@@ -61,8 +61,13 @@ def exact(value, keys, name="OBJECT"):
 
 def confined(root, value):
     require(type(value) is str and value and "\x00" not in value, "INVALID_PATH")
+    # Treat both separators as path syntax on every runner.  Without this
+    # normalization, POSIX interprets a Windows traversal such as ``..\\x``
+    # as a harmless filename and the contract becomes platform-dependent.
+    normalized = value.replace("\\", "/")
+    require(".." not in Path(normalized).parts, "PATH_TRAVERSAL")
     root = Path(root).resolve()
-    candidate = Path(value)
+    candidate = Path(normalized)
     if not candidate.is_absolute():
         candidate = root / candidate
     resolved = candidate.resolve()
