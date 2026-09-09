@@ -1,6 +1,7 @@
 * text=auto eol=lf
 *.bat text eol=crlf
 *.ps1 text eol=crlf
+vendor/v162-deployment-pack/scripts/run_pack_smoke.ps1 -text
 *.png binary
 *.jpg binary
 *.jpeg binary
@@ -8,4 +9,3 @@
 *.zip binary
 *.parquet binary
 *.duckdb binary
-
