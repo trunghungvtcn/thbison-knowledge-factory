@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "data_class": "REPOSITORY",
+  "as_of": "2026-09-05T00:00:00+07:00",
+  "frozen_corpus": "v166/corpus/frozen-001",
+  "v165_run": "v165/artifacts/final-001",
+  "expected_baseline": "af9e6eac67a8debf022b9567806022c5e5477c837f876d1e95c280f421b4e399",
+  "target_entity_ids": [
+    "0496c4f5-fe89-5d30-b948-34505fb64143",
+    "59957ace-b4fb-519e-b92d-773bc74ad268"
+  ]
+}

@@ -1,0 +1,55 @@
+name: verify
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install verified dependencies
+        run: python -m pip install -r requirements-dev.txt
+      - name: Validate environment
+        run: python -m pip check
+      - name: Compile source
+        run: python -m compileall -q src scripts
+      - name: Verify migration payload
+        run: python scripts/verify_migration_payload.py
+      - name: Run source-only offline tests
+        env:
+          PYTHONPATH: src
+        run: >-
+          python -m pytest -q
+          tests/test_runtime_contract.py
+          tests/test_v16.py
+          tests/test_v161_condition_ast.py
+          tests/test_v161_decision_pull.py
+          tests/test_v161_decisions.py
+          tests/test_v161_identity.py
+          tests/test_v161_notion_adapter.py
+          tests/test_v161_notion_payload.py
+          tests/test_v161_object_value.py
+          tests/test_v162_remediation.py
+          tests/test_v164_literal_boundaries.py
+          tests/test_v164_semantics.py
+          tests/test_v166_evidence_completion.py
+      - name: Build source bundle
+        run: git archive --format=zip --output=thbison-knowledge-factory-source.zip HEAD
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: source-${{ github.sha }}
+          path: thbison-knowledge-factory-source.zip
+          if-no-files-found: error
+          retention-days: 14

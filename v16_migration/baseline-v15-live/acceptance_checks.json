@@ -1,0 +1,16 @@
+{
+  "gates": {
+    "update_count": 70,
+    "create_count": 0,
+    "missing_mapping_count": 0,
+    "mapping_collision_count": 0,
+    "human_field_write_count": 0,
+    "remote_writes": 0,
+    "schema_type_mismatch_count": 0
+  },
+  "reverse_order_replay": "PASS",
+  "single_semantic_change": "PASS",
+  "human_notes_preserved": true,
+  "plan_sha256": "af9e6eac67a8debf022b9567806022c5e5477c837f876d1e95c280f421b4e399",
+  "remote_write_capability": false
+}

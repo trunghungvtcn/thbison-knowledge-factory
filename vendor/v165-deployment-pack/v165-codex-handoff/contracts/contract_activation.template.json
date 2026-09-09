@@ -1,0 +1,16 @@
+{
+  "classification": "DRAFT_TEMPLATE_NOT_APPROVED",
+  "contract_id": "complete_record_derivation/v1",
+  "contract_spec_hash": null,
+  "decision": "NOT_APPROVED",
+  "issuer_id": null,
+  "issuer_role": null,
+  "registry_hash": null,
+  "approval_evidence_ref": null,
+  "allowed_predicates": ["inspection_interval"],
+  "target_entity_ids": ["0496c4f5-fe89-5d30-b948-34505fb64143"],
+  "mode": "LOCAL_SHADOW",
+  "valid_from": null,
+  "valid_until": null,
+  "production_authorized": false
+}

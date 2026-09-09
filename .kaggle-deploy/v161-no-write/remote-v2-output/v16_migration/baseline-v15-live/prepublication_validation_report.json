@@ -1,0 +1,19 @@
+{
+  "blocking_issue_count": 79,
+  "create_count": 0,
+  "effective_decision_counts": {
+    "BLOCKED_BY_SYSTEM_STATUS": 11,
+    "HOLD_CONDITION_REVIEW": 9,
+    "PENDING": 50
+  },
+  "human_field_write_count": 0,
+  "input_rows": 70,
+  "mapping_collision_count": 0,
+  "missing_mapping_count": 0,
+  "mode": "NO_WRITE",
+  "production_mutation_authorized": false,
+  "ready_for_remote_no_write": true,
+  "remote_writes": 0,
+  "schema_type_mismatch_count": 0,
+  "update_count": 70
+}

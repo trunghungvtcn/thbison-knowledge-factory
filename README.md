@@ -64,3 +64,9 @@ python -m pytest -q
 ```
 
 The full notebook requires packages in `requirements.txt`; the lightweight tests use the dependencies already common in Jupyter/Kaggle environments.
+
+## Migration alignment
+
+The repository has been aligned as the private source-of-truth for executable code. Runtime contracts are fail-closed, accept only `TEST_ONLY`, verify the full commit and input SHA-256, cap retries/timeouts, and make duplicate submissions a no-op. Data and reviewed decisions remain outside Git and are registered by digest in `manifests/migration_assets.json`.
+
+This migration does **not** deploy a runtime, enable a scheduler, write production knowledge, train a model, or claim model improvement. See `REPAIR_ALIGNMENT_REPORT.md` for the verification boundary.

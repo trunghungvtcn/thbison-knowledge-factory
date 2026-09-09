@@ -1,0 +1,19 @@
+{
+  "baseline_pins": {
+    "knowledge/canonical_knowledge.parquet": "74130d9861f46a00ad82b0870ab8cbbfa2f3a5a42be22687747559eb79f14f05",
+    "review/notion_v2_sync.parquet": "f11b2394e6609e6fb8bfda39e84e36ea8f7af00a576a6b1037f14c10a7f9e6c6"
+  },
+  "snapshot_captured_at": "2026-09-04T09:02:57.788Z",
+  "files": {
+    "current_notion_schema.json": "76359ba7771130e674804f13b735ca087ef9abca9bbaabb72e4c8abcac0dec2a",
+    "live_knowledge_snapshot.json": "f896246643a83c69555b906c9bbc908f78f30a9ca01982edf07aa42930ba3bd4",
+    "live_snapshot_raw.json": "886741633e585cc3e63ff347f7cda0d0fab9aab844fe2cb67939734d1f4e0e27",
+    "notion_schema_raw.json": "922d25da20aa471fc49137ea99e6a0c14cb304f04d35ae258d924002fdebf8b0",
+    "v15_all_page_mappings.json": "3d8f129d6865fbfaf58acfa7f7b550344f3b3bee53c59d42e9856f19ec4537dc",
+    "v15_canonical_rows.json": "215293cc51568db2fc9311ca56b40d46b1d5bb378f6952c32450d90fc6714a7e"
+  },
+  "canonical_rows": 70,
+  "live_review_rows": 70,
+  "all_page_mappings": 102,
+  "object_value_policy": "Retain legacy prose and block; do not infer structured semantic values."
+}

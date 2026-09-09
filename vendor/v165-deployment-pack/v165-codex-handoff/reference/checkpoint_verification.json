@@ -1,0 +1,13 @@
+{
+  "status": "V165_HANDOFF_PACK_VERIFIED",
+  "input_zip_sha256": "30054428e104f084efd2cd9dea04037c2698cf6cadee99c89e3fb911338823aa",
+  "manifest_members_verified": 14,
+  "checkpoint_regular_files": 15,
+  "mappings": 70,
+  "issues": 79,
+  "proposals_rehashed": 2,
+  "scope": "LOCAL_PACKAGE_INTEGRITY_ONLY",
+  "repository_tests_run": false,
+  "raw_sources_reextracted": false,
+  "production_authorized": false
+}

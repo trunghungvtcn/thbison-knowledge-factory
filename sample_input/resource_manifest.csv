@@ -1,0 +1,2 @@
+resource_id,original_url,publisher_id,publisher_name,file_path,content_sha256,license_state,fetched_at,priority,source_role,authority_tier,jurisdiction,applicability_scope,claim_families,legal_status
+fixture-kito-cb010,https://example.invalid/controlled-pilot-fixture,publisher-kito,KITO,sample-kito-cb010.html,3ccac887bd93410ceefd0e791be9a8831e8491087f760280ea85831953bc8dcb,ALLOWED_INTERNAL,2026-09-01T00:00:00Z,P1,MANUFACTURER_SPEC,MANUFACTURER_PRIMARY,GLOBAL,KITO_CB010,MODEL_TECHNICAL_SPEC,CONTROLLED_FIXTURE

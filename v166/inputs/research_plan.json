@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "source_id": "tt19-2025-bnv-official-pdf",
+      "url": "https://datafiles.chinhphu.vn/cpp/files/vbpq/2025/10/19-bnv.pdf",
+      "role": "CURRENT_OFFICIAL_CROSS_REFERENCE",
+      "provenance_family": "VANBAN_CHINHPHU"
+    },
+    {
+      "source_id": "tt54-2016-official-gazette-pdf",
+      "url": "https://congbao.chinhphu.vn/tai-ve-van-ban-so-54-2016-tt-bldtbxh-23923-17902?format=pdf",
+      "role": "ISSUING_INSTRUMENT",
+      "provenance_family": "CONGBAO_CHINHPHU"
+    },
+    {
+      "source_id": "tt12-2021-official-vbpl-pdf",
+      "url": "https://vbpl.vn/FileData/TW/Lists/vbpq/Attachments/156014/VanBanGoc_thong-tu-12-2021-tt-bldtbxh.pdf",
+      "role": "AMENDMENT_SCOPE",
+      "provenance_family": "VBPL_QUOCGIA"
+    },
+    {
+      "source_id": "tt54-2016-current-status-metadata",
+      "url": "https://vbpl.vn/bolaodong/Pages/vbpq-van-ban-goc.aspx?ItemID=121979",
+      "role": "CURRENT_STATUS_METADATA",
+      "provenance_family": "VBPL_QUOCGIA"
+    }
+  ]
+}

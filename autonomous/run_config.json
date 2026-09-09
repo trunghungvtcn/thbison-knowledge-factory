@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "mode": "LOCAL_SHADOW",
+  "as_of": "2026-09-08T00:00:00+07:00",
+  "legal_as_of": "2026-09-05T00:00:00+07:00",
+  "parent_revision": "e30b0fe47dc720aec3a5dafb4aecb80d59d9a4a317e4da2c5cfaa295d5a3f492",
+  "temporal_delta": "New public OEM construction corpus at 2026-09-08. Legacy legal applicability remains fixed at 2026-09-05; no legal status inference.",
+  "topic": "manual_chain_hoist",
+  "production_authorized": false,
+  "sources": [
+    {"source_id":"harrington-cf","url":"https://www.harringtonhoists.com/hand-chain-hoists/cf","publisher":"Harrington Hoists","provenance_family":"kito-crosby","authority":"OEM","access":"PUBLIC","scope":{"manufacturer":"Harrington","model":"CF","jurisdiction":"OEM_GLOBAL_DESCRIPTION"},"subtopic":"construction"},
+    {"source_id":"kito-cx","url":"https://www.kito.net/en/products/cx-hand-chain-block/","publisher":"KITO Europe","provenance_family":"kito-crosby","authority":"OEM","access":"PUBLIC","scope":{"manufacturer":"KITO","model":"CX","jurisdiction":"OEM_GLOBAL_DESCRIPTION"},"subtopic":"construction"},
+    {"source_id":"kito-cb","url":"https://www.kito.net/en/products/cb-hand-chain-hoist/","publisher":"KITO Europe","provenance_family":"kito-crosby","authority":"OEM","access":"PUBLIC","scope":{"manufacturer":"KITO","model":"CB","jurisdiction":"OEM_GLOBAL_DESCRIPTION"},"subtopic":"mechanism"}
+  ]
+}
