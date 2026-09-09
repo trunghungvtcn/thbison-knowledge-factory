@@ -1,0 +1,37 @@
+{
+  "environment": "STAGING",
+  "database_name": "V161-STAGING-TEST",
+  "database_id": "3d1fbe3f-22e6-8027-bcd1-fde940252184",
+  "data_source_id": "3d1fbe3f-22e6-80c7-84e3-000b8d2a28a0",
+  "page_ids": [
+    "3d1fbe3f-22e6-8066-8c21-f20f62ada0c8",
+    "3d1fbe3f-22e6-80c3-90a7-fb83848ac27e",
+    "3d1fbe3f-22e6-808f-8dfb-ec2e751a10dd"
+  ],
+  "page_titles": [
+    "V161-STAGING-SYNTH-001",
+    "V161-STAGING-SYNTH-002",
+    "V161-STAGING-SYNTH-003"
+  ],
+  "schema": {
+    "Name": {"type": "title"},
+    "Claim Text": {"type": "rich_text"},
+    "Run ID": {"type": "rich_text"},
+    "Condition Status": {"type": "select", "options": ["RESOLVED"]},
+    "System Status": {"type": "select", "options": ["REVIEW_REQUIRED"]},
+    "Decision": {"type": "select", "options": []},
+    "Reviewer Note": {"type": "rich_text"}
+  },
+  "integration_name_prepared": "V161-STAGING-TEST",
+  "integration_created": true,
+  "integration_id": "3d1fbe3f-22e6-8131-8602-00275e8977a2",
+  "content_access_verified": true,
+  "content_access_observation": "Chrome Content access lists only V161-STAGING-TEST. Final visual verification: only Read/Update content enabled; Insert, Comments and Agent disabled; No user information selected.",
+  "remote_preflight_observation": "Dedicated staging token used only in transient process. Initial API schema read and exact seven-field type check succeeded. Subsequent GET failed with transport error before any cycle or PATCH. Independent TCP 443 probe failed. No cycle directory exists. Token removed from process and clipboard cleared.",
+  "remote_cycle_started": true,
+  "remote_cycle_completed": true,
+  "remote_cycle_status": "REMOTE_STAGING_PASS",
+  "remote_cycle_artifacts": "staging/artifacts/remote-cycle-001",
+  "canonical_baseline_sha256": "af9e6eac67a8debf022b9567806022c5e5477c837f876d1e95c280f421b4e399",
+  "verification": "2026-09-04: Chrome private database created; connector read-only fetch confirms schema and all three parents. Dedicated API preflight still required. No token stored in this file."
+}

@@ -1,0 +1,33 @@
+# Local environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Credentials and runtime configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+kaggle.json
+access_token
+
+# Recovered data, generated outputs and models
+data/
+datasets/
+models/
+checkpoints/
+outputs/
+artifacts/
+recovery/
+private-audit/
+data-staging/
+*.parquet
+*.duckdb
+*.pdf
+*.zip
+*.log
+

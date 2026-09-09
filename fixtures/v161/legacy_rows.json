@@ -1,0 +1,28 @@
+[
+  {
+    "legacy_canonical_id": "KC-LEGACY-001",
+    "canonical_text": "Không được sử dụng pa lăng vượt tải trọng định mức.",
+    "predicate": "RATED_LOAD_LIMIT",
+    "object_value": {"type": "enum", "value": "MUST_NOT_BE_EXCEEDED"},
+    "applicability": "GENERIC",
+    "condition_tags": [],
+    "system_status": "REVIEW_REQUIRED",
+    "decision": "PENDING",
+    "notes": "Giữ nguyên ghi chú của người duyệt",
+    "notion_page_id": "page-demo-001"
+  },
+  {
+    "legacy_canonical_id": "KC-LEGACY-002",
+    "canonical_text": "Chu kỳ áp dụng thay đổi khi thiết bị ở ngoài trời, sử dụng lưu động hoặc quá 12 năm.",
+    "predicate": "INSPECTION_INTERVAL",
+    "object_value": {"type": "enum", "value": "CONDITION_DEPENDENT"},
+    "applicability": "JURISDICTION_SPECIFIC",
+    "jurisdiction": "VN",
+    "condition_tags": ["OUTDOOR", "MOBILE_USE", "AGE_OVER_12_YEARS"],
+    "condition_raw_text": "Lắp ngoài trời; sử dụng lưu động; hoặc thiết bị trên 12 năm.",
+    "system_status": "HOLD",
+    "decision": "APPROVED",
+    "notes": "Approval cũ không được vượt HOLD",
+    "notion_page_id": "page-demo-002"
+  }
+]

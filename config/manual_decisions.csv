@@ -1,0 +1,25 @@
+candidate_id,review_decision,reviewer_note
+d6859572fe0dd98906eb3490562aced24720e0b22552a1c8538acb486008cf3a,APPROVED,Product attribute approval migrated from the user-reviewed v1 semantic claim; identical source quote and value.
+2058a8345e0d3a019f3e7d25c9f8c6bf96e352aaba6542e6c300945aa89f56fa,APPROVED,Product attribute approval migrated from the user-reviewed v1 semantic claim; identical source quote and value.
+bc52ed32d572c3303dafe171ce4738de62d3fb48e3f7446602e0d490249b34d7,APPROVED,Product attribute approval migrated from the user-reviewed v1 semantic claim; identical source quote and value.
+2ffb26dfc9d9260f204f846d4dce3f8629550f7ec0d7e8d13f5929b020e837a8,APPROVED,Product attribute approval migrated from the user-reviewed v1 semantic claim; identical source quote and value.
+03fa842b94fc0186ba78cb9c48f6ed9658305a90f01788429bd34f294e18e4b0,APPROVED,Product attribute approval migrated from the user-reviewed v1 semantic claim; identical source quote and value.
+e51bd88c3b8bebc49a80013fc9a95d31afbb763b6b4a51641a3ca295ba7e8ff4,APPROVED,Product attribute approval migrated from the user-reviewed v1 semantic claim; identical source quote and value.
+3cb9c3381792bf54b5993f59e1e661c1cfccc61811d538d33059e31cb7e0dcf8,HOLD,Cross-source conflict retained: KITO JP 284 N versus KITO Europe 290 N.
+0fba6fffa0972cb0be16e728574f6618530d4ce13537a141f8ca3dabef62933e,APPROVED,Product attribute approval migrated from the user-reviewed v1 semantic claim; identical source quote and value.
+8d9b33fb05515fa9c33862c6aba0b06eb0e00787fa5a5912a8716a4c711042e8,APPROVED,Product attribute approval migrated from the user-reviewed v1 semantic claim; identical source quote and value.
+6457e2a3a4a6488a6b8d64228ce9f2781933e5d2dec5390ae0f29f768e815b0b,APPROVED,Product attribute approval migrated from the user-reviewed v1 semantic claim; identical source quote and value.
+683f5257f3ecbf729412909aa92621bae861d3cd9ccff31b555954e10b6d69e1,APPROVED,Product attribute approval migrated from the user-reviewed v1 semantic claim; identical source quote and value.
+193dcf276998ff18bcbae2646ae9539b1ca36eb95e3dd2f32c8d2e5c5bc29754,APPROVED,Product attribute approval migrated from the user-reviewed v1 semantic claim; identical source quote and value.
+acf5b953e72776f4b0ad62e853db0fa236d043e3c3924e26f3650eed73c4c24f,APPROVED,Product attribute approval migrated from the user-reviewed v1 semantic claim; identical source quote and value.
+fbffcbf91922c628eb116695b4f38f646978f1cc27aefc6762cb18cbef76669f,APPROVED,Product attribute approval migrated from the user-reviewed v1 semantic claim; identical source quote and value.
+026cd3557a110884df1c8474a6c0b4abdd99080cf2ed40897741a7992a2d5942,APPROVED,Product attribute approval migrated from the user-reviewed v1 semantic claim; identical source quote and value.
+e288ea4d8459d317e4182621224ae9bc7a45273171c64c2cec38122e4574abc1,APPROVED,Product attribute approval migrated from the user-reviewed v1 semantic claim; identical source quote and value.
+cf4c30d4d589b0b6db8f869e8fa67115f3aa18441ed90fce5c03e43b53174c56,APPROVED,Product attribute approval migrated from the user-reviewed v1 semantic claim; identical source quote and value.
+a8312f29c674227bc07ff57cdb7062693d683f0271515610f5eb9ac15d597531,APPROVED,Product attribute approval migrated from the user-reviewed v1 semantic claim; identical source quote and value.
+e6b0f0736184b208a17449c2045d98bc85ef49cf7cfa957e1920f4749ed360d4,APPROVED,Product attribute approval migrated from the user-reviewed v1 semantic claim; identical source quote and value.
+cd98ce6edfb5c10ffda8d2b1827bbbc48e526c0c75718c414747c286e2683963,APPROVED,Product attribute approval migrated from the user-reviewed v1 semantic claim; identical source quote and value.
+48bde2ef8cbe4982e123070821e619c63fb28860db867cae66dadeceb6684010,REJECTED,Duplicate supporting record; canonical KITO JP attribute retained while evidence remains linked.
+0ca5acd9412812d1528a6882760d02abcffb217b6412195223e58b4ca3873b7e,REJECTED,Duplicate supporting record; canonical KITO JP attribute retained while evidence remains linked.
+0821bf22197318366afcd757265fb03277d9c0329fdc3b7b008b348e0632b436,HOLD,Cross-source conflict retained: KITO JP 284 N versus KITO Europe 290 N.
+ce0faeb07836f037fa7d43e0fd704cb3b4a0778d0a8dc6b19d65af24d5a03bad,REJECTED,Duplicate supporting record; canonical KITO JP attribute retained while evidence remains linked.

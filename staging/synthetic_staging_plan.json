@@ -1,0 +1,150 @@
+{
+  "target_kind": "DEDICATED_STAGING",
+  "records": [
+    {
+      "operation": "UPDATE",
+      "environment": "STAGING",
+      "synthetic": true,
+      "synthetic_id": "V161-STAGING-SYNTH-001",
+      "target_ref": "STAGING_FIXTURE_PAGE_001",
+      "properties": {
+        "Claim Text": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "V16.1 synthetic staging quantity record"
+              }
+            }
+          ]
+        },
+        "Run ID": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "V16.1-STAGING-SYNTH"
+              }
+            }
+          ]
+        },
+        "Condition Status": {
+          "select": {
+            "name": "RESOLVED"
+          }
+        },
+        "System Status": {
+          "select": {
+            "name": "REVIEW_REQUIRED"
+          }
+        }
+      },
+      "semantic_fixture": {
+        "object_value": {
+          "type": "quantity",
+          "amount": 1,
+          "unit": "kN"
+        },
+        "condition_ast": {
+          "op": "TRUE"
+        }
+      }
+    },
+    {
+      "operation": "UPDATE",
+      "environment": "STAGING",
+      "synthetic": true,
+      "synthetic_id": "V161-STAGING-SYNTH-002",
+      "target_ref": "STAGING_FIXTURE_PAGE_002",
+      "properties": {
+        "Claim Text": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "V16.1 synthetic staging enum record"
+              }
+            }
+          ]
+        },
+        "Run ID": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "V16.1-STAGING-SYNTH"
+              }
+            }
+          ]
+        },
+        "Condition Status": {
+          "select": {
+            "name": "RESOLVED"
+          }
+        },
+        "System Status": {
+          "select": {
+            "name": "REVIEW_REQUIRED"
+          }
+        }
+      },
+      "semantic_fixture": {
+        "object_value": {
+          "type": "enum",
+          "value": "TEST_ONLY"
+        },
+        "condition_ast": {
+          "op": "TRUE"
+        }
+      }
+    },
+    {
+      "operation": "UPDATE",
+      "environment": "STAGING",
+      "synthetic": true,
+      "synthetic_id": "V161-STAGING-SYNTH-003",
+      "target_ref": "STAGING_FIXTURE_PAGE_003",
+      "properties": {
+        "Claim Text": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "V16.1 synthetic staging boolean record"
+              }
+            }
+          ]
+        },
+        "Run ID": {
+          "rich_text": [
+            {
+              "type": "text",
+              "text": {
+                "content": "V16.1-STAGING-SYNTH"
+              }
+            }
+          ]
+        },
+        "Condition Status": {
+          "select": {
+            "name": "RESOLVED"
+          }
+        },
+        "System Status": {
+          "select": {
+            "name": "REVIEW_REQUIRED"
+          }
+        }
+      },
+      "semantic_fixture": {
+        "object_value": {
+          "type": "boolean",
+          "value": true
+        },
+        "condition_ast": {
+          "op": "TRUE"
+        }
+      }
+    }
+  ]
+}

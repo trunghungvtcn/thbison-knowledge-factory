@@ -1,0 +1,51 @@
+schema_version: "2.0.0"
+category_id: "L2-HAND-CHAIN-HOIST"
+category_name_en: "Hand chain hoist"
+category_name_vi: "Pa lăng xích kéo tay"
+target_jurisdictions:
+  - "VN"
+  - "US"
+  - "GB"
+  - "CA"
+included_entities:
+  - "manual hand chain hoist"
+  - "chain block"
+excluded_entities:
+  - "electric chain hoist"
+  - "lever hoist"
+resource_limit: 100
+candidate_limit: 500
+review_admission_limit: 200
+max_file_bytes: 52428800
+max_pdf_pages: 300
+ocr_page_limit: 300
+digital_text_min_chars: 40
+extract_tables: true
+enable_ocr: true
+ocr_languages:
+  - "en"
+ocr_gpu: true
+ocr_dpi: 180
+deepseek:
+  enabled: false
+  provider_base_url: "https://api.yescale.io/v1"
+  model_identifier: "deepseek-v4-pro"
+  max_calls: 30
+  prompt_version: "kf-claim-v1"
+notion:
+  # Enable after adding NOTION_API_KEY as a private Kaggle Secret.
+  enabled: false
+  api_version: "2026-03-11"
+  evidence_data_source_id: "87318868-8be2-4e27-8ab6-7a3d0b53bb32"
+  product_attributes_data_source_id: "a4812f47-e1a6-4aa1-a619-558a79a4c4ff"
+  knowledge_items_data_source_id: "9d53865d-0cdd-41f3-a6c6-5d171b4e50f4"
+  max_rows: 200
+source_coverage:
+  required_roles:
+    - "MANUFACTURER_SPEC"
+    - "REGULATION"
+    - "REGULATOR_GUIDANCE"
+  required_authority_tiers:
+    - "MANUFACTURER_PRIMARY"
+    - "PRIMARY_LEGAL"
+    - "GOVERNMENT_GUIDANCE"

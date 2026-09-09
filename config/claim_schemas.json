@@ -1,0 +1,87 @@
+{
+  "schema_version": "2.0.0",
+  "claim_schemas": [
+    {
+      "claim_family": "MODEL_TECHNICAL_SPEC",
+      "schema_version": "2.0.0",
+      "required_slots": [
+        "subject.manufacturer",
+        "subject.model",
+        "predicate",
+        "value",
+        "unit",
+        "lineage.resource_version_id"
+      ],
+      "optional_slots": [
+        "scope.document_revision",
+        "scope.jurisdiction",
+        "scope.product_variant",
+        "scope.measurement_condition"
+      ],
+      "allowed_predicates": [
+        "rated_load",
+        "standard_lift",
+        "hand_chain_pull",
+        "net_mass"
+      ]
+    },
+    {
+      "claim_family": "REGULATORY_REQUIREMENT",
+      "schema_version": "2.0.0",
+      "required_slots": ["subject.product_family", "predicate", "claim_text", "scope.jurisdiction", "scope.applicability", "lineage.resource_version_id", "lineage.authority_tier"],
+      "optional_slots": ["scope.legal_status"],
+      "allowed_predicates": ["rated_capacity_marking", "overload_prohibition", "inspection_requirement", "support_structure_requirement", "attachment_point_prohibition", "competent_lift_planning", "thorough_examination", "inspection_recordkeeping", "static_load_test", "dynamic_load_test", "document_review", "no_load_test", "inspection_interval"]
+    },
+    {
+      "claim_family": "SAFETY_GUIDANCE",
+      "schema_version": "2.0.0",
+      "required_slots": ["subject.product_family", "predicate", "claim_text", "scope.jurisdiction", "scope.applicability", "lineage.resource_version_id", "lineage.authority_tier"],
+      "optional_slots": [],
+      "allowed_predicates": ["remove_defective_equipment", "people_lifting_prohibition", "personnel_exclusion", "vertical_lift_alignment", "smooth_operation"]
+    },
+    {
+      "claim_family": "LEGAL_SCOPE",
+      "schema_version": "2.0.0",
+      "required_slots": ["subject.product_family", "predicate", "claim_text", "scope.jurisdiction", "scope.applicability", "lineage.resource_version_id"],
+      "optional_slots": ["scope.legal_status"],
+      "allowed_predicates": ["manual_chain_block_in_scope"]
+    },
+    {
+      "claim_family": "APPLICATION_CONSTRAINT",
+      "schema_version": "1.0.0",
+      "required_slots": [
+        "subject.product_family",
+        "predicate",
+        "constraint_text",
+        "lineage.resource_version_id"
+      ],
+      "optional_slots": [
+        "scope.jurisdiction",
+        "scope.product_variant",
+        "scope.usage_condition"
+      ],
+      "allowed_predicates": [
+        "prohibited_use",
+        "environment_limit",
+        "inspection_requirement"
+      ]
+    },
+    {
+      "claim_family": "TERMINOLOGY_DEFINITION",
+      "schema_version": "1.0.0",
+      "required_slots": [
+        "term",
+        "definition",
+        "lineage.resource_version_id"
+      ],
+      "optional_slots": [
+        "synonym",
+        "scope.jurisdiction"
+      ],
+      "allowed_predicates": [
+        "defined_as",
+        "synonym_of"
+      ]
+    }
+  ]
+}

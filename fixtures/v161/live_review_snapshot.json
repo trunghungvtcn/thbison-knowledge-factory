@@ -1,0 +1,20 @@
+[
+  {
+    "page_id": "page-demo-001",
+    "legacy_id": "KC-LEGACY-001",
+    "decision": "PENDING",
+    "reviewer_note": "Giữ nguyên ghi chú của người duyệt",
+    "status": "Review required",
+    "reviewed_entity_id": null,
+    "reviewed_version_id": null
+  },
+  {
+    "page_id": "page-demo-002",
+    "legacy_id": "KC-LEGACY-002",
+    "decision": "APPROVED",
+    "reviewer_note": "Approval cũ không được vượt HOLD",
+    "status": "HOLD",
+    "reviewed_entity_id": null,
+    "reviewed_version_id": null
+  }
+]

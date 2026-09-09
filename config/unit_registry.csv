@@ -1,0 +1,12 @@
+predicate,raw_unit,normalized_unit,quantity_kind,physical_dimension,factor,offset,formula_id,registry_version
+hand_chain_pull,N,N,pull_force,force,1,0,identity-force-v1,1.0.0
+hand_chain_pull,lbf,N,pull_force,force,4.4482216153,0,lbf-to-n-v1,1.0.0
+net_mass,kg,kg,product_mass,mass,1,0,identity-mass-v1,1.0.0
+net_mass,lb,kg,product_mass,mass,0.45359237,0,lb-to-kg-v1,1.0.0
+standard_lift,m,m,lift_length,length,1,0,identity-length-v1,1.0.0
+standard_lift,mm,m,lift_length,length,0.001,0,mm-to-m-v1,1.0.0
+standard_lift,ft,m,lift_length,length,0.3048,0,ft-to-m-v1,1.0.0
+rated_load,t,t,rated_load,domain_load_rating,1,0,identity-rated-load-v1,1.0.0
+rated_load,kg,t,rated_load,domain_load_rating,0.001,0,kg-to-tonne-rated-load-v1,1.0.0
+rated_load,short ton,t,rated_load,domain_load_rating,0.90718474,0,short-ton-to-tonne-rated-load-v1,1.0.0
+
