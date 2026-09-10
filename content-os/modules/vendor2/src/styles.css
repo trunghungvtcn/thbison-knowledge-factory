@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Be Vietnam Pro", "Segoe UI", sans-serif;
+  --font-sans: "Be Vietnam Pro", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --color-paper: #f3f1ec;
+  --color-ink: #1b1915;
+  --color-muted: #6d675c;
+  --color-subtle: #8a8376;
+  --color-line: #ddd6c8;
+  --color-panel: #fffcf7;
+  --color-raised: #ece7dc;
+  --color-steel: #3e5363;
+  --color-steel-fg: #f4f1ea;
+  --color-ok: #2c5a43;
+  --color-ok-bg: #e4efe8;
+  --color-warn: #7a5420;
+  --color-warn-bg: #f4ead8;
+  --color-danger: #8a2e2e;
+  --color-danger-bg: #f3e2e0;
+  --color-mock: #3e5363;
+
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  --shadow-border:
+    0px 0px 0px 1px rgba(27, 25, 21, 0.06),
+    0px 1px 2px -1px rgba(27, 25, 21, 0.06),
+    0px 2px 4px 0px rgba(27, 25, 21, 0.04);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-steel);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

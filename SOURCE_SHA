@@ -1,0 +1,2 @@
+The immutable implementation source SHA is recorded after the source commit.
+The release tag may include a later metadata-only commit; verify both in the release body.

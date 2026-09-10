@@ -1,0 +1,25 @@
+{
+  "protocol_version": "1.0.0",
+  "provenance": {
+    "source": "THBISON-STAGING-FIXTURE",
+    "pin": "v6-r2-preflight-1"
+  },
+  "required_headers": ["Authorization"],
+  "max_pages": 8,
+  "retry_budget": 3,
+  "data_sources": {
+    "c80fbe3f-22e6-8329-9dd6-875fb67a3755": {
+      "name": "Evidence Sources",
+      "properties": {
+        "Name": {"type": "title"},
+        "Status": {"type": "select"},
+        "Related": {
+          "type": "relation",
+          "relation_destination": "expected-parent-hub"
+        }
+      }
+    }
+  },
+  "relation_allowlist": ["expected-parent-hub", "allowlisted-parent"],
+  "expected_relation_parent": "expected-parent-hub"
+}

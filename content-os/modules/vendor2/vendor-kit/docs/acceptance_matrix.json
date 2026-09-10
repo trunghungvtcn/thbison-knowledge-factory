@@ -1,0 +1,546 @@
+{
+  "version": "1.0.0",
+  "count": 60,
+  "scenarios": [
+    {
+      "id": "G01",
+      "owner": "BOTH",
+      "name": "Version and schema",
+      "stimulus": "Valid and unsupported versions; missing/extra fields",
+      "expected": "Valid accepted; malformed rejected; no fallback",
+      "evidence": "actual HTTP response + validator log",
+      "required": true
+    },
+    {
+      "id": "G02",
+      "owner": "BOTH",
+      "name": "Tenant isolation",
+      "stimulus": "Same IDs under a different authenticated project",
+      "expected": "No cross-project read/write or side effect",
+      "evidence": "integration test with two real test identities",
+      "required": true
+    },
+    {
+      "id": "G03",
+      "owner": "BOTH",
+      "name": "Missing or forged credentials",
+      "stimulus": "No bearer, expired token, forged caller role",
+      "expected": "401/403; never trust client roles",
+      "evidence": "auth integration tests; credentials redacted",
+      "required": true
+    },
+    {
+      "id": "G04",
+      "owner": "BOTH",
+      "name": "Idempotent duplicate",
+      "stimulus": "20 identical concurrent POSTs then service restart and repeat",
+      "expected": "One logical job; original identity returned after restart",
+      "evidence": "DB/ledger evidence + side-effect counter",
+      "required": true
+    },
+    {
+      "id": "G05",
+      "owner": "BOTH",
+      "name": "Idempotent payload conflict",
+      "stimulus": "Same key with changed request body",
+      "expected": "409 without extra provider call",
+      "evidence": "HTTP + counter",
+      "required": true
+    },
+    {
+      "id": "G06",
+      "owner": "BOTH",
+      "name": "Cancellation and restart",
+      "stimulus": "Cancel queued/running job; kill/restart process",
+      "expected": "No new calls after cancellation; terminal status retained",
+      "evidence": "process-level recovery log",
+      "required": true
+    },
+    {
+      "id": "G07",
+      "owner": "BOTH",
+      "name": "Finite nested retries",
+      "stimulus": "Inject 429/503, timeout, 401 and validation failures",
+      "expected": "All retries share budget/deadline; auth/invalid payload not retried",
+      "evidence": "fake clock + request ledger",
+      "required": true
+    },
+    {
+      "id": "G08",
+      "owner": "BOTH",
+      "name": "Budget reservation",
+      "stimulus": "Concurrent calls approach max tokens/requests/cost",
+      "expected": "No over-reservation; ambiguous charged calls remain accounted",
+      "evidence": "concurrency test + counters",
+      "required": true
+    },
+    {
+      "id": "G09",
+      "owner": "BOTH",
+      "name": "Artifact integrity and path",
+      "stimulus": "Expired URL, wrong hash, traversal, same filename different bytes",
+      "expected": "Refresh URL safely; refuse corruption/escape/collision",
+      "evidence": "file gateway contract tests",
+      "required": true
+    },
+    {
+      "id": "G10",
+      "owner": "BOTH",
+      "name": "Untrusted text",
+      "stimulus": "Source/model text contains tool instructions and URLs",
+      "expected": "Not executed; does not overwrite system policy",
+      "evidence": "injection test with observed side effects",
+      "required": true
+    },
+    {
+      "id": "G11",
+      "owner": "BOTH",
+      "name": "Reproducible delivery",
+      "stimulus": "Fresh checkout/build image, no local caches",
+      "expected": "Same declared source; lockfile and artifact hash; no embedded secret",
+      "evidence": "clean CI + SBOM + scanner findings",
+      "required": true
+    },
+    {
+      "id": "G12",
+      "owner": "BOTH",
+      "name": "Warnings and failure truth",
+      "stimulus": "Build/runtime warnings, skipped tests, upstream unavailability",
+      "expected": "Report warnings/skips and truthful NOT_RUN; no fake green status",
+      "evidence": "complete logs/JUnit and exclusions list",
+      "required": true
+    },
+    {
+      "id": "S01",
+      "owner": "VENDOR_1",
+      "name": "Provider normalization",
+      "stimulus": "Known OpenSEO protocol response fixture",
+      "expected": "Expected ResearchResult with provenance retained",
+      "evidence": "adapter integration",
+      "required": true
+    },
+    {
+      "id": "S02",
+      "owner": "VENDOR_1",
+      "name": "Actual provider probe",
+      "stimulus": "Owner-authorized scoped keyword/SERP read",
+      "expected": "Recorded capability/version/auth and measured result",
+      "evidence": "sanitized sandbox/live receipt; not mock",
+      "required": true
+    },
+    {
+      "id": "S03",
+      "owner": "VENDOR_1",
+      "name": "Null versus zero",
+      "stimulus": "No volume/difficulty returned",
+      "expected": "Null+MISSING, never fabricated numeric 0",
+      "evidence": "golden payload comparison",
+      "required": true
+    },
+    {
+      "id": "S04",
+      "owner": "VENDOR_1",
+      "name": "Locale binding",
+      "stimulus": "Same keyword with VN/vi and different locale",
+      "expected": "Separate provider requests/cache; scope retained",
+      "evidence": "request capture + cache keys",
+      "required": true
+    },
+    {
+      "id": "S05",
+      "owner": "VENDOR_1",
+      "name": "Freshness and metric scale",
+      "stimulus": "Stale source and metrics using different scales",
+      "expected": "Mark stale; document conversion; timestamp preserved",
+      "evidence": "normalizer tests",
+      "required": true
+    },
+    {
+      "id": "S06",
+      "owner": "VENDOR_1",
+      "name": "Vietnamese duplicate handling",
+      "stimulus": "Unicode/diacritic/whitespace variants",
+      "expected": "Document normalization, preserve meaning and display text",
+      "evidence": "curated input-output set",
+      "required": true
+    },
+    {
+      "id": "S07",
+      "owner": "VENDOR_1",
+      "name": "Competitor provenance",
+      "stimulus": "SERP includes text and source URL",
+      "expected": "No competitor prose copied into a draft or technical fact DB",
+      "evidence": "source mapping tests",
+      "required": true
+    },
+    {
+      "id": "S08",
+      "owner": "VENDOR_1",
+      "name": "Intent grouping",
+      "stimulus": "Related terms with distinct buying/informational intent",
+      "expected": "Clusters retain intent boundaries and rationale",
+      "evidence": "curated benchmark + reviewer rubric",
+      "required": true
+    },
+    {
+      "id": "S09",
+      "owner": "VENDOR_1",
+      "name": "Product scope",
+      "stimulus": "Lever hoist, electric hoist and hand chain hoist mix",
+      "expected": "Off-pilot candidates flagged, not silently merged",
+      "evidence": "curated benchmark",
+      "required": true
+    },
+    {
+      "id": "S10",
+      "owner": "VENDOR_1",
+      "name": "Existing page collision",
+      "stimulus": "Topic already covered in existing_pages",
+      "expected": "Update/cannibalization recommendation, no duplicate forced brief",
+      "evidence": "integration fixture",
+      "required": true
+    },
+    {
+      "id": "S11",
+      "owner": "VENDOR_1",
+      "name": "Calendar not publication",
+      "stimulus": "Change proposed_publish_at",
+      "expected": "Revision updates; no publish call triggered",
+      "evidence": "side-effect log",
+      "required": true
+    },
+    {
+      "id": "S12",
+      "owner": "VENDOR_1",
+      "name": "Complete brief",
+      "stimulus": "Research with required user goals",
+      "expected": "All agreed brief fields populated; evidence needs explicit",
+      "evidence": "schema + consumer replay",
+      "required": true
+    },
+    {
+      "id": "S13",
+      "owner": "VENDOR_1",
+      "name": "Cache optimization",
+      "stimulus": "Repeat equivalent research within permitted freshness",
+      "expected": "Avoid redundant paid requests; source age still visible",
+      "evidence": "baseline/candidate benchmark",
+      "required": true
+    },
+    {
+      "id": "S14",
+      "owner": "VENDOR_1",
+      "name": "Provider rate limits",
+      "stimulus": "429 Retry-After then recovery",
+      "expected": "Bounded retry honors wait and job deadline",
+      "evidence": "fake-clock integration",
+      "required": true
+    },
+    {
+      "id": "S15",
+      "owner": "VENDOR_1",
+      "name": "Provider schema drift",
+      "stimulus": "Tool missing or unexpected response",
+      "expected": "Fail closed or visible degraded mode; never invented metrics",
+      "evidence": "capability error test",
+      "required": true
+    },
+    {
+      "id": "S16",
+      "owner": "VENDOR_1",
+      "name": "Malicious SERP text",
+      "stimulus": "SERP asks agent to upload keys or change policy",
+      "expected": "Untrusted content isolated; no secret/side effect",
+      "evidence": "security fixture",
+      "required": true
+    },
+    {
+      "id": "S17",
+      "owner": "VENDOR_1",
+      "name": "Stable revision outputs",
+      "stimulus": "Replay same snapshot/version and reordered provider items",
+      "expected": "Stable canonical brief identity where semantics identical",
+      "evidence": "deterministic replay",
+      "required": true
+    },
+    {
+      "id": "S18",
+      "owner": "VENDOR_1",
+      "name": "Actual consumer compatibility",
+      "stimulus": "Vendor 1 emitted brief supplied to Vendor 2 fixture client",
+      "expected": "No field renaming or silent defaults",
+      "evidence": "cross-package replay receipt",
+      "required": true
+    },
+    {
+      "id": "C01",
+      "owner": "VENDOR_2",
+      "name": "Brief intake",
+      "stimulus": "Valid actual Vendor 1 output",
+      "expected": "Writer consumes unchanged brief revision",
+      "evidence": "cross-package test",
+      "required": true
+    },
+    {
+      "id": "C02",
+      "owner": "VENDOR_2",
+      "name": "Missing or held evidence",
+      "stimulus": "No eligible claims, HOLD, QUARANTINE",
+      "expected": "REVIEW_REQUIRED/gaps, no invented factual block",
+      "evidence": "generation test and assertion",
+      "required": true
+    },
+    {
+      "id": "C03",
+      "owner": "VENDOR_2",
+      "name": "Citation semantics",
+      "stimulus": "Paraphrase with wrong negation/unit/model despite valid ID",
+      "expected": "Detect or block; reference-ID validity not treated as entailment",
+      "evidence": "curated evaluator + human-reviewed hold-out",
+      "required": true
+    },
+    {
+      "id": "C04",
+      "owner": "VENDOR_2",
+      "name": "Scope and jurisdiction",
+      "stimulus": "Foreign rule or different OEM model",
+      "expected": "No unsupported THBISON/VN generalization",
+      "evidence": "content-quality benchmark",
+      "required": true
+    },
+    {
+      "id": "C05",
+      "owner": "VENDOR_2",
+      "name": "Source prompt injection",
+      "stimulus": "Evidence tells model to ignore restrictions",
+      "expected": "Instruction ignored; source remains data",
+      "evidence": "model-adapter security test",
+      "required": true
+    },
+    {
+      "id": "C06",
+      "owner": "VENDOR_2",
+      "name": "Model invalid output",
+      "stimulus": "Malformed JSON/timeouts/provider unavailable",
+      "expected": "Bounded retries, schema error visible, no fake completed article",
+      "evidence": "transport+schema log",
+      "required": true
+    },
+    {
+      "id": "C07",
+      "owner": "VENDOR_2",
+      "name": "Approval invalidation",
+      "stimulus": "Edit body, SEO field, destination or evidence snapshot",
+      "expected": "Old approval cannot publish",
+      "evidence": "state machine test",
+      "required": true
+    },
+    {
+      "id": "C08",
+      "owner": "VENDOR_2",
+      "name": "Approval authorization",
+      "stimulus": "Model/caller supplies approved=true or another user ID",
+      "expected": "Server rejects; only role-authenticated approval accepted",
+      "evidence": "API authorization test",
+      "required": true
+    },
+    {
+      "id": "C09",
+      "owner": "VENDOR_2",
+      "name": "Out-of-scope safety/legal text",
+      "stimulus": "Attempt publish safety/legal draft in pilot",
+      "expected": "Publication blocked and reason visible",
+      "evidence": "policy negative tests",
+      "required": true
+    },
+    {
+      "id": "C10",
+      "owner": "VENDOR_2",
+      "name": "Revoked evidence",
+      "stimulus": "Source revoked after preview/approval",
+      "expected": "Re-check source/policy blocks publication",
+      "evidence": "time-of-use integration",
+      "required": true
+    },
+    {
+      "id": "C11",
+      "owner": "VENDOR_2",
+      "name": "Rendered preview and sources",
+      "stimulus": "Complete synthetic article",
+      "expected": "Readable preview plus functional per-block source links",
+      "evidence": "browser test + screenshots",
+      "required": true
+    },
+    {
+      "id": "C12",
+      "owner": "VENDOR_2",
+      "name": "Desktop and mobile UX",
+      "stimulus": "1440x900 and 390x844 viewport flows",
+      "expected": "No clipped editor/calendar; mock/live state visible; store untouched",
+      "evidence": "screenshots and browser assertions",
+      "required": true
+    },
+    {
+      "id": "C13",
+      "owner": "VENDOR_2",
+      "name": "XSS and unsafe rendering",
+      "stimulus": "Malicious HTML/URL in provider/user/model text",
+      "expected": "Sanitized output, no script execution or unsafe navigation",
+      "evidence": "browser security test",
+      "required": true
+    },
+    {
+      "id": "C14",
+      "owner": "VENDOR_2",
+      "name": "Timezone and duplicate tick",
+      "stimulus": "Aware date displayed Bangkok, repeated scheduler tick",
+      "expected": "One due operation; naive times rejected; no early publish",
+      "evidence": "clock-controlled scheduler tests",
+      "required": true
+    },
+    {
+      "id": "C15",
+      "owner": "VENDOR_2",
+      "name": "CMS accepted but response lost",
+      "stimulus": "Provider creates draft then network times out",
+      "expected": "UNKNOWN then reconcile; no blind new create",
+      "evidence": "fault-injection CMS mock counters",
+      "required": true
+    },
+    {
+      "id": "C16",
+      "owner": "VENDOR_2",
+      "name": "Publishing replay",
+      "stimulus": "Retry same approved version after restart",
+      "expected": "Same provider record; no duplicate post",
+      "evidence": "persistent ledger + readback",
+      "required": true
+    },
+    {
+      "id": "C17",
+      "owner": "VENDOR_2",
+      "name": "Unauthorized destination/write scope",
+      "stimulus": "Wrong site/page; protected Notion human fields",
+      "expected": "Deny write; preserve original human fields",
+      "evidence": "adapter negative tests",
+      "required": true
+    },
+    {
+      "id": "C18",
+      "owner": "VENDOR_2",
+      "name": "Social summary",
+      "stimulus": "Approved article -> Facebook Page summary",
+      "expected": "Not full copy; meaning/link retained; posting flag OFF",
+      "evidence": "content test + destination guard",
+      "required": true
+    },
+    {
+      "id": "C19",
+      "owner": "VENDOR_2",
+      "name": "Sensitive logs",
+      "stimulus": "Tokens, signed URLs and internal review notes in errors",
+      "expected": "No secret leakage in logs/browser/build artifact",
+      "evidence": "scan + structured redaction tests",
+      "required": true
+    },
+    {
+      "id": "C20",
+      "owner": "VENDOR_2",
+      "name": "Concurrent editing",
+      "stimulus": "Two writers update same article revision",
+      "expected": "Conflict visible; no silent lost update",
+      "evidence": "optimistic concurrency test",
+      "required": true
+    },
+    {
+      "id": "C21",
+      "owner": "VENDOR_2",
+      "name": "File roundtrip",
+      "stimulus": "Notion attachment expires or upload partly fails",
+      "expected": "Recover via gateway; retain outbox; verify before success",
+      "evidence": "artifact gateway integration",
+      "required": true
+    },
+    {
+      "id": "C22",
+      "owner": "VENDOR_2",
+      "name": "Rollback and compensation",
+      "stimulus": "App rollback after draft creation",
+      "expected": "No accidental unpublish/delete; data/IDs preserved",
+      "evidence": "migration/rollback test",
+      "required": true
+    },
+    {
+      "id": "P01",
+      "owner": "BOTH",
+      "name": "Admission performance",
+      "stimulus": "100 local admission requests at concurrency 5",
+      "expected": "p95 <= 1000ms without provider work in request handler",
+      "evidence": "raw timing samples + fixed environment",
+      "required": true
+    },
+    {
+      "id": "P02",
+      "owner": "BOTH",
+      "name": "Cached brief latency",
+      "stimulus": "100 warmed-up read requests",
+      "expected": "p95 <= 500ms; no paid provider call",
+      "evidence": "timings + provider counter",
+      "required": true
+    },
+    {
+      "id": "P03",
+      "owner": "BOTH",
+      "name": "Preview latency",
+      "stimulus": "10k-character fixture, cached render path",
+      "expected": "p95 <= 2000ms excluding new generation",
+      "evidence": "browser/backend timing trace",
+      "required": true
+    },
+    {
+      "id": "P04",
+      "owner": "BOTH",
+      "name": "Concurrency effects",
+      "stimulus": "20 repeats plus different jobs",
+      "expected": "Correct duplicate suppression and budget under load",
+      "evidence": "load report + ledger",
+      "required": true
+    },
+    {
+      "id": "P05",
+      "owner": "BOTH",
+      "name": "Measured optimization",
+      "stimulus": "Compare initial working baseline vs final on same inputs",
+      "expected": "Declared metric improves >=15% or mark NOT_MET; correctness unchanged",
+      "evidence": "before/after samples, percent calculation",
+      "required": true
+    },
+    {
+      "id": "P06",
+      "owner": "BOTH",
+      "name": "Resource and disk failure",
+      "stimulus": "Disk/outbox quota, OOM or provider outage",
+      "expected": "Truthful terminal/recoverable state; no success before save",
+      "evidence": "fault injection + resource measurements",
+      "required": true
+    },
+    {
+      "id": "P07",
+      "owner": "BOTH",
+      "name": "Build host portability",
+      "stimulus": "Fresh Linux and supported dev host checkouts",
+      "expected": "Hash/newline/path behavior consistent; no global Git setting hack",
+      "evidence": "CI and file checksum report",
+      "required": true
+    },
+    {
+      "id": "P08",
+      "owner": "BOTH",
+      "name": "Three-boundary rehearsal",
+      "stimulus": "Actual vendor services with synthetic Knowledge and CMS",
+      "expected": "Research->brief->evidence->preview->mock publication with trace IDs",
+      "evidence": "end-to-end test using actual delivered images",
+      "required": true
+    }
+  ]
+}

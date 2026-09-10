@@ -1,0 +1,20 @@
+{
+  "status": "CHANGES_REQUIRED",
+  "acceptance_claimed": false,
+  "module": "VENDOR_4",
+  "contract_version": "1.0.0",
+  "contract_sha256": "fd3c1b6f1ec5461e7080c538e1c332d7af3098db32edd1565e1ae16933f951a8",
+  "source_revision_sha256": "bf04692f36c0c0951abee9d9c5b6b6e9e529a0bbaf2cb31332a987e6c959eb46",
+  "artifact_sha256": "529ef68ebe17424ed66cce1f378a1519b3709b789e91e6f2cd7fe17852065fd4",
+  "artifact_subject": "source.zip",
+  "test_summary": {
+    "pass": 55,
+    "fail": 0,
+    "skipped": 0
+  },
+  "issued_at": "2026-09-10T07:33:42Z",
+  "data_class": "TEST_ONLY",
+  "handoff": "HANDOFF_READY_OFFLINE",
+  "code_changed": false,
+  "closeout_issued_at": "2026-09-10T07:48:42Z"
+}

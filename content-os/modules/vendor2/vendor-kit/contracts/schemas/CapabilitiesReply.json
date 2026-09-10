@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version",
+    "service",
+    "code_commit",
+    "contract_sha256",
+    "mode",
+    "enabled_operations",
+    "max_json_bytes"
+  ],
+  "properties": {
+    "contract_version": {
+      "const": "1.0.0"
+    },
+    "service": {
+      "enum": [
+        "seo-planning",
+        "content-workflow"
+      ]
+    },
+    "code_commit": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{40}$"
+    },
+    "contract_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "mode": {
+      "enum": [
+        "MOCK",
+        "STAGING",
+        "LIVE"
+      ]
+    },
+    "enabled_operations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "max_json_bytes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2097152
+    }
+  }
+}

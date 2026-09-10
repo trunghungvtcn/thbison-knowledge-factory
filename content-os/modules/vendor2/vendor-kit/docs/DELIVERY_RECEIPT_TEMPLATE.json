@@ -1,0 +1,27 @@
+{
+  "status": "NOT_STARTED",
+  "module": "VENDOR_1_OR_VENDOR_2",
+  "source_commit": null,
+  "source_tree_sha256": null,
+  "artifact_digest": null,
+  "contract_sha256": null,
+  "test_fixture_sha256": null,
+  "upstream_versions": {},
+  "environment": {},
+  "test_evidence": [],
+  "scenario_results": [],
+  "benchmark": {
+    "status": "NOT_RUN",
+    "baseline": null,
+    "candidate": null,
+    "metric": null,
+    "raw_samples": null
+  },
+  "real_provider_probe": {
+    "status": "NOT_RUN_EXTERNAL",
+    "receipt": null
+  },
+  "public_posts_created": 0,
+  "paid_calls": 0,
+  "known_blockers": []
+}

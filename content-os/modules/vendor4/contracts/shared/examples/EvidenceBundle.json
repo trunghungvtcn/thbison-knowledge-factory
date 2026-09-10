@@ -1,0 +1,30 @@
+{
+  "contract_version": "1.0.0",
+  "project_id": "test-thbison",
+  "data_class": "TEST_ONLY",
+  "bundle_id": "test-bundle-1",
+  "snapshot_sha256": "e5fb39220eefc4e5accbc009878790ea72d0ef2915bd820877701054f630a8bf",
+  "policy_version": "test-policy-1",
+  "as_of": "2030-01-01T00:00:00Z",
+  "claims": [
+    {
+      "claim_id": "test-claim-1",
+      "text": "TEST ONLY. Example Model X has a blue housing. This is synthetic, not a real product claim.",
+      "status": "ELIGIBLE",
+      "risk": "DESCRIPTIVE",
+      "allowed_uses": [
+        "DRAFT",
+        "PUBLISH"
+      ],
+      "source_ref": "synthetic-source",
+      "source_version": "test-1",
+      "source_sha256": "50e9cbbb305b7b323321b772250c8b9f31a0e2cbe98282bbcd6beebd433c578f",
+      "locator": "text:1",
+      "quote": "TEST ONLY. Example Model X has a blue housing. This is synthetic, not a real product claim.",
+      "quote_sha256": "50e9cbbb305b7b323321b772250c8b9f31a0e2cbe98282bbcd6beebd433c578f",
+      "applicability": "Synthetic Example Model X only",
+      "jurisdiction": "TEST_ONLY"
+    }
+  ],
+  "gaps": []
+}

@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "1.0.0"
+    },
+    "project_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "data_class": {
+      "type": "string",
+      "enum": [
+        "TEST_ONLY",
+        "STAGING",
+        "PRODUCTION"
+      ]
+    },
+    "research_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "request_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "country_code": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        },
+        "language": {
+          "type": "string",
+          "pattern": "^[a-z]{2}(-[A-Z]{2})?$"
+        },
+        "timezone": {
+          "const": "Asia/Bangkok"
+        },
+        "domain": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+        }
+      },
+      "required": [
+        "country_code",
+        "language",
+        "timezone",
+        "domain"
+      ]
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "keyword": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "volume": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "difficulty": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 100
+          },
+          "measurement_status": {
+            "type": "string",
+            "enum": [
+              "MEASURED",
+              "MISSING",
+              "STALE",
+              "SYNTHETIC"
+            ]
+          },
+          "provider": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "captured_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "source_ref": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+          }
+        },
+        "required": [
+          "keyword",
+          "volume",
+          "difficulty",
+          "measurement_status",
+          "provider",
+          "captured_at",
+          "source_ref"
+        ]
+      },
+      "minItems": 1
+    },
+    "provider_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "artifact_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "media_type": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 12000
+        }
+      },
+      "required": [
+        "artifact_id",
+        "sha256",
+        "bytes",
+        "media_type"
+      ]
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 12000
+      },
+      "minItems": 0
+    }
+  },
+  "required": [
+    "contract_version",
+    "project_id",
+    "data_class",
+    "research_id",
+    "request_id",
+    "scope",
+    "keywords",
+    "provider_snapshot",
+    "warnings"
+  ]
+}

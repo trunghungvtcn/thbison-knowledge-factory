@@ -1,0 +1,12 @@
+{
+  "contract_version": "1.0.0",
+  "project_id": "test-thbison",
+  "data_class": "TEST_ONLY",
+  "job_id": "test-job-1",
+  "request_id": "test-request-1",
+  "status": "QUEUED",
+  "code_commit": "cccccccccccccccccccccccccccccccccccccccc",
+  "contract_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "result_artifact": null,
+  "error_code": null
+}

@@ -1,0 +1,19 @@
+{
+  "CONTENT_OS_MODE": "MOCK",
+  "CONTENT_OS_CONTRACT_VERSION": "1.0.0",
+  "CONTENT_OS_TIMEZONE": "Asia/Bangkok",
+  "CONTENT_OS_RATE_LIMIT": "200",
+  "PORT": "8080",
+  "DATABASE_URL": "",
+  "comment": "Leave DATABASE_URL empty for embedded PGLite (simulation). Set only when the THBISON team supplies a dedicated scoped database. Do not point this contractor build at production THBISON resources.",
+  "demo_tokens_test_only": {
+    "editor": "svc_editor_test_thbison_ok12",
+    "reader": "svc_reader_test_thbison_ok12",
+    "other": "svc_editor_other_project_ok12"
+  },
+  "flags": {
+    "allow_live": false,
+    "allow_staging": false,
+    "allow_social": false
+  }
+}

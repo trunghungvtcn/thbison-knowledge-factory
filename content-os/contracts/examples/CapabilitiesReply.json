@@ -1,0 +1,12 @@
+{
+  "contract_version": "1.0.0",
+  "service": "seo-planning",
+  "code_commit": "cccccccccccccccccccccccccccccccccccccccc",
+  "contract_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "mode": "MOCK",
+  "enabled_operations": [
+    "planning.create",
+    "brief.read"
+  ],
+  "max_json_bytes": 2097152
+}

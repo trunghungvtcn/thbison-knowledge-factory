@@ -10,6 +10,7 @@ then exempts only J2 overlay paths. Any other mismatch still fails.
 from __future__ import annotations
 
 import json
+import hashlib
 import re
 import subprocess
 import sys
@@ -22,6 +23,7 @@ FORBIDDEN = re.compile(
     r"|^v166/corpus(/|$)"
 )
 J2_OVERLAY = re.compile(r"^(scripts/jobs/j2_|docs/jobs/J2)")
+INTEGRATION_MANIFEST = "manifests/integration_overlay.json"
 
 
 def main() -> int:
@@ -39,7 +41,38 @@ def main() -> int:
     }
     exempt = {"manifests/migration_assets.json"}
     overlay = {path for path in tracked if J2_OVERLAY.search(path)}
-    missing = sorted((tracked - exempt - overlay) - manifest_paths)
+    integration = json.loads((ROOT / INTEGRATION_MANIFEST).read_text(encoding="utf-8"))
+    exempt.add(INTEGRATION_MANIFEST)
+    integration_paths = {entry["path"] for entry in integration["entries"]}
+    changed = set(subprocess.run(
+        ["git", "diff", "--name-only", integration["base_core_sha"], "--"],
+        cwd=ROOT, check=True, capture_output=True, text=True,
+    ).stdout.splitlines())
+    expected_integration = (changed - exempt - overlay) | ((tracked - exempt - overlay) - manifest_paths)
+    if integration_paths != expected_integration:
+        raise SystemExit(
+            "integration overlay mismatch: "
+            f"missing={sorted(expected_integration - integration_paths)}, "
+            f"extra={sorted(integration_paths - expected_integration)}"
+        )
+    stage_lines = subprocess.run(
+        ["git", "ls-files", "--stage"], cwd=ROOT, check=True, capture_output=True, text=True,
+    ).stdout.splitlines()
+    stage = {line.split(None, 3)[3]: (line.split(None, 3)[0], line.split(None, 3)[1]) for line in stage_lines}
+    for entry in integration["entries"]:
+        path = entry["path"]
+        mode, git_oid = stage[path]
+        if mode == "160000":
+            if entry != {"path": path, "kind": "gitlink", "git_sha": git_oid}:
+                raise SystemExit(f"integration gitlink mismatch: {path}")
+        else:
+            blob = subprocess.run(
+                ["git", "show", f":{path}"], cwd=ROOT, check=True, capture_output=True,
+            ).stdout
+            digest = hashlib.sha256(blob).hexdigest()
+            if entry != {"path": path, "kind": "file", "sha256": digest, "bytes": len(blob)}:
+                raise SystemExit(f"integration file mismatch: {path}")
+    missing = sorted((tracked - exempt - overlay - integration_paths) - manifest_paths)
     extra = sorted(manifest_paths - tracked)
     if missing or extra:
         raise SystemExit(f"manifest mismatch: missing={missing}, extra={extra}")
@@ -54,6 +87,7 @@ def main() -> int:
             "tracked": len(tracked),
             "manifested": len(manifest_paths),
             "j2_overlay": sorted(overlay),
+            "integration_overlay": len(integration_paths),
             "status": "PASS",
         },
         sort_keys=True,

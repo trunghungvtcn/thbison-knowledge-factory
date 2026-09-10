@@ -1,0 +1,32 @@
+{
+  "status": "HANDOFF_WITH_BLOCKERS",
+  "module": "VENDOR_6",
+  "round": "FINAL",
+  "contract_version": "1.0.0",
+  "contract_sha256": "fd3c1b6f1ec5461e7080c538e1c332d7af3098db32edd1565e1ae16933f951a8",
+  "acceptance_claimed": false,
+  "code_changed": false,
+  "source_revision_sha256": "9022947278ceb2600ee5a7c4743b11a160076e227581b8b3e4b3f914e7b0cb8a",
+  "artifact_sha256": "a8c5267044ee3aacce1f9729349c8ac789ccc93ed43cbe7a72f90e78735188a6",
+  "test_summary": {
+    "junit_tests": 73,
+    "pass": 71,
+    "skip": 2,
+    "fail": 0,
+    "rerun_this_round": false,
+    "skipped_cases": [
+      "INT-26",
+      "INT-27"
+    ],
+    "vendor_python": "3.10.21",
+    "reviewer_python": "3.12.14"
+  },
+  "environment": {
+    "mode": "MOCK",
+    "live_access": false,
+    "g1_clean_venv": "BLOCKED_ENVIRONMENT",
+    "actual_component_verified": false,
+    "paid_calls": 0,
+    "public_effects": 0
+  }
+}

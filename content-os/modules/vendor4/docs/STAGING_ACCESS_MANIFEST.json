@@ -1,0 +1,19 @@
+{
+  "manifest_version": "1.0.0",
+  "issued_at": "2026-09-10",
+  "notion_staging_hub": "https://app.notion.com/p/3d7fbe3f22e6815e93cdd2232a4b2419?pvs=204",
+  "access_model": {
+    "source_databases": "READ_ONLY",
+    "staging_databases": "READ_WRITE_WITH_TEST_RUN_ID",
+    "production_writes": "DENIED",
+    "public_or_paid_effects": "DENIED"
+  },
+  "databases": [
+    {"name":"Evidence Sources","page_url":"https://app.notion.com/p/3d7fbe3f22e6819c99e5c07f89cbc940?pvs=204","data_source_id":"c80fbe3f-22e6-8329-9dd6-875fb67a3755","expected_rows":9},
+    {"name":"Product Attributes","page_url":"https://app.notion.com/p/3d7fbe3f22e681f3be5eca62ad89b94c?pvs=204","data_source_id":"e51fbe3f-22e6-82e8-8831-07a909bdba1a","expected_rows":24},
+    {"name":"Knowledge Items","page_url":"https://app.notion.com/p/3d7fbe3f22e6816f8790e9e26749c71e?pvs=204","data_source_id":"367fbe3f-22e6-82cf-9f1f-0762f4850df9","expected_rows":114},
+    {"name":"Canonical Knowledge","page_url":"https://app.notion.com/p/3d7fbe3f22e681a18ed8fae2a11249f8?pvs=204","data_source_id":"d22fbe3f-22e6-82fa-944c-076af76d5960","expected_rows":68}
+  ],
+  "credential_delivery": "OUT_OF_BAND_SHORT_LIVED_NO_TOKEN_IN_PACKAGE",
+  "mandatory_controls": ["pin_source_and_schema_revision","backup_or_test_namespace","test_run_id","mutation_receipt","bug_or_mismatch_report","cleanup_or_rollback","zero_production_write_verification"]
+}

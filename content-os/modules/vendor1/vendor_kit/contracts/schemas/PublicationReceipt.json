@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "1.0.0"
+    },
+    "project_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "data_class": {
+      "type": "string",
+      "enum": [
+        "TEST_ONLY",
+        "STAGING",
+        "PRODUCTION"
+      ]
+    },
+    "publication_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "request_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "article_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "article_revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "destination_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "content_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "DRY_RUN",
+        "SCHEDULED",
+        "PUBLISHING",
+        "PUBLISHED",
+        "UNKNOWN",
+        "FAILED",
+        "CANCELLED"
+      ]
+    },
+    "provider_record_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "provider_url": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uri"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "actual_side_effects": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "contract_version",
+    "project_id",
+    "data_class",
+    "publication_id",
+    "request_id",
+    "article_id",
+    "article_revision",
+    "destination_id",
+    "content_sha256",
+    "status",
+    "provider_record_id",
+    "provider_url",
+    "created_at",
+    "actual_side_effects"
+  ]
+}

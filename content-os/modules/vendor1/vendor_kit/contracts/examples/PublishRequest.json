@@ -1,0 +1,14 @@
+{
+  "contract_version": "1.0.0",
+  "project_id": "test-thbison",
+  "data_class": "TEST_ONLY",
+  "request_id": "test-publish-1",
+  "article_id": "test-article-1",
+  "article_revision": 1,
+  "content_sha256": "6be925fada31f467e81cc238266833827c300d6a0f2c5c89fbdc8a044515975d",
+  "evidence_snapshot_sha256": "e5fb39220eefc4e5accbc009878790ea72d0ef2915bd820877701054f630a8bf",
+  "approval_id": "test-approval-1",
+  "destination_id": "test-cms",
+  "mode": "DRY_RUN",
+  "scheduled_at": null
+}

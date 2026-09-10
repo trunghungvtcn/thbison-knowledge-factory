@@ -1,0 +1,60 @@
+name: integration-candidate
+
+on:
+  push:
+    branches: [integration/thbison-01]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: recursive
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@cdca7365b2dadb8e87b04c68a2f6765854364264 # v4.4.0
+        with:
+          node-version: "22.23.2"
+          cache: npm
+          cache-dependency-path: |
+            content-os/modules/vendor1/package-lock.json
+            content-os/modules/vendor2/package-lock.json
+      - name: Install Python verification dependencies
+        run: python -m pip install pytest==9.1.1 jsonschema==4.26.0
+      - name: Verify source and run Knowledge/contractor suites
+        run: python scripts/verify_candidate.py --full
+      - name: Clean install, typecheck, test and build V1
+        working-directory: content-os/modules/vendor1
+        env:
+          DATABASE_URL: ""
+        run: npm ci --ignore-scripts && npm run typecheck && npm test && npm run build
+      - name: Clean install, typecheck, test and build V2
+        working-directory: content-os/modules/vendor2
+        env:
+          DATABASE_URL: ""
+        run: npm ci --ignore-scripts && npm run typecheck && npm test && npm run build
+      - name: Run V5 and V6 source suites
+        run: |
+          CMS_LEDGER_PATH="$RUNNER_TEMP/v5.sqlite" python -m pytest -q content-os/modules/vendor5/tests --junitxml=v5.xml
+          python -m pytest -q content-os/modules/vendor6/tests --junitxml=v6.xml
+      - name: Actual-process synthetic E2E
+        run: python content-os/modules/vendor6/scripts/run_actual_integration.py
+      - name: Upload current evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: integration-evidence-${{ github.sha }}
+          path: |
+            content-os/evidence-current
+            v5.xml
+            v6.xml
+          if-no-files-found: warn
+          retention-days: 14

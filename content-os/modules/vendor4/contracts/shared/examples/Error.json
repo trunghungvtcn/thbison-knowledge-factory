@@ -1,0 +1,7 @@
+{
+  "contract_version": "1.0.0",
+  "request_id": "test-error-1",
+  "code": "MISSING_EVIDENCE",
+  "message": "No allowed claims.",
+  "retryable": false
+}

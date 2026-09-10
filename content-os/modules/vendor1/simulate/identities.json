@@ -1,0 +1,18 @@
+{
+  "data_class": "TEST_ONLY",
+  "note": "Fixture service principals. Not THBISON IAM. Safe to ship.",
+  "tokens": {
+    "thbison-test-token-aaaaaaaa": {
+      "project_id": "test-thbison",
+      "roles": ["planning"]
+    },
+    "thbison-test-token-bbbbbbbb": {
+      "project_id": "other-project",
+      "roles": ["planning"]
+    },
+    "thbison-test-token-expiredxx": {
+      "project_id": "test-thbison",
+      "roles": ["expired"]
+    }
+  }
+}

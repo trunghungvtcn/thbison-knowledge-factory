@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "1.0.0"
+    },
+    "project_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "data_class": {
+      "type": "string",
+      "enum": [
+        "TEST_ONLY",
+        "STAGING",
+        "PRODUCTION"
+      ]
+    },
+    "bundle_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "snapshot_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "policy_version": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "as_of": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "claim_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ELIGIBLE",
+              "HOLD",
+              "QUARANTINE"
+            ]
+          },
+          "risk": {
+            "type": "string",
+            "enum": [
+              "DESCRIPTIVE",
+              "PRODUCT_SPEC",
+              "SAFETY",
+              "LEGAL"
+            ]
+          },
+          "allowed_uses": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "DRAFT",
+                "PUBLISH"
+              ]
+            },
+            "minItems": 0
+          },
+          "source_ref": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+          },
+          "source_version": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "source_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "locator": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "quote": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "quote_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "applicability": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          },
+          "jurisdiction": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 12000
+          }
+        },
+        "required": [
+          "claim_id",
+          "text",
+          "status",
+          "risk",
+          "allowed_uses",
+          "source_ref",
+          "source_version",
+          "source_sha256",
+          "locator",
+          "quote",
+          "quote_sha256",
+          "applicability",
+          "jurisdiction"
+        ]
+      },
+      "minItems": 0
+    },
+    "gaps": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 12000
+      },
+      "minItems": 0
+    }
+  },
+  "required": [
+    "contract_version",
+    "project_id",
+    "data_class",
+    "bundle_id",
+    "snapshot_sha256",
+    "policy_version",
+    "as_of",
+    "claims",
+    "gaps"
+  ]
+}

@@ -1,0 +1,11 @@
+services:
+  knowledge-gateway:
+    build: .
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env.example
+    environment:
+      APP_MODE: MOCK
+      ALLOW_PRODUCTION: "false"
+      TEST_RUN_ID: local-compose

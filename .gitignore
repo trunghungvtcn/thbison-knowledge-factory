@@ -37,3 +37,10 @@ config/manual_decisions.csv
 .venv312/
 /j2-junit.xml
 /j2-summary.json
+/integration-test-results/
+/content-os/evidence-current/
+/content-os/.lab-data/
+/content-os/.lab-control/
+/content-os/**/node_modules/
+/content-os/**/.vercel/
+/content-os/**/.nitro/

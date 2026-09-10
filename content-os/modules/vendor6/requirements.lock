@@ -1,0 +1,7 @@
+# Top-level + resolved in this lab image. Not a host pip freeze.
+jsonschema==4.23.0
+pytest==8.3.3
+referencing==0.37.0
+jsonschema-specifications==2025.9.1
+rpds-py==0.30.0
+attrs==26.1.0

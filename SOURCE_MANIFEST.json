@@ -1,0 +1,28 @@
+{
+  "job_id": "THBISON-INTEGRATION-01",
+  "candidate_status": "HANDOFF_WITH_BLOCKERS",
+  "components": {
+    "knowledge_core": "3f1f125f3ccb6b5fbf173c2aa0e10b5d3b30584b",
+    "knowledge_j1": "6fae4c406d7f9a6c00515b19b36db0dcfa16e6a2",
+    "knowledge_j2": "8b197d67f70f6db614a8aefdda7b84f0d4009827",
+    "knowledge_bridge": "601822789da365bd527f0eb0d8b427e713edbc99",
+    "contractor_m1_m5": "afac091e60bb6c8a0f0630964e43f5e80951267c"
+  },
+  "content_os_import": {
+    "source_archive_sha256": "28aab4fd8f2db00509e769154d5a0d5b45112901c9669330ab773104f813a8ba",
+    "namespace": "content-os/",
+    "excluded_generated_or_private_classes": [
+      "evidence/logs",
+      "node_modules",
+      "wheelhouse",
+      "nested archives",
+      "backup and bytecode files"
+    ]
+  },
+  "merge_order": ["core_to_j1", "core_to_j2", "core_to_bridge", "content_os_import", "integration_overlay"],
+  "overlay_manifest": "manifests/integration_overlay.json",
+  "contractor_path": "dependencies/pipeline-lab-contractor-m1-m5",
+  "data_class": "TEST_ONLY",
+  "live_data_pass": false,
+  "production_authorized": false
+}

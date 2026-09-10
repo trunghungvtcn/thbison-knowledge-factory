@@ -1,0 +1,9 @@
+{
+  "contract_version": "1.0.0",
+  "job_states": ["QUEUED", "LEASED", "RUNNING", "SUCCEEDED", "FAILED", "CANCELLED", "BLOCKED_INPUT"],
+  "terminal_states": ["SUCCEEDED", "FAILED", "CANCELLED", "BLOCKED_INPUT"],
+  "required_identity_bindings": ["project_id", "service_id", "roles"],
+  "required_idempotency_bindings": ["project_id", "operation", "idempotency_key", "canonical_request_sha256"],
+  "live_access_allowed": false,
+  "additional_properties_allowed": false
+}

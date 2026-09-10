@@ -1,0 +1,9 @@
+{
+  "job_id": "THBISON-INDEPENDENT-AUDIT-01",
+  "master_release_url": null,
+  "candidate_sha": null,
+  "audit_issue_url": null,
+  "notion_status": "NOTION_TARGET_MISSING",
+  "deploy_target": "UNDECIDED_A_OR_B",
+  "production_authorized": false
+}

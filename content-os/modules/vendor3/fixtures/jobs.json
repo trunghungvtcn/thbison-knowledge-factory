@@ -1,0 +1,4 @@
+[
+  {"project_id":"test-alpha","operation":"plan","idempotency_key":"idem-plan-0001","budget":{"max_requests":4,"max_cost_units":20},"data_class":"TEST_ONLY"},
+  {"project_id":"test-alpha","operation":"draft","idempotency_key":"idem-draft-0001","budget":{"max_requests":3,"max_cost_units":15},"data_class":"TEST_ONLY"}
+]

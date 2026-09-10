@@ -1,0 +1,16 @@
+services:
+  cms-adapter:
+    build: .
+    read_only: true
+    user: "10001:10001"
+    environment:
+      APP_MODE: MOCK
+      STAGING_ENABLED: "false"
+      STAGING_WRITE_ENABLED: "false"
+      ALLOW_PRODUCTION: "false"
+      ALLOW_PUBLIC_EFFECTS: "false"
+      CMS_LEDGER_PATH: /tmp/ledger.sqlite
+    tmpfs:
+      - /tmp
+    ports:
+      - "127.0.0.1:8080:8080"

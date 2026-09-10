@@ -1,0 +1,73 @@
+{
+  "generated_for": "VENDOR_6",
+  "contract_version": "1.0.0",
+  "contract_sha256": "fd3c1b6f1ec5461e7080c538e1c332d7af3098db32edd1565e1ae16933f951a8",
+  "components": [
+    {
+      "vendor": "VENDOR_1",
+      "role": "Planning/SEO",
+      "status": "MISSING",
+      "acceptance": "NOT_PROVIDED",
+      "artifact_sha256": null,
+      "start_command": null,
+      "endpoint": null,
+      "health_auth": null,
+      "label": "MISSING"
+    },
+    {
+      "vendor": "VENDOR_2",
+      "role": "Content OS / Writer / Approval UI",
+      "status": "CANDIDATE_UNACCEPTED",
+      "acceptance": "UNACCEPTED_CANDIDATE",
+      "artifact_sha256": "2feea5b65c89a90af37cb59c1ae00d46b2e651ef1d634a385ad33d78a8ce9013",
+      "input_path": "input/VENDOR2-CANDIDATE.zip",
+      "start_command": null,
+      "endpoint": null,
+      "health_auth": "UNKNOWN",
+      "label": "STUB_IN_HARNESS",
+      "note": "Candidate zip present; no pinned start command or lab endpoint. Harness uses simulator, not production baseline."
+    },
+    {
+      "vendor": "VENDOR_3",
+      "role": "Runtime / Orchestrator",
+      "status": "CANDIDATE_UNACCEPTED",
+      "acceptance": "UNACCEPTED_CANDIDATE",
+      "artifact_sha256": "031ab5482528f1fd58b1a9fecaf928ce012120365d0f54aea3fda60482087ee9",
+      "input_path": "input/VENDOR3-CANDIDATE.zip",
+      "start_command": null,
+      "endpoint": null,
+      "health_auth": "UNKNOWN",
+      "label": "STUB_IN_HARNESS"
+    },
+    {
+      "vendor": "VENDOR_4",
+      "role": "Knowledge + Asset Gateway",
+      "status": "CANDIDATE_UNACCEPTED",
+      "acceptance": "UNACCEPTED_CANDIDATE",
+      "artifact_sha256": "21231e3e45015d91ee202c11f4c32b657a708079fe165521e57c83710f5cf2d0",
+      "input_path": "input/VENDOR4-CANDIDATE.zip",
+      "start_command": null,
+      "endpoint": null,
+      "health_auth": "UNKNOWN",
+      "label": "STUB_IN_HARNESS"
+    },
+    {
+      "vendor": "VENDOR_5",
+      "role": "CMS Adapter",
+      "status": "MISSING",
+      "acceptance": "NOT_PROVIDED",
+      "artifact_sha256": null,
+      "start_command": null,
+      "endpoint": null,
+      "health_auth": null,
+      "label": "MISSING"
+    }
+  ],
+  "missing_inputs": [
+    "Vendor1 implementation",
+    "Vendor5 implementation",
+    "CMS staging base URL and token",
+    "Notion staging token (out of band)",
+    "Pinned start commands / health endpoints for V2/V3/V4 candidates"
+  ]
+}

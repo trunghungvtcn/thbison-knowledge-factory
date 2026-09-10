@@ -1,0 +1,22 @@
+services:
+  runtime:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      APP_MODE: MOCK
+      ALLOW_PRODUCTION: "false"
+      ALLOW_PUBLIC_EFFECTS: "false"
+      DATABASE_URL: /data/runtime.db
+    volumes:
+      - runtime-data:/data
+    networks:
+      isolated:
+        internal: true
+
+volumes:
+  runtime-data:
+
+networks:
+  isolated:
+    internal: true

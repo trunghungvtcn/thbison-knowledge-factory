@@ -1,0 +1,27 @@
+{
+  "project_id": "test-thbison",
+  "data_class": "TEST_ONLY",
+  "knowledge_revision": "fixture-r1",
+  "policy_version": "knowledge-policy-r1",
+  "as_of": "2030-01-01T00:00:00Z",
+  "claims": [
+    {
+      "claim_id": "claim-chain-hoist-overview",
+      "text": "Pa lăng xích kéo tay là thiết bị nâng vận hành bằng lực kéo tay qua chuỗi truyền động.",
+      "quote": "Pa lăng xích kéo tay là thiết bị nâng vận hành bằng lực kéo tay qua chuỗi truyền động.",
+      "quote_sha256": "5be331bcd5f2e3550694a9b73204e8a5114477ad37c6f5feb113d91360cb2117",
+      "status": "ELIGIBLE",
+      "risk": "DESCRIPTIVE",
+      "provenance_verified": true,
+      "source": {
+        "id": "synthetic-kf-fixture",
+        "revision": "1",
+        "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "locator": "fixture://knowledge-output/claim-chain-hoist-overview"
+      },
+      "applicability": "Synthetic integration fixture only",
+      "jurisdiction": "TEST_ONLY"
+    }
+  ],
+  "gaps": []
+}

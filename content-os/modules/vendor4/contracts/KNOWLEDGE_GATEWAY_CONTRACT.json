@@ -1,0 +1,10 @@
+{
+  "contract_version": "1.0.0",
+  "data_classes": ["TEST_ONLY", "SYNTHETIC"],
+  "query_bindings": ["project_id", "product_id", "model", "jurisdiction", "locale", "revision"],
+  "required_provenance": ["claim_id", "claim_version", "quote", "quote_sha256", "locator", "source_sha256", "jurisdiction", "conditions"],
+  "forbidden_usable_statuses": ["HOLD", "REVOKED", "REVIEW_REQUIRED"],
+  "human_managed_write_fields": ["Status", "Decision", "Reviewer Note"],
+  "live_access_allowed": false,
+  "additional_properties_allowed": false
+}
