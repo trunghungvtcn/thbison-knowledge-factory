@@ -37,12 +37,22 @@ J2 is **published**, not UNPUBLISHED. Read from issue #4 on 2026-09-10.
 
 Each ZIP is a **prompt kit that needs GitHub**. It is not an executable remediation and is not offline-complete.
 
-- `packages/J1-final-fix.zip` (rebuild from `packages/J1-final-fix/` with `zip -X`)
-- `packages/J2-final-fix.zip`
-- `packages/J3-final-fix.zip`
-- `packages/SHA256SUMS.txt`
+Download from this GitHub Release and verify:
+
+```text
+sha256sum -c SHA256SUMS.txt
+```
+
+```text
+fd611f749e9102feb76ea8e06eb0d617d18fae6713d60e82f027e5bc1bb18d21  J1-final-fix.zip
+c3dd40e82ca7d37c6a356e0bfb613d8cae73ae11469a39e1ba875a5a6c0e6705  J2-final-fix.zip
+c0fea0246dadcbd458b4fed75635a466d7ac8421a5980df31aafeeb2e7af7364  J3-final-fix.zip
+```
+
+Unpacked sources: `handoff/final-review/packages/J*-final-fix/`. Binary ZIPs are gitignored.
 
 Tree on this branch: `handoff/final-review/`
+Tag: `handoff-j1-j3-final-20260910`
 
 ## Coordination
 

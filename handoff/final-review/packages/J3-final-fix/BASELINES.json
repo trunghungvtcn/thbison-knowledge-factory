@@ -1,0 +1,23 @@
+{
+  "kind": "github-guidance-pack",
+  "acceptance_claimed": false,
+  "offline_complete": false,
+  "core": "3f1f125f3ccb6b5fbf173c2aa0e10b5d3b30584b",
+  "j1_reviewed": "b9e291fb84ddf99a6e6dd662ae122f39326f4d41",
+  "j1_pr": 7,
+  "j2_published_head": "5e6161914f519403059ce13a1568d58ac7162f28",
+  "j2_pr": 8,
+  "j2_status": "PUBLISHED",
+  "j3_reviewed": "9a7d09375bf242f3cf89b9e2d556192a12e8b830",
+  "j3_pr": 6,
+  "contractor": "afac091e60bb6c8a0f0630964e43f5e80951267c",
+  "contractor_repo": "trunghungvtcn/pipeline-lab-contractor-m1-m5",
+  "issues": {"j1": 3, "j2": 4, "j3": 2, "j3_pointer": 5},
+  "source_links": {
+    "core": "https://github.com/trunghungvtcn/thbison-knowledge-factory/commit/3f1f125f3ccb6b5fbf173c2aa0e10b5d3b30584b",
+    "j1": "https://github.com/trunghungvtcn/thbison-knowledge-factory/commit/b9e291fb84ddf99a6e6dd662ae122f39326f4d41",
+    "j2": "https://github.com/trunghungvtcn/thbison-knowledge-factory/commit/5e6161914f519403059ce13a1568d58ac7162f28",
+    "j3": "https://github.com/trunghungvtcn/thbison-knowledge-factory/commit/9a7d09375bf242f3cf89b9e2d556192a12e8b830",
+    "contractor": "https://github.com/trunghungvtcn/pipeline-lab-contractor-m1-m5/commit/afac091e60bb6c8a0f0630964e43f5e80951267c"
+  }
+}

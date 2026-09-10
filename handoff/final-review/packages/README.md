@@ -1,19 +1,19 @@
 # Packages
 
-Binary ZIPs were built with `zip -X` (no extra metadata) from the sibling unpacked directories.
+Each job ZIP is a GitHub-required guidance pack (not offline-complete).
 
-SHA256SUMS.txt:
+Contents (same order used when packing):
 
-```
-f0cd14db1689490cc1934236bf32d98e4481a609a387a8a39993ce4c85cdf63d  J1-final-fix.zip
-1a9a2993f89a3093b6efd3bff5e6bbe5850e96aa2d1cad8c8a5662b05c40222a  J2-final-fix.zip
-fe1247d72d753791826df47c19430dc6400dd9b54561ac3eefc26d7e2977c3ad  J3-final-fix.zip
-```
+`COMMON_RULES.md` `BASELINES.json` `PROMPT.md` `ACCEPTANCE.md` `SOURCE.txt`
 
-Rebuild (must use `zip -X` and the same file set):
+SHA256SUMS.txt (bytes of the three ZIPs attached to the prerelease):
 
 ```
-cd J1-final-fix && zip -X ../J1-final-fix.zip COMMON_RULES.md BASELINES.json PROMPT.md ACCEPTANCE.md SOURCE.txt
+fd611f749e9102feb76ea8e06eb0d617d18fae6713d60e82f027e5bc1bb18d21  J1-final-fix.zip
+c3dd40e82ca7d37c6a356e0bfb613d8cae73ae11469a39e1ba875a5a6c0e6705  J2-final-fix.zip
+c0fea0246dadcbd458b4fed75635a466d7ac8421a5980df31aafeeb2e7af7364  J3-final-fix.zip
 ```
 
-GitHub-resident form is this unpacked tree plus SHA256SUMS. Binary zips cannot be pushed through the text file API used in this session. Tag requested: `handoff-j1-j3-final-20260910`. Do not claim offline-complete.
+Built with Python `zipfile.ZIP_DEFLATED` (Info-ZIP `zip` not available in the publisher sandbox). Unpacked sources live in `packages/J*-final-fix/`. Binary ZIPs are gitignored and published only as GitHub Release assets.
+
+Tag: `handoff-j1-j3-final-20260910`.
