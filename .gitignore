@@ -35,3 +35,5 @@ config/manual_decisions.csv
 *.log
 .test-tmp/
 .venv312/
+/j2-junit.xml
+/j2-summary.json

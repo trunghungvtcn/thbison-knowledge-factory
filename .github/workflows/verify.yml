@@ -31,7 +31,17 @@ jobs:
       - name: Run source-only offline tests
         env:
           PYTHONPATH: src
-        run: python -m pytest -q
+        run: python scripts/jobs/j2_source_only_pytest.py --junitxml=j2-junit.xml --summary-json=j2-summary.json
+      - name: Upload JUnit
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: junit-${{ github.event.pull_request.head.sha || github.sha }}
+          path: |
+            j2-junit.xml
+            j2-summary.json
+          if-no-files-found: error
+          retention-days: 14
       - name: Build source bundle
         run: git archive --format=zip --output=thbison-knowledge-factory-source.zip HEAD
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
