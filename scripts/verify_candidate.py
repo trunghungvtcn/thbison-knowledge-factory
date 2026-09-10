@@ -28,6 +28,16 @@ def run(args, *, cwd=ROOT, env=None):
     subprocess.run(args, cwd=cwd, env=env, check=True)
 
 
+def run_contractor(args, *, cwd, env):
+    print("+", " ".join(map(str, args)))
+    result = subprocess.run(args, cwd=cwd, env=env, text=True, capture_output=True)
+    print(result.stdout, end="")
+    if result.stderr:
+        print(result.stderr, end="", file=sys.stderr)
+    if result.returncode or "CONTRACTOR_PARTIAL" in result.stdout or "CONTRACTOR_FAIL" in result.stdout:
+        raise SystemExit("CONTRACTOR_VERIFICATION_INCOMPLETE")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--full", action="store_true", help="run Linux-only bridge and contractor suites")
@@ -53,7 +63,7 @@ def main() -> int:
 
     if opts.full:
         run([sys.executable, "-m", "pytest", "-q", "tests/jobs"], env=env)
-        run([sys.executable, "run_all.py"], cwd=contractor, env={**env, "PYTHONPATH": ""})
+        run_contractor([sys.executable, "run_all.py"], cwd=contractor, env={**env, "PYTHONPATH": ""})
     elif os.name == "nt":
         print("NOT_RUN Linux-only J3 locator/contractor suites; use --full in GitHub Actions")
     print("CANDIDATE_SOURCE_VERIFY_PASS")

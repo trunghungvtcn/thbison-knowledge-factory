@@ -40,14 +40,28 @@ jobs:
         working-directory: content-os/modules/vendor1
         env:
           DATABASE_URL: ""
-        run: npm ci --ignore-scripts && npm run typecheck && npm test && npm run build
+        run: |
+          set +e
+          npm ci --ignore-scripts; install=$?
+          npm run typecheck; typecheck=$?
+          npm test; tests=$?
+          npm run build; build=$?
+          printf 'install=%s typecheck=%s tests=%s build=%s\n' "$install" "$typecheck" "$tests" "$build"
+          test "$install,$typecheck,$tests,$build" = "0,0,0,0"
       - name: Clean install, typecheck, test and build V2
         id: v2
         continue-on-error: true
         working-directory: content-os/modules/vendor2
         env:
           DATABASE_URL: ""
-        run: npm ci --ignore-scripts && npm run typecheck && npm test && npm run build
+        run: |
+          set +e
+          npm ci --ignore-scripts; install=$?
+          npm run typecheck; typecheck=$?
+          npm test; tests=$?
+          npm run build; build=$?
+          printf 'install=%s typecheck=%s tests=%s build=%s\n' "$install" "$typecheck" "$tests" "$build"
+          test "$install,$typecheck,$tests,$build" = "0,0,0,0"
       - name: Run V5 and V6 source suites
         id: v5_v6
         continue-on-error: true

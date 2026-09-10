@@ -10,10 +10,10 @@ Data class: **TEST_ONLY**
 | Gate | Result | Evidence / limitation |
 |---|---|---|
 | G0 | PASS | Outer package and Content OS SHA-256 verified; exact five source pins recorded; core→J1→J2→bridge deltas applied without conflict; vendor namespaces and NOTICE retained. |
-| G1 | BLOCKED | V1/V2 clean install, typecheck, tests and Node 22 builds pass. PGLite build fallback works, but an isolated external PostgreSQL migration was not available on this Windows runner. |
-| G2 | BLOCKED | Strict Knowledge source/hash behavior is integrated, but the complete J1 suite requires the Linux CI runner because the pinned contractor locator is POSIX-only. |
-| G3 | BLOCKED | Local contractor result was 82/101 (M1 13/18, M2 17/17, M3 18/18, M4 27/27, M5 7/21); the remaining failures are Windows/POSIX transport cases. Linux CI is the required independent collection run. |
-| G4 | BLOCKED | Local bridge jobs were 20 pass/20 fail on the same POSIX-locator boundary. V6 was 70 pass, 1 fail, 2 skip: the pinned staging fixture's stored contract digest does not match its recomputed digest. |
+| G1 | BLOCKED | V1/V2 clean install and typecheck pass; local Node 22 builds pass. Linux CI exposed incomplete imported payload: V1 179/195 and V2 180/195 tests pass, with failures rooted in absent `.grok/skills/og` fixtures. Isolated external PostgreSQL migration was not available. |
+| G2 | PASS | Linux CI runs the exact pinned history and reports all 40 Knowledge jobs plus 4 gateway tests passing; strict source/hash behavior and inventory verification are included. |
+| G3 | BLOCKED | The pinned contractor reports `CONTRACTOR_PARTIAL`; verifier now converts that misleading zero exit into `CONTRACTOR_VERIFICATION_INCOMPLETE`. Local detail was 82/101 and the Linux contractor did not emit per-module accounting to stdout. |
+| G4 | PASS | Linux CI reports 40/40 bridge jobs, V5 46/46, and V6 71 pass with 2 declared skips; actual-process E2E covers the synthetic chain. Real staging/Notion remains separately unverified. |
 | G5 | PASS | Actual-process TEST_ONLY chain executed V1→Knowledge/V4→V2→V3→V5 under V6; identity/digest/approval bindings matched and CMS stayed DRY_RUN. |
 | G6 | PASS | V3 persisted state survived restart, V3 alone owned retry, repeated requests were idempotent, CMS receipt reported zero actual effects. |
 | G7 | BLOCKED | V1/V2 auth tests and production builds pass, but browser desktop/mobile screenshots were not produced on this runner. |

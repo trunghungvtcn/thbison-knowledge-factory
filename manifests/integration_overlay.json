@@ -2,10 +2,10 @@
   "base_core_sha": "3f1f125f3ccb6b5fbf173c2aa0e10b5d3b30584b",
   "entries": [
     {
-      "bytes": 3120,
+      "bytes": 3648,
       "kind": "file",
       "path": ".github/workflows/integration-candidate.yml",
-      "sha256": "b9d78da8c11eef8965ab12552c14b10d4c07906a3aad9710ce7c285ab493f6cb"
+      "sha256": "0d4952386ab5ffef685bcf3900bdf5eb33893455449a608de697e7c7fb137da7"
     },
     {
       "bytes": 1852,
@@ -68,10 +68,10 @@
       "sha256": "e5f3fe108d5ebe89d4494e392ca29ac76465885543cfcead56877abf0e906e93"
     },
     {
-      "bytes": 2980,
+      "bytes": 3099,
       "kind": "file",
       "path": "REPORT_CODEX.md",
-      "sha256": "92635ad0e3f8157d59e2d084c48ec07d3e2eb7ce845a0544728cec2808aaf2af"
+      "sha256": "63dc48abd33fbef727d40d0447ced7f429dfd658fa03a470ab7a5aa1c17ff00e"
     },
     {
       "bytes": 1102,
@@ -4945,10 +4945,10 @@
       "sha256": "5dddc411ad3d972abf7052af1d5b5e5eac33c63b6807c132a9f32e10377bd39b"
     },
     {
-      "bytes": 2720,
+      "bytes": 3174,
       "kind": "file",
       "path": "scripts/verify_candidate.py",
-      "sha256": "48e5877455effb59cba59ca77d7f8adfe46e968ece5367d261273d1404c8e5e5"
+      "sha256": "5c9cb16f1284fc818e264feeb57c117e93462633fc32bea95f84093800bf5542"
     },
     {
       "bytes": 4512,
