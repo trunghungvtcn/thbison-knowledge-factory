@@ -3,9 +3,12 @@
 JOB_ID=J3
 BRANCH=jobs/j3-contractor-adapter-20260910
 REVIEWED_SHA=9a7d09375bf242f3cf89b9e2d556192a12e8b830
+HEAD_SHA=f8985448b84f309ad80b89843008d3608426337f
 CONTRACTOR_BASELINE=afac091e60bb6c8a0f0630964e43f5e80951267c
 MODE=LOCAL_SHADOW
 acceptance_claimed=false
+
+Frozen leftovers: `docs/jobs/J3-INTERNAL-TAKEOVER.md`. No new feature requests from that list.
 
 ## Final remediation (on reviewed SHA)
 
@@ -30,4 +33,4 @@ Missing CONTRACTOR_ROOT / packages → command fails (not skip-pass).
 
 ## Out of scope
 
-merge, deploy, scheduler, live Notion, paid models, contractor edits, GitHub Release.
+merge, deploy, scheduler, live Notion, paid models, contractor edits, GitHub Release, new features beyond the frozen list.
