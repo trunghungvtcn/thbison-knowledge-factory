@@ -1,20 +1,21 @@
-"""LOCAL_SHADOW bridge from KF runtime contract to contractor public APIs.
+"""LOCAL_SHADOW bridge from KF runtime contract to contractor public APIs."""
 
-Does not wrap contractor internals. Does not talk to live Notion or paid models.
-"""
-
-from .adapter import LocalShadowAdapter, ShadowResult
-from .mapping import CONTRACTOR_BASELINE, PUBLIC_API_MAP, SYMBOL_MAP
+from .adapter import LocalShadowAdapter, ShadowResult, mark_allowed, transport_is_allowed
+from .mapping import CONTRACTOR_BASELINE, J1_REVIEWED, J2_PUBLISHED, PUBLIC_API_MAP, SYMBOL_MAP
 
 MODE = "LOCAL_SHADOW"
 LOCAL_SHADOW = MODE
 
 __all__ = [
     "CONTRACTOR_BASELINE",
+    "J1_REVIEWED",
+    "J2_PUBLISHED",
     "LOCAL_SHADOW",
     "MODE",
     "LocalShadowAdapter",
     "PUBLIC_API_MAP",
     "SYMBOL_MAP",
     "ShadowResult",
+    "mark_allowed",
+    "transport_is_allowed",
 ]
