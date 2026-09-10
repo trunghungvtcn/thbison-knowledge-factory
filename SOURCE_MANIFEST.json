@@ -24,5 +24,11 @@
   "contractor_path": "dependencies/pipeline-lab-contractor-m1-m5",
   "data_class": "TEST_ONLY",
   "live_data_pass": false,
-  "production_authorized": false
+  "production_authorized": false,
+  "bounded_remediation": {
+    "base_release": "thbison-integration-01-rc1",
+    "independent_audit_pack_sha256": "27cf3101618e4049d367e5c148142a0d674d4c0283f7ca2dfee50bf153751b35",
+    "scope": "CMS malformed/non-object JSON validation envelope only",
+    "details": "REMEDIATION_01.md"
+  }
 }

@@ -1,7 +1,7 @@
 {
   "job_id": "THBISON-INDEPENDENT-AUDIT-01",
-  "master_release_url": "https://github.com/trunghungvtcn/thbison-knowledge-factory/releases/tag/thbison-integration-01-rc1",
-  "candidate_sha": "082540cab6c3eed75c74516362b3002138ddecbe",
+  "master_release_url": "https://github.com/trunghungvtcn/thbison-knowledge-factory/releases/tag/thbison-integration-01-rc2",
+  "candidate_sha": "c6272fef001ae1e94d032931c448ac657e1a366b",
   "audit_issue_url": "https://github.com/trunghungvtcn/thbison-knowledge-factory/issues/12",
   "notion_status": "NOTION_TARGET_MISSING",
   "deploy_target": "UNDECIDED_A_OR_B",
