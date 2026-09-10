@@ -9,6 +9,8 @@ from __future__ import annotations
 CONTRACTOR_REPO = "trunghungvtcn/pipeline-lab-contractor-m1-m5"
 CONTRACTOR_BASELINE = "afac091e60bb6c8a0f0630964e43f5e80951267c"
 FACTORY_BASELINE = "3f1f125f3ccb6b5fbf173c2aa0e10b5d3b30584b"
+J1_REVIEWED = "b9e291fb84ddf99a6e6dd662ae122f39326f4d41"
+J2_PUBLISHED = "5e6161914f519403059ce13a1568d58ac7162f28"
 
 # KF runtime contract field / action -> contractor public symbol
 SYMBOL_MAP: dict[str, dict[str, str]] = {
@@ -16,7 +18,7 @@ SYMBOL_MAP: dict[str, dict[str, str]] = {
         "module": "kf_pilot.runtime_contract",
         "symbol": "RunContract.fingerprint",
         "contractor": "JobLedger.admit(idempotency_key, request_digest)",
-        "notes": "fingerprint is the idempotency key; request_digest is SHA256 of canonical contract bytes plus snapshot hash",
+        "notes": "fingerprint is the idempotency key; request_digest binds snapshot + J1/J2 commit SHA + input hash",
     },
     "RunContract.code_commit": {
         "module": "kf_pilot.runtime_contract",
@@ -69,7 +71,7 @@ PUBLIC_API_MAP: dict[str, dict[str, str]] = {
     "grok_notion_projection.Projector": {
         "package": "grok_notion_projection",
         "symbols": "Projector.project, FakeTransport, MUTATING_OPS, READ_OPS",
-        "used": "LOCAL_SHADOW projection only; FakeTransport never leaves process",
+        "used": "LOCAL_SHADOW projection only after LOCAL_SHADOW_ALLOWED marker",
     },
 }
 
@@ -80,8 +82,8 @@ SEAM_PROPOSALS: list[dict[str, str]] = [
         "owner": "reviewer",
     },
     {
-        "gap": "J1 input SHA and J2 environment SHA are not published as issue comments",
-        "proposal": "Adapter accepts j1_input_sha / j2_env_sha; missing pins yield BLOCKED_INPUT + HUMAN_HOLD",
+        "gap": "J1/J2 input content hashes are unpublished; only commit SHAs are published",
+        "proposal": "Bind commit SHA and input hash separately; input_verified stays false until inventory digest exists",
         "owner": "J1/J2 authors",
     },
 ]
