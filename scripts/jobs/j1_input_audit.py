@@ -43,6 +43,14 @@ from kf_pilot.legacy_manifest import (  # noqa: E402
 
 SHA256_HEX = 64
 WRITE_PREFIXES = ("scripts/jobs/j1_", "tests/jobs/test_j1_", "docs/jobs/J1")
+TOOL_REL = "scripts/jobs/j1_input_audit.py"
+ABSENT_STATUSES = frozenset(
+    {"MISSING", "MISSING_EXTERNAL", "UNSAFE_LOCATOR", "BLOCKED_INPUT"}
+)
+STRICT_FAIL_STATUSES = frozenset(
+    {"MISSING", "MISSING_EXTERNAL", "HASH_MISMATCH", "UNSAFE_LOCATOR", "BLOCKED_INPUT"}
+)
+CLEAN_STATUSES = frozenset({"PRESENT", "HASH_VERIFIED", "NOT_LOCATOR_MAP"})
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -55,6 +63,29 @@ def sha256_file(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def file_status(
+    *,
+    exists: bool,
+    expected_sha256: str | None = None,
+    actual_sha256: str | None = None,
+    absent: str = "MISSING",
+) -> str:
+    """PRESENT = bytes on disk; HASH_VERIFIED = expected digest matches those bytes."""
+    if not exists:
+        return absent
+    if expected_sha256:
+        if actual_sha256 == expected_sha256:
+            return "HASH_VERIFIED"
+        return "HASH_MISMATCH"
+    return "PRESENT"
+
+
+def strict_exit_code(items: list[dict[str, Any]]) -> int:
+    if any(item.get("status") in STRICT_FAIL_STATUSES for item in items):
+        return 1
+    return 0
 
 
 def canonical_dumps(value: Any) -> str:
@@ -116,10 +147,29 @@ def record(
     note: str = "",
     runtime_required: bool = False,
 ) -> dict[str, Any]:
+    present = status not in ABSENT_STATUSES
+    hash_verified = bool(
+        expected_sha256
+        and actual_sha256
+        and actual_sha256 == expected_sha256
+        and present
+    )
+    if status == "HASH_VERIFIED":
+        present = True
+        hash_verified = True
+    elif status == "PRESENT":
+        present = True
+        hash_verified = False
+    elif status == "HASH_MISMATCH":
+        present = True
+        hash_verified = False
     item = {
         "path": path.replace("\\", "/"),
         "locator": path,
         "status": status,
+        "present": present,
+        "hash_verified": hash_verified,
+        "blocked_input": status in ABSENT_STATUSES,
         "provenance": provenance,
         "expected_sha256": expected_sha256,
         "actual_sha256": actual_sha256,
@@ -223,7 +273,7 @@ def check_locators(
             )
             continue
         actual = sha256_file(path)
-        status = "OK" if actual == expected else "HASH_MISMATCH"
+        status = file_status(exists=True, expected_sha256=expected, actual_sha256=actual)
         note = root_note
         if status == "HASH_MISMATCH":
             extra = "nested historical pin; GitHub migrated_sha256 is authoritative for recovered tree"
@@ -267,7 +317,7 @@ def audit_github_assets(root: Path, manifest: dict[str, Any], tracked: set[str])
                 )
                 continue
             actual = sha256_file(path)
-            status = "OK" if actual == expected else "HASH_MISMATCH"
+            status = file_status(exists=True, expected_sha256=expected, actual_sha256=actual)
             note = ""
             if asset.get("original_sha256") != expected:
                 note = "original_sha256 differs from migrated_sha256 (intentional transform recorded)"
@@ -350,12 +400,13 @@ def audit_runtime(root: Path) -> list[dict[str, Any]]:
                 )
             )
             continue
+        actual = sha256_file(path)
         items.append(
             record(
                 path=rel,
-                status="OK",
+                status=file_status(exists=True, actual_sha256=actual),
                 provenance=provenance,
-                actual_sha256=sha256_file(path),
+                actual_sha256=actual,
                 bytes_count=path.stat().st_size,
                 source="runtime:machine_admission.LEGACY",
                 runtime_required=True,
@@ -364,13 +415,15 @@ def audit_runtime(root: Path) -> list[dict[str, Any]]:
         )
     for rel in (*SAMPLE_INPUT_PATHS, *TEST_ONLY_FIXTURES):
         path = root / rel
+        exists = path.is_file()
+        actual = sha256_file(path) if exists else None
         items.append(
             record(
                 path=rel,
-                status="OK" if path.is_file() else "MISSING",
+                status=file_status(exists=exists, actual_sha256=actual),
                 provenance=classify(rel),
-                actual_sha256=sha256_file(path) if path.is_file() else None,
-                bytes_count=path.stat().st_size if path.is_file() else None,
+                actual_sha256=actual,
+                bytes_count=path.stat().st_size if exists else None,
                 source="runtime:test_only_or_sample",
                 runtime_required=True,
             )
@@ -380,8 +433,11 @@ def audit_runtime(root: Path) -> list[dict[str, Any]]:
         items.append(
             record(
                 path=f"{V161_PARQUET_EXPECTED_ROOT}/{name}",
-                status="MISSING_EXTERNAL" if not candidate.is_file() else (
-                    "OK" if sha256_file(candidate) == expected else "HASH_MISMATCH"
+                status=file_status(
+                    exists=candidate.is_file(),
+                    expected_sha256=expected,
+                    actual_sha256=sha256_file(candidate) if candidate.is_file() else None,
+                    absent="MISSING_EXTERNAL",
                 ),
                 provenance="REAL_INPUT_EXTERNAL",
                 expected_sha256=expected,
@@ -395,7 +451,11 @@ def audit_runtime(root: Path) -> list[dict[str, Any]]:
     items.append(
         record(
             path="config/manual_decisions.csv",
-            status="MISSING_EXTERNAL" if not decisions.is_file() else "PRESENT_IGNORED_PATH",
+            status=file_status(
+                exists=decisions.is_file(),
+                actual_sha256=sha256_file(decisions) if decisions.is_file() else None,
+                absent="MISSING_EXTERNAL",
+            ),
             provenance="REAL_INPUT_EXTERNAL",
             actual_sha256=sha256_file(decisions) if decisions.is_file() else None,
             source="runtime:reviewed_decisions",
@@ -456,9 +516,14 @@ def summarize(items: list[dict[str, Any]]) -> dict[str, Any]:
         "status_counts": dict(sorted(counts.items())),
         "provenance_counts": dict(sorted(provenance.items())),
         "runtime_required_count": len(runtime),
-        "runtime_required_ok": sum(1 for item in runtime if item["status"] == "OK"),
+        "runtime_required_present": sum(1 for item in runtime if item.get("present")),
+        "runtime_required_hash_verified": sum(1 for item in runtime if item.get("hash_verified")),
+        "present_count": sum(1 for item in items if item.get("present")),
+        "hash_verified_count": sum(1 for item in items if item.get("hash_verified")),
+        "blocked_input_count": sum(1 for item in items if item.get("blocked_input")),
         "missing_count": len(missing),
         "hash_mismatch_count": len(mismatches),
+        "strict_would_fail": any(item["status"] in STRICT_FAIL_STATUSES for item in items),
     }
 
 
@@ -490,7 +555,12 @@ def build_report(root: Path) -> dict[str, Any]:
     items.append(
         record(
             path=LEGACY_MANIFEST_MODULE,
-            status="OK" if (root / LEGACY_MANIFEST_MODULE).is_file() else "MISSING",
+            status=file_status(
+                exists=(root / LEGACY_MANIFEST_MODULE).is_file(),
+                actual_sha256=sha256_file(root / LEGACY_MANIFEST_MODULE)
+                if (root / LEGACY_MANIFEST_MODULE).is_file()
+                else None,
+            ),
             provenance="SOURCE",
             actual_sha256=sha256_file(root / LEGACY_MANIFEST_MODULE)
             if (root / LEGACY_MANIFEST_MODULE).is_file()
@@ -504,7 +574,7 @@ def build_report(root: Path) -> dict[str, Any]:
     exceptions = [
         item
         for item in items
-        if item["status"] not in {"OK", "NOT_LOCATOR_MAP"}
+        if item["status"] not in CLEAN_STATUSES
         or item.get("runtime_required")
     ]
     missing_precise = [
@@ -516,6 +586,9 @@ def build_report(root: Path) -> dict[str, Any]:
             "provenance": item["provenance"],
             "source": item["source"],
             "note": item.get("note", ""),
+            "present": item.get("present"),
+            "hash_verified": item.get("hash_verified"),
+            "blocked_input": item.get("blocked_input"),
             "publish_to_github": False if item["provenance"] == "REAL_INPUT_EXTERNAL" else None,
         }
         for item in items
@@ -528,14 +601,47 @@ def build_report(root: Path) -> dict[str, Any]:
             "EXTRA_IN_MANIFEST",
         }
     ]
+    tool_path = Path(__file__).resolve()
+    tool_sha = sha256_file(tool_path)
+    hashes = {
+        "audited_source_sha": commit,
+        "tool_sha": tool_sha,
+        "tool_path": TOOL_REL,
+        "reproduction": [
+            {
+                "name": "audited_source_sha",
+                "command": "git rev-parse HEAD",
+                "bytes": "git commit of the inventory-code tree",
+            },
+            {
+                "name": "tool_sha",
+                "command": f"sha256sum {TOOL_REL}",
+                "alt_command": f"git hash-object {TOOL_REL}",
+                "bytes": f"file bytes of {TOOL_REL}",
+            },
+            {
+                "name": "inventory_content_hash",
+                "command": (
+                    "python3 scripts/jobs/j1_input_audit.py --compact "
+                    "--out docs/jobs/J1_INVENTORY.json; "
+                    "the inventory_sha256 field is SHA256 of canonical_dumps("
+                    "stable_report(report)) where generated_at is popped and "
+                    "hashes.inventory_content_hash is not yet set"
+                ),
+                "bytes": "canonical JSON of the report minus generated_at",
+            },
+        ],
+    }
     report = {
         "job_id": "J1",
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "base_sha": commit,
+        "audited_source_sha": commit,
         "read_only": True,
         "inputs_mutated": False,
         "migration_job_id": manifest.get("job_id"),
         "legacy_manifest_resolver": LEGACY_MANIFEST_MODULE,
+        "hashes": hashes,
         "summary": summarize(items),
         "exceptions": exceptions,
         "missing_or_mismatch": missing_precise,
@@ -550,7 +656,9 @@ def build_report(root: Path) -> dict[str, Any]:
             "upload_real_corpus_to_github",
         ],
     }
-    report["inventory_sha256"] = fingerprint(report)
+    digest = fingerprint(report)
+    report["inventory_sha256"] = digest
+    report["hashes"]["inventory_content_hash"] = digest
     return report
 
 
@@ -579,6 +687,11 @@ def main(argv: list[str] | None = None) -> int:
         "--compact",
         action="store_true",
         help="omit full inventory array from --out (sha256 still covers the full set)",
+    )
+    parser.add_argument(
+        "--strict",
+        action="store_true",
+        help="exit non-zero when any path is missing or a published digest mismatches",
     )
     args = parser.parse_args(argv)
     root = args.root.resolve()
@@ -609,12 +722,20 @@ def main(argv: list[str] | None = None) -> int:
         args.missing_out.write_text(canonical_dumps(report["missing_or_mismatch"]), encoding="utf-8")
     if not args.out:
         sys.stdout.write(text)
+    exit_code = strict_exit_code(report["inventory"]) if args.strict else 0
     print(
         json.dumps(
             {
                 "job_id": "J1",
-                "status": "AUDIT_COMPLETE",
+                "mode": "strict" if args.strict else "inventory",
+                "status": "STRICT_FAIL" if exit_code else "AUDIT_COMPLETE",
+                "exit_code": exit_code,
                 "inventory_sha256": report["inventory_sha256"],
+                "hashes": {
+                    "audited_source_sha": report["hashes"]["audited_source_sha"],
+                    "tool_sha": report["hashes"]["tool_sha"],
+                    "inventory_content_hash": report["hashes"]["inventory_content_hash"],
+                },
                 "summary": report["summary"],
                 "inputs_mutated": False,
             },
@@ -622,7 +743,7 @@ def main(argv: list[str] | None = None) -> int:
         ),
         file=sys.stderr,
     )
-    return 0
+    return exit_code
 
 
 if __name__ == "__main__":
