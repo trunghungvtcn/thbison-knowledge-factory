@@ -2,10 +2,10 @@
   "base_core_sha": "3f1f125f3ccb6b5fbf173c2aa0e10b5d3b30584b",
   "entries": [
     {
-      "bytes": 2290,
+      "bytes": 3120,
       "kind": "file",
       "path": ".github/workflows/integration-candidate.yml",
-      "sha256": "fede1b4657150e1d04865eacfcb7ba0d3d1f0f18f8a8328d1f684fcc829341e3"
+      "sha256": "b9d78da8c11eef8965ab12552c14b10d4c07906a3aad9710ce7c285ab493f6cb"
     },
     {
       "bytes": 1852,
