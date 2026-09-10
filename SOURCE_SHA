@@ -1,2 +1,3 @@
-The immutable implementation source SHA is recorded after the source commit.
-The release tag may include a later metadata-only commit; verify both in the release body.
+082540c168a7fc264a767e80f49834d67de65ec1  implementation-source
+
+The release tag includes a later metadata-only commit; verify both SHAs from the release body.
