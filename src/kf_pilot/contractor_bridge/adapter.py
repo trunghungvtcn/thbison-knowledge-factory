@@ -13,7 +13,9 @@ from kf_pilot.runtime_contract import ContractError, RunContract, canonical_byte
 from .mapping import CONTRACTOR_BASELINE, FACTORY_BASELINE
 from .pins import (
     TERMINAL_STATES,
+    declared_test_fixture,
     holds_for_pins,
+    is_hex_sha256,
     mark_allowed,
     normalize_pins,
     pin_record,
@@ -202,6 +204,71 @@ class LocalShadowAdapter:
             and receipt.get("projection_status") == "ok"
             and receipt.get("mode") == "LOCAL_SHADOW"
         )
+
+    def _receipt_file_sha(self) -> str | None:
+        path = self._receipt_path()
+        if not path.is_file():
+            return None
+        try:
+            return sha256_file(path)
+        except OSError:
+            return None
+
+    def _ledger_receipt_shas(self, extra: dict[str, Any]) -> tuple[str | None, str | None]:
+        payload = extra.get("result_payload")
+        payload_sha = payload.lower() if is_hex_sha256(payload) else None
+        outbox: Any = extra.get("outbox_obj")
+        if outbox is None and extra.get("outbox"):
+            raw = extra.get("outbox")
+            if isinstance(raw, str):
+                try:
+                    outbox = json.loads(raw)
+                except (TypeError, ValueError, json.JSONDecodeError):
+                    outbox = None
+        outbox_sha = None
+        if isinstance(outbox, dict) and is_hex_sha256(outbox.get("receipt_sha256")):
+            outbox_sha = str(outbox["receipt_sha256"]).lower()
+        return payload_sha, outbox_sha
+
+    def _verify_receipt_against_ledger(
+        self,
+        *,
+        receipt: dict[str, Any] | None,
+        extra: dict[str, Any],
+        job_id: str,
+        fingerprint: str,
+        digest: str,
+    ) -> dict[str, Any]:
+        file_sha = self._receipt_file_sha()
+        payload_sha, outbox_sha = self._ledger_receipt_shas(extra)
+        ledger_sha = payload_sha or outbox_sha
+        projection_status = extra.get("projection_status") or "NONE"
+        report: dict[str, Any] = {
+            "ok": False,
+            "reason": "PROJECTION_NOT_APPLIED",
+            "file_sha": file_sha,
+            "ledger_sha": ledger_sha,
+            "payload_sha": payload_sha,
+            "outbox_sha": outbox_sha,
+            "projection_status": projection_status,
+        }
+        if payload_sha and outbox_sha and payload_sha != outbox_sha:
+            report["reason"] = "LEDGER_RECEIPT_HASH_INTERNAL_MISMATCH"
+            return report
+        if projection_status != "APPLIED":
+            return report
+        if not self._receipt_proves(receipt, job_id=job_id, fingerprint=fingerprint, digest=digest):
+            report["reason"] = "RECEIPT_MISSING_OR_CORRUPT"
+            return report
+        if not file_sha or not ledger_sha:
+            report["reason"] = "RECEIPT_HASH_MISSING"
+            return report
+        if file_sha != ledger_sha:
+            report["reason"] = "RECEIPT_HASH_MISMATCH"
+            return report
+        report["ok"] = True
+        report["reason"] = "OK"
+        return report
 
     def _pin_evidence(self, pins: dict[str, Any], **extra: Any) -> dict[str, Any]:
         synthetic = pins.get("j1_hash_status") == "SYNTHETIC" or pins.get("j2_hash_status") == "SYNTHETIC"
@@ -398,16 +465,40 @@ class LocalShadowAdapter:
                 holds=holds,
                 evidence=self._pin_evidence(pins, projection_complete=False),
             )
-        persisted = self._persist_receipt(
-            job_id=job_id,
-            fp=fp,
-            actual_sha=actual_sha,
-            manifest=manifest,
-            digest=digest,
-            holds=holds,
-            pins=pins,
-            envelopes=envelopes,
-        )
+        try:
+            persisted = self._persist_receipt(
+                job_id=job_id,
+                fp=fp,
+                actual_sha=actual_sha,
+                manifest=manifest,
+                digest=digest,
+                holds=holds,
+                pins=pins,
+                envelopes=envelopes,
+            )
+        except Exception as exc:
+            envelopes["receipt"] = {
+                "status": "error",
+                "reason_code": "RECEIPT_INTERRUPTED",
+                "error": type(exc).__name__,
+            }
+            status = "RECONCILE_REQUIRED" if resumed else "FAILED"
+            return ShadowResult(
+                status=status,
+                reason_code="RECEIPT_INTERRUPTED",
+                contractor_job_id=job_id,
+                fingerprint=fp,
+                snapshot_sha256=actual_sha,
+                manifest_sha256=manifest,
+                hold_reasons=holds + ["RECONCILE_REQUIRED:RECEIPT_INTERRUPTED"],
+                envelopes=envelopes,
+                evidence=self._pin_evidence(
+                    pins,
+                    resumed=resumed,
+                    projection_complete=False,
+                    receipt_interrupted=True,
+                ),
+            )
         if isinstance(persisted, ShadowResult):
             if resumed:
                 persisted.status = "RECONCILE_REQUIRED"
@@ -437,6 +528,8 @@ class LocalShadowAdapter:
                 projection_complete=True,
                 synthetic_pass=bool(synthetic and status == "LOCAL_SHADOW_COMPLETE"),
                 real_data_pass=False,
+                fixture_declared=True,
+                receipt_hash_verified_against_ledger=True,
             ),
         )
 
@@ -458,12 +551,20 @@ class LocalShadowAdapter:
         state = extra.get("state")
         projection_status = extra.get("projection_status") or "NONE"
         receipt = self._load_receipt()
-        envelopes["receipt_present"] = bool(receipt)
-        proved = (
-            state == "SUCCEEDED"
-            and projection_status == "APPLIED"
-            and self._receipt_proves(receipt, job_id=job_id, fingerprint=fp, digest=digest)
+        proof = self._verify_receipt_against_ledger(
+            receipt=receipt,
+            extra=extra,
+            job_id=job_id,
+            fingerprint=fp,
+            digest=digest,
         )
+        envelopes["receipt_present"] = bool(receipt)
+        envelopes["receipt_proof"] = {
+            "ok": proof["ok"],
+            "reason": proof["reason"],
+            "file_sha": proof["file_sha"],
+            "ledger_sha": proof["ledger_sha"],
+        }
         if state not in TERMINAL_STATES:
             return ShadowResult(
                 status="HUMAN_HOLD",
@@ -480,9 +581,10 @@ class LocalShadowAdapter:
                     ledger_state=state,
                     projection_status=projection_status,
                     projection_complete=False,
+                    receipt_hash_verified_against_ledger=False,
                 ),
             )
-        if proved:
+        if proof["ok"] and state == "SUCCEEDED":
             return ShadowResult(
                 status="DUPLICATE_NOOP",
                 reason_code="IDEMPOTENT_HIT",
@@ -499,6 +601,9 @@ class LocalShadowAdapter:
                     projection_status=projection_status,
                     projection_complete=True,
                     receipt=self.RECEIPT_NAME,
+                    receipt_sha256=proof["file_sha"],
+                    ledger_receipt_sha256=proof["ledger_sha"],
+                    receipt_hash_verified_against_ledger=True,
                     resumed=False,
                     synthetic_pass=False,
                 ),
@@ -519,6 +624,29 @@ class LocalShadowAdapter:
                     ledger_state=state,
                     projection_status=projection_status,
                     projection_complete=False,
+                    receipt_hash_verified_against_ledger=False,
+                ),
+            )
+        if projection_status == "APPLIED":
+            reason = str(proof.get("reason") or "RECEIPT_HASH_MISMATCH")
+            return ShadowResult(
+                status="RECONCILE_REQUIRED",
+                reason_code=reason,
+                contractor_job_id=job_id,
+                fingerprint=fp,
+                snapshot_sha256=actual_sha,
+                manifest_sha256=manifest,
+                hold_reasons=holds + [f"RECONCILE_REQUIRED:{reason}"],
+                envelopes=envelopes,
+                evidence=self._pin_evidence(
+                    pins,
+                    replay=True,
+                    ledger_state=state,
+                    projection_status=projection_status,
+                    projection_complete=False,
+                    receipt_sha256=proof.get("file_sha"),
+                    ledger_receipt_sha256=proof.get("ledger_sha"),
+                    receipt_hash_verified_against_ledger=False,
                 ),
             )
         return self._project_and_persist(
@@ -553,6 +681,19 @@ class LocalShadowAdapter:
                     pins,
                     blocked_before=["freeze", "admit", "project"],
                     blocked_input=True,
+                ),
+            )
+        # B4: only an explicitly declared TEST_ONLY/SYNTHETIC fixture may proceed.
+        if not declared_test_fixture(contract.mode, contract.dataset_snapshot_id):
+            return ShadowResult(
+                status="HUMAN_HOLD",
+                reason_code="BLOCKED_INPUT",
+                hold_reasons=holds + ["BLOCKED_INPUT:FIXTURE_NOT_DECLARED"],
+                evidence=self._pin_evidence(
+                    pins,
+                    blocked_before=["freeze", "admit", "project"],
+                    blocked_input=True,
+                    fixture_declared=False,
                 ),
             )
         contract.validate()

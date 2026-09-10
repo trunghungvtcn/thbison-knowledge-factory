@@ -25,6 +25,9 @@ _UNVERIFIED_PUBLISHED = {
     J2_JUNIT_SHA256: "ENVIRONMENT_UNVERIFIED",
 }
 
+# Real-looking hashes that are not declared synthetic fixtures.
+UNVERIFIED_REAL = frozenset({"UNVERIFIED", "PUBLISHED_UNVERIFIED", "ENVIRONMENT_UNVERIFIED"})
+
 
 def transport_is_allowed(transport: Any) -> bool:
     """Exact FakeTransport only. Self-declared flags and subclasses are denied."""
@@ -57,6 +60,18 @@ def classify_hash(value: str | None, *, role: str) -> str:
     if role == "environment":
         return "ENVIRONMENT_UNVERIFIED"
     return "UNVERIFIED"
+
+
+def is_hex_sha256(value: Any) -> bool:
+    return isinstance(value, str) and bool(_HASH_RE.match(value.lower()))
+
+
+def declared_test_fixture(mode: str, dataset_snapshot_id: str | None) -> bool:
+    """Explicit TEST_ONLY/SYNTHETIC fixture declaration. Not inferred from a hash."""
+    if mode != "TEST_ONLY":
+        return False
+    token = (dataset_snapshot_id or "").upper()
+    return "TEST_ONLY" in token or "SYNTHETIC" in token
 
 
 def normalize_pins(
@@ -131,6 +146,8 @@ def holds_for_pins(pins: dict[str, Any]) -> list[str]:
         holds.append("BLOCKED_INPUT:J1_INPUT_HASH_MISSING")
     elif not pins["j1_input_format_ok"]:
         holds.append("BLOCKED_INPUT:J1_INPUT_HASH_MALFORMED")
+    elif pins["j1_hash_status"] in UNVERIFIED_REAL:
+        holds.append("BLOCKED_INPUT:J1_INPUT_UNVERIFIED")
     if not pins["j2_commit_sha"]:
         holds.append("BLOCKED_INPUT:J2_COMMIT_SHA_MISSING")
     elif not pins["j2_commit_format_ok"]:
@@ -139,4 +156,6 @@ def holds_for_pins(pins: dict[str, Any]) -> list[str]:
         holds.append("BLOCKED_INPUT:J2_INPUT_HASH_MISSING")
     elif not pins["j2_input_format_ok"]:
         holds.append("BLOCKED_INPUT:J2_INPUT_HASH_MALFORMED")
+    elif pins["j2_hash_status"] in UNVERIFIED_REAL:
+        holds.append("BLOCKED_INPUT:J2_ENV_UNVERIFIED")
     return holds
