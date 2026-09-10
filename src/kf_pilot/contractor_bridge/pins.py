@@ -10,14 +10,68 @@ _COMMIT_RE = re.compile(r"^[0-9a-f]{40}$")
 _HASH_RE = re.compile(r"^[0-9a-f]{64}$")
 TERMINAL_STATES = frozenset({"SUCCEEDED", "FAILED", "CANCELLED", "RECONCILE_REQUIRED"})
 
+# INTERNAL-BRIDGE-01 environment / publication pins. Vendor mapping.J2_PUBLISHED
+# stays at the historical 5e61619 record and is not rewritten here.
+J2_ENV_COMMIT = "8b197d67f70f6db614a8aefdda7b84f0d4009827"
+J1_INVENTORY_COMMIT = "b9e291fb84ddf99a6e6dd662ae122f39326f4d41"
+J1_PUBLISHED_INVENTORY_DIGEST = "318a7db871bb056e321d75d18063b9267ece121d7a36f604aaca08ca167f7c89"
+J1_LIVE_INVENTORY_CONTENT_HASH = "86165e109bc105975e831e077e60377353811947ff2e7aa7da2a64bb5d88d277"
+J2_JUNIT_SHA256 = "fccd4eeab5f897e882937d7cd36081e09786a773df237981f4c57d3240223962"
+
+# Never treat these as HASH_VERIFIED of a private corpus.
+_UNVERIFIED_PUBLISHED = {
+    J1_PUBLISHED_INVENTORY_DIGEST: "PUBLISHED_UNVERIFIED",
+    J1_LIVE_INVENTORY_CONTENT_HASH: "PUBLISHED_UNVERIFIED",
+    J2_JUNIT_SHA256: "ENVIRONMENT_UNVERIFIED",
+}
+
+# Real-looking hashes that are not declared synthetic fixtures.
+UNVERIFIED_REAL = frozenset({"UNVERIFIED", "PUBLISHED_UNVERIFIED", "ENVIRONMENT_UNVERIFIED"})
+
 
 def transport_is_allowed(transport: Any) -> bool:
-    return getattr(transport, "LOCAL_SHADOW_ALLOWED", None) is True
+    """Exact FakeTransport only. Self-declared flags and subclasses are denied."""
+    try:
+        from grok_notion_projection import FakeTransport
+    except ImportError:
+        return False
+    return type(transport) is FakeTransport
 
 
 def mark_allowed(transport: Any) -> Any:
-    setattr(transport, "LOCAL_SHADOW_ALLOWED", True)
+    """Vendor compatibility shim. LOCAL_SHADOW_ALLOWED is not an allow-list."""
+    try:
+        setattr(transport, "LOCAL_SHADOW_ALLOWED", True)
+    except Exception:
+        pass
     return transport
+
+
+def classify_hash(value: str | None, *, role: str) -> str:
+    if not value:
+        return "MISSING"
+    if not _HASH_RE.match(value):
+        return "MALFORMED"
+    if len(set(value)) == 1:
+        return "SYNTHETIC"
+    published = _UNVERIFIED_PUBLISHED.get(value)
+    if published:
+        return published
+    if role == "environment":
+        return "ENVIRONMENT_UNVERIFIED"
+    return "UNVERIFIED"
+
+
+def is_hex_sha256(value: Any) -> bool:
+    return isinstance(value, str) and bool(_HASH_RE.match(value.lower()))
+
+
+def declared_test_fixture(mode: str, dataset_snapshot_id: str | None) -> bool:
+    """Explicit TEST_ONLY/SYNTHETIC fixture declaration. Not inferred from a hash."""
+    if mode != "TEST_ONLY":
+        return False
+    token = (dataset_snapshot_id or "").upper()
+    return "TEST_ONLY" in token or "SYNTHETIC" in token
 
 
 def normalize_pins(
@@ -52,6 +106,8 @@ def normalize_pins(
 
 
 def pin_record(raw: dict[str, str | None]) -> dict[str, Any]:
+    j1_hash_status = classify_hash(raw["j1_input_hash"], role="input")
+    j2_hash_status = classify_hash(raw["j2_input_hash"], role="environment")
     return {
         "j1_commit_sha": raw["j1_commit_sha"],
         "j1_input_hash": raw["j1_input_hash"],
@@ -59,12 +115,24 @@ def pin_record(raw: dict[str, str | None]) -> dict[str, Any]:
         "j1_input_format_ok": bool(raw["j1_input_hash"] and _HASH_RE.match(raw["j1_input_hash"] or "")),
         "j1_commit_published": raw["j1_commit_sha"] == J1_REVIEWED,
         "j1_input_verified": False,
+        "j1_hash_status": j1_hash_status,
         "j2_commit_sha": raw["j2_commit_sha"],
         "j2_input_hash": raw["j2_input_hash"],
         "j2_commit_format_ok": bool(raw["j2_commit_sha"] and _COMMIT_RE.match(raw["j2_commit_sha"] or "")),
         "j2_input_format_ok": bool(raw["j2_input_hash"] and _HASH_RE.match(raw["j2_input_hash"] or "")),
         "j2_commit_published": raw["j2_commit_sha"] == J2_PUBLISHED,
+        "j2_env_commit_known": raw["j2_commit_sha"] == J2_ENV_COMMIT,
         "j2_input_verified": False,
+        "j2_hash_status": j2_hash_status,
+        "j2_role": "environment",
+        "pin_roles": {
+            "code_commit": "j1_commit_sha",
+            "environment": "j2_commit_sha",
+            "input_hash": "j1_input_hash",
+            "environment_hash": "j2_input_hash",
+        },
+        "real_data": False,
+        "hash_verified": False,
     }
 
 
@@ -78,6 +146,8 @@ def holds_for_pins(pins: dict[str, Any]) -> list[str]:
         holds.append("BLOCKED_INPUT:J1_INPUT_HASH_MISSING")
     elif not pins["j1_input_format_ok"]:
         holds.append("BLOCKED_INPUT:J1_INPUT_HASH_MALFORMED")
+    elif pins["j1_hash_status"] in UNVERIFIED_REAL:
+        holds.append("BLOCKED_INPUT:J1_INPUT_UNVERIFIED")
     if not pins["j2_commit_sha"]:
         holds.append("BLOCKED_INPUT:J2_COMMIT_SHA_MISSING")
     elif not pins["j2_commit_format_ok"]:
@@ -86,4 +156,6 @@ def holds_for_pins(pins: dict[str, Any]) -> list[str]:
         holds.append("BLOCKED_INPUT:J2_INPUT_HASH_MISSING")
     elif not pins["j2_input_format_ok"]:
         holds.append("BLOCKED_INPUT:J2_INPUT_HASH_MALFORMED")
+    elif pins["j2_hash_status"] in UNVERIFIED_REAL:
+        holds.append("BLOCKED_INPUT:J2_ENV_UNVERIFIED")
     return holds
