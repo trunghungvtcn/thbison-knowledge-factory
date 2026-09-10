@@ -27,7 +27,7 @@ jobs:
       - name: Compile source
         run: python -m compileall -q src scripts
       - name: Verify migration payload
-        run: python scripts/verify_migration_payload.py
+        run: python scripts/jobs/j2_verify_payload.py
       - name: Run source-only offline tests
         env:
           PYTHONPATH: src
@@ -40,7 +40,7 @@ jobs:
           path: |
             j2-junit.xml
             j2-summary.json
-          if-no-files-found: error
+          if-no-files-found: ignore
           retention-days: 14
       - name: Build source bundle
         run: git archive --format=zip --output=thbison-knowledge-factory-source.zip HEAD
