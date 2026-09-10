@@ -9,7 +9,19 @@
   "exit_code": null,
   "junit": "",
   "tests_run": null,
-  "tests_deselected": [],
+  "tests_deselected": [
+    {
+      "nodeid": "",
+      "missing_input": "",
+      "status": "BLOCKED_INPUT|NOT_RUN"
+    }
+  ],
+  "hashes": {
+    "audited_source_sha": "",
+    "tool_sha": "",
+    "inventory_or_input_hash": "",
+    "reproduction": []
+  },
   "holds": [],
-  "notes": "Do not label subset results as full-suite PASS."
+  "notes": "Do not label subset results as full-suite PASS. READY_FOR_REVIEW is not ACCEPTED."
 }

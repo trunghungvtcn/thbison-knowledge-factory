@@ -1,4 +1,11 @@
 job=J2
-published_head=5e6161914f519403059ce13a1568d58ac7162f28
-pr=https://github.com/trunghungvtcn/thbison-knowledge-factory/commit/5e6161914f519403059ce13a1568d58ac7162f28
+kind=github-guidance-pack
+offline_complete=false
+published_head=8b197d67f70f6db614a8aefdda7b84f0d4009827
+j2_status=PUBLISHED
+source=https://github.com/trunghungvtcn/thbison-knowledge-factory/commit/8b197d67f70f6db614a8aefdda7b84f0d4009827
+tree=https://github.com/trunghungvtcn/thbison-knowledge-factory/tree/8b197d67f70f6db614a8aefdda7b84f0d4009827
+pr=https://github.com/trunghungvtcn/thbison-knowledge-factory/pull/8
+mailbox=https://github.com/trunghungvtcn/thbison-knowledge-factory/issues/4
 core=3f1f125f3ccb6b5fbf173c2aa0e10b5d3b30584b
+read_from=issue #4 body HEAD_SHA on 2026-09-10

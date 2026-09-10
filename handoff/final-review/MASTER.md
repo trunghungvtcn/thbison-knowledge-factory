@@ -1,14 +1,29 @@
-# MASTER — J1–J3 final remediation handoff
+# MASTER — J1–J3 final remediation handoff (r2)
 
 status: READY_FOR_REVIEW
 acceptance_claimed: false
 kind: GitHub guidance pack (not offline-complete)
 code_changed: false
 date: 2026-09-10
+tag: `handoff-j1-j3-final-20260910-r2`
+branch: `handoff/j1-j3-final-review-20260910`
 
 This pack publishes the **final fix plan and prompts** for J1, J2, and J3.
 It does **not** implement the fixes. It does **not** claim ACCEPTED.
 It does **not** claim offline-complete.
+
+## Why r2
+
+Tag `handoff-j1-j3-final-20260910` (commit `ad0c682`) already exists and **is not moved**.
+That r1 pack pinned J2 HEAD `5e6161914f519403059ce13a1568d58ac7162f28` after issue #4 body had already published `8b197d67f70f6db614a8aefdda7b84f0d4009827`. This r2 pack is the master guidance: same branch, corrected pins, expanded prompts. Use this Release, not r1.
+
+r1 ZIP hashes (historical, verified by re-download, not this pack):
+
+```
+fd611f749e9102feb76ea8e06eb0d617d18fae6713d60e82f027e5bc1bb18d21  J1-final-fix.zip
+c3dd40e82ca7d37c6a356e0bfb613d8cae73ae11469a39e1ba875a5a6c0e6705  J2-final-fix.zip
+c0fea0246dadcbd458b4fed75635a466d7ac8421a5980df31aafeeb2e7af7364  J3-final-fix.zip
+```
 
 ## Baselines
 
@@ -16,11 +31,12 @@ It does **not** claim offline-complete.
 |---|---|---|
 | Core / working baseline | `3f1f125f3ccb6b5fbf173c2aa0e10b5d3b30584b` | PR #1 head `fix/migration-architecture-alignment` |
 | J1 reviewed source | `b9e291fb84ddf99a6e6dd662ae122f39326f4d41` | draft PR #7 |
-| J2 published HEAD | `5e6161914f519403059ce13a1568d58ac7162f28` | issue #4 body + draft PR #8 |
+| J2 published HEAD | `8b197d67f70f6db614a8aefdda7b84f0d4009827` | issue #4 body + draft PR #8 head |
 | J3 reviewed source | `9a7d09375bf242f3cf89b9e2d556192a12e8b830` | draft PR #6 |
 | Contractor public API | `afac091e60bb6c8a0f0630964e43f5e80951267c` | `trunghungvtcn/pipeline-lab-contractor-m1-m5` |
 
 J2 is **published**, not UNPUBLISHED. Read from issue #4 on 2026-09-10.
+Earlier J2 SHA `5e61619` is a parent on PR #8 (before the payload wrapper). Do not use it as HEAD.
 
 ## Issues and PRs
 
@@ -32,27 +48,29 @@ J2 is **published**, not UNPUBLISHED. Read from issue #4 on 2026-09-10.
 - J2 PR: https://github.com/trunghungvtcn/thbison-knowledge-factory/pull/8
 - J3 PR: https://github.com/trunghungvtcn/thbison-knowledge-factory/pull/6
 - Core PR: https://github.com/trunghungvtcn/thbison-knowledge-factory/pull/1
+- Handoff docs PR: https://github.com/trunghungvtcn/thbison-knowledge-factory/pull/9
 
 ## Guidance packs (one ZIP per job)
 
 Each ZIP is a **prompt kit that needs GitHub**. It is not an executable remediation and is not offline-complete.
 
+Contents of each ZIP: `PROMPT.md`, `ACCEPTANCE.md`, `COMMON_RULES.md`, `BASELINES.json`, `SOURCE.txt` (source URL at the correct SHA).
+
 Download from this GitHub Release and verify:
 
 ```text
-sha256sum -c SHA256SUMS.txt
+sha256sum -c SHA256SUMS
 ```
 
 ```text
-fd611f749e9102feb76ea8e06eb0d617d18fae6713d60e82f027e5bc1bb18d21  J1-final-fix.zip
-c3dd40e82ca7d37c6a356e0bfb613d8cae73ae11469a39e1ba875a5a6c0e6705  J2-final-fix.zip
-c0fea0246dadcbd458b4fed75635a466d7ac8421a5980df31aafeeb2e7af7364  J3-final-fix.zip
+b8d05cc9e9f9b1d50d5003a60b1cbdaf8e5158b0ecd521f3c89ad433ceac16fe  J1-final-fix.zip
+1449cecab437ca529192125c0cd252b68f6bf718a7a2cf83541b3fde1fa3173c  J2-final-fix.zip
+e296a319e453c3d8fb61e62ac669ce9d08ab40c1a7c9a74f87d2996857c868c4  J3-final-fix.zip
 ```
 
 Unpacked sources: `handoff/final-review/packages/J*-final-fix/`. Binary ZIPs are gitignored.
 
 Tree on this branch: `handoff/final-review/`
-Tag: `handoff-j1-j3-final-20260910`
 
 ## Coordination
 
