@@ -1,0 +1,9 @@
+job=J1
+kind=github-guidance-pack
+offline_complete=false
+reviewed_sha=b9e291fb84ddf99a6e6dd662ae122f39326f4d41
+source=https://github.com/trunghungvtcn/thbison-knowledge-factory/commit/b9e291fb84ddf99a6e6dd662ae122f39326f4d41
+tree=https://github.com/trunghungvtcn/thbison-knowledge-factory/tree/b9e291fb84ddf99a6e6dd662ae122f39326f4d41
+pr=https://github.com/trunghungvtcn/thbison-knowledge-factory/pull/7
+mailbox=https://github.com/trunghungvtcn/thbison-knowledge-factory/issues/3
+core=3f1f125f3ccb6b5fbf173c2aa0e10b5d3b30584b

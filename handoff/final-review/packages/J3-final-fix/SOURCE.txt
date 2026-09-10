@@ -1,0 +1,14 @@
+job=J3
+kind=github-guidance-pack
+offline_complete=false
+reviewed_sha=9a7d09375bf242f3cf89b9e2d556192a12e8b830
+source=https://github.com/trunghungvtcn/thbison-knowledge-factory/commit/9a7d09375bf242f3cf89b9e2d556192a12e8b830
+tree=https://github.com/trunghungvtcn/thbison-knowledge-factory/tree/9a7d09375bf242f3cf89b9e2d556192a12e8b830
+pr=https://github.com/trunghungvtcn/thbison-knowledge-factory/pull/6
+mailbox=https://github.com/trunghungvtcn/thbison-knowledge-factory/issues/2
+pointer=https://github.com/trunghungvtcn/thbison-knowledge-factory/issues/5
+contractor=afac091e60bb6c8a0f0630964e43f5e80951267c
+contractor_source=https://github.com/trunghungvtcn/pipeline-lab-contractor-m1-m5/commit/afac091e60bb6c8a0f0630964e43f5e80951267c
+core=3f1f125f3ccb6b5fbf173c2aa0e10b5d3b30584b
+j1_reviewed=b9e291fb84ddf99a6e6dd662ae122f39326f4d41
+j2_published_head=8b197d67f70f6db614a8aefdda7b84f0d4009827

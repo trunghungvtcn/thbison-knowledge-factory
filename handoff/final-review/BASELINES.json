@@ -1,0 +1,42 @@
+{
+  "kind": "github-guidance-pack",
+  "pack_id": "handoff-j1-j3-final-20260910-r2",
+  "acceptance_claimed": false,
+  "offline_complete": false,
+  "code_changed": false,
+  "date": "2026-09-10",
+  "core": "3f1f125f3ccb6b5fbf173c2aa0e10b5d3b30584b",
+  "core_evidence": "PR #1 head; branch fix/migration-architecture-alignment",
+  "j1_reviewed": "b9e291fb84ddf99a6e6dd662ae122f39326f4d41",
+  "j1_pr": 7,
+  "j1_issue": 3,
+  "j1_inventory_content_hash_published": "318a7db871bb056e321d75d18063b9267ece121d7a36f604aaca08ca167f7c89",
+  "j1_inventory_hash_note": "Published on issue #3 as inventory_sha256 of the J1 report. Not a claim that missing external inputs were HASH_VERIFIED.",
+  "j2_published_head": "8b197d67f70f6db614a8aefdda7b84f0d4009827",
+  "j2_published_head_read_from": "issue #4 body HEAD_SHA + PR #8 head + branch jobs/j2-core-verification-20260910, read 2026-09-10",
+  "j2_earlier_sha_on_same_pr": "5e6161914f519403059ce13a1568d58ac7162f28",
+  "j2_status": "PUBLISHED",
+  "j2_pr": 8,
+  "j2_issue": 4,
+  "j2_junit_sha256_at_head": "fccd4eeab5f897e882937d7cd36081e09786a773df237981f4c57d3240223962",
+  "j3_reviewed": "9a7d09375bf242f3cf89b9e2d556192a12e8b830",
+  "j3_pr": 6,
+  "j3_issue": 2,
+  "j3_pointer_issue": 5,
+  "contractor": "afac091e60bb6c8a0f0630964e43f5e80951267c",
+  "contractor_repo": "trunghungvtcn/pipeline-lab-contractor-m1-m5",
+  "issues": {"j1": 3, "j2": 4, "j3": 2, "j3_pointer": 5},
+  "source_links": {
+    "core": "https://github.com/trunghungvtcn/thbison-knowledge-factory/commit/3f1f125f3ccb6b5fbf173c2aa0e10b5d3b30584b",
+    "j1": "https://github.com/trunghungvtcn/thbison-knowledge-factory/commit/b9e291fb84ddf99a6e6dd662ae122f39326f4d41",
+    "j2": "https://github.com/trunghungvtcn/thbison-knowledge-factory/commit/8b197d67f70f6db614a8aefdda7b84f0d4009827",
+    "j3": "https://github.com/trunghungvtcn/thbison-knowledge-factory/commit/9a7d09375bf242f3cf89b9e2d556192a12e8b830",
+    "contractor": "https://github.com/trunghungvtcn/pipeline-lab-contractor-m1-m5/commit/afac091e60bb6c8a0f0630964e43f5e80951267c"
+  },
+  "supersedes": {
+    "tag": "handoff-j1-j3-final-20260910",
+    "commit": "ad0c6825804b59c91f99651570fec1efc0d32b32",
+    "reason": "r1 pinned J2 HEAD 5e61619 after issue #4 body already published 8b197d67. Old tag is not moved.",
+    "old_tag_unchanged": true
+  }
+}

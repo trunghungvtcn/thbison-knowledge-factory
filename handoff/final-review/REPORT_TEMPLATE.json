@@ -1,0 +1,27 @@
+{
+  "schema": "thbison.job-report.v1",
+  "job_id": "J?",
+  "status": "READY_FOR_REVIEW",
+  "acceptance_claimed": false,
+  "head_sha": "",
+  "base_sha": "3f1f125f3ccb6b5fbf173c2aa0e10b5d3b30584b",
+  "command": "",
+  "exit_code": null,
+  "junit": "",
+  "tests_run": null,
+  "tests_deselected": [
+    {
+      "nodeid": "",
+      "missing_input": "",
+      "status": "BLOCKED_INPUT|NOT_RUN"
+    }
+  ],
+  "hashes": {
+    "audited_source_sha": "",
+    "tool_sha": "",
+    "inventory_or_input_hash": "",
+    "reproduction": []
+  },
+  "holds": [],
+  "notes": "Do not label subset results as full-suite PASS. READY_FOR_REVIEW is not ACCEPTED."
+}
