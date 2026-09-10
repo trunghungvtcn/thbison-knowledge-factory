@@ -1,0 +1,5 @@
+job=J3
+reviewed_sha=9a7d09375bf242f3cf89b9e2d556192a12e8b830
+pr=https://github.com/trunghungvtcn/thbison-knowledge-factory/commit/9a7d09375bf242f3cf89b9e2d556192a12e8b830
+contractor=afac091e60bb6c8a0f0630964e43f5e80951267c
+core=3f1f125f3ccb6b5fbf173c2aa0e10b5d3b30584b

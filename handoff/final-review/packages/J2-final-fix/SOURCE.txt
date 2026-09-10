@@ -1,0 +1,4 @@
+job=J2
+published_head=5e6161914f519403059ce13a1568d58ac7162f28
+pr=https://github.com/trunghungvtcn/thbison-knowledge-factory/commit/5e6161914f519403059ce13a1568d58ac7162f28
+core=3f1f125f3ccb6b5fbf173c2aa0e10b5d3b30584b
