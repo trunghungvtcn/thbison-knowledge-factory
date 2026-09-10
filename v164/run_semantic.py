@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from kf_pilot.v16.identity import claim_version_id
+from kf_pilot.legacy_manifest import LegacyManifestPathError, resolve_manifest_entries
 from kf_pilot.v162_remediation.core import BASELINE, compute, digest as v162_digest, resolve
 from kf_pilot.v163_evidence.binding import digest as v163_digest
 from kf_pilot.v163_evidence.sources import VisibleText, source_catalog, verify_span
@@ -61,8 +62,12 @@ def verify_checkpoint() -> dict:
     plan = _json(BASELINE_FILE)
     require(v162_digest(plan) == BASELINE, "V161_BASELINE_MISMATCH")
     source_manifest = _json(V163_FINAL / "v163_input_manifest.json")
+    try:
+        source_paths = resolve_manifest_entries(ROOT, source_manifest, dialect="windows-relative-v1")
+    except LegacyManifestPathError as exc:
+        require(False, "V163_INPUT_MANIFEST_PATH_UNSAFE", str(exc))
     for rel, expected in source_manifest.items():
-        path = ROOT / rel
+        path = source_paths[rel]
         require(path.is_file() and sha256(path.read_bytes()) == expected,
                 "V163_INPUT_MANIFEST_MISMATCH", rel)
     report = _json(V163_FINAL / "v163_readiness_report.json")

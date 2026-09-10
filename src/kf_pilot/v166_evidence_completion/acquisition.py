@@ -1,9 +1,12 @@
 """The only V16.6 module allowed to use the network."""
 import mimetypes
+import os
+import shutil
+import tempfile
 import time
 from pathlib import Path
 
-from .canonical import bytes_for, load, require, sha256
+from .canonical import bytes_for, confined, load, require, sha256
 from .schemas import iso_time, validate_research_plan
 
 MAX_SOURCE_BYTES = 20 * 1024 * 1024
@@ -62,21 +65,33 @@ def freeze(acquisition_dir, as_of, output):
     iso_time(as_of)
     source = Path(acquisition_dir).resolve()
     manifest = load(source / "acquisition_manifest.json")
-    out = _new_dir(output)
-    corpus = out / "corpus"
-    corpus.mkdir()
-    frozen = []
-    for row in manifest["sources"]:
-        item = dict(row)
-        if row["status"] == "FETCHED":
-            src = source / row["local_path"]
-            require(src.is_file() and sha256(src.read_bytes()) == row["sha256"], "ACQUISITION_HASH_MISMATCH")
-            dest = corpus / src.name
-            dest.write_bytes(src.read_bytes())
-            item["local_path"] = "corpus/" + dest.name
-        frozen.append(item)
-    frozen_manifest = {"schema_version": 1, "as_of": as_of, "sources": frozen}
-    frozen_manifest["corpus_revision"] = sha256(bytes_for(frozen_manifest))
-    (out / "frozen_corpus_manifest.json").write_bytes(bytes_for(frozen_manifest) + b"\n")
-    (out / "discovery_log.jsonl").write_bytes((source / "discovery_log.jsonl").read_bytes())
-    return {"corpus_revision": frozen_manifest["corpus_revision"], "fetched": sum(r["status"] == "FETCHED" for r in frozen)}
+    final = Path(output)
+    require(not final.exists(), "OUTPUT_ALREADY_EXISTS")
+    final.parent.mkdir(parents=True, exist_ok=True)
+    out = Path(tempfile.mkdtemp(prefix=final.name + ".staging-", dir=final.parent))
+    try:
+        corpus = out / "corpus"
+        corpus.mkdir()
+        frozen = []
+        for row in manifest["sources"]:
+            item = dict(row)
+            if row["status"] == "FETCHED":
+                src = confined(source, row["local_path"])
+                raw = src.read_bytes() if src.is_file() else b""
+                require(src.is_file() and sha256(raw) == row["sha256"], "ACQUISITION_HASH_MISMATCH")
+                dest = corpus / row["sha256"]
+                if dest.exists():
+                    require(dest.read_bytes() == raw, "ACQUISITION_BLOB_COLLISION")
+                else:
+                    dest.write_bytes(raw)
+                item["local_path"] = "corpus/" + dest.name
+            frozen.append(item)
+        frozen_manifest = {"schema_version": 1, "as_of": as_of, "sources": frozen}
+        frozen_manifest["corpus_revision"] = sha256(bytes_for(frozen_manifest))
+        (out / "frozen_corpus_manifest.json").write_bytes(bytes_for(frozen_manifest) + b"\n")
+        (out / "discovery_log.jsonl").write_bytes((source / "discovery_log.jsonl").read_bytes())
+        os.replace(out, final)
+        return {"corpus_revision": frozen_manifest["corpus_revision"], "fetched": sum(r["status"] == "FETCHED" for r in frozen)}
+    except BaseException:
+        shutil.rmtree(out, ignore_errors=True)
+        raise

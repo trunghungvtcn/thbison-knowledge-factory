@@ -1,7 +1,7 @@
 import hashlib
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 
 
 class ContractError(ValueError):
@@ -65,11 +65,12 @@ def confined(root, value):
     # normalization, POSIX interprets a Windows traversal such as ``..\\x``
     # as a harmless filename and the contract becomes platform-dependent.
     normalized = value.replace("\\", "/")
+    windows = PureWindowsPath(value)
+    require(not Path(normalized).is_absolute() and not windows.drive and not windows.root,
+            "ABSOLUTE_PATH")
     require(".." not in Path(normalized).parts, "PATH_TRAVERSAL")
     root = Path(root).resolve()
-    candidate = Path(normalized)
-    if not candidate.is_absolute():
-        candidate = root / candidate
+    candidate = root / normalized
     resolved = candidate.resolve()
     require(os.path.commonpath([str(root), str(resolved)]) == str(root), "PATH_TRAVERSAL")
     return resolved

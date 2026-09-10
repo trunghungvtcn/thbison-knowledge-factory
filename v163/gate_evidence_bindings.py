@@ -8,6 +8,7 @@ import sys
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'src'))
 from kf_pilot.v163_evidence.sources import source_catalog,verify_span
+from kf_pilot.legacy_manifest import LegacyManifestPathError,resolve_manifest_entries
 from kf_pilot.v163_evidence.binding import review_work,proposals,adjudicate
 from kf_pilot.v162_remediation.core import require,gate_readiness,digest,BASELINE
 
@@ -19,8 +20,13 @@ def main(output,trusted_reviewers=None):
     v162['verify_assets']()
     for n,h in load(output/'artifact_hashes.json').items():
         require(hashlib.sha256((output/n).read_bytes()).hexdigest()==h,'artifact hash mismatch')
-    for n,h in load(output/'v163_input_manifest.json').items():
-        require(hashlib.sha256((ROOT/n).read_bytes()).hexdigest()==h,'input/code hash changed')
+    source_manifest=load(output/'v163_input_manifest.json')
+    try:
+        source_paths=resolve_manifest_entries(ROOT,source_manifest,dialect='windows-relative-v1')
+    except LegacyManifestPathError as exc:
+        require(False,'input/code path unsafe:'+str(exc))
+    for n,h in source_manifest.items():
+        require(hashlib.sha256(source_paths[n].read_bytes()).hexdigest()==h,'input/code hash changed')
     old=ROOT/'v162/artifacts/remediation-final';base=ROOT/'v162/baseline-reproduced'
     require(digest(load(base/'notion_typed_update_plan.json'))==BASELINE,'baseline changed')
     catalog=source_catalog(ROOT)

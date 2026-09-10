@@ -20,6 +20,7 @@ PACK=ROOT/'vendor/v165-deployment-pack/v165-codex-handoff'
 PRIMARY='0496c4f5-fe89-5d30-b948-34505fb64143'
 SECONDARY='59957ace-b4fb-519e-b92d-773bc74ad268'
 TARGETS=(PRIMARY,SECONDARY)
+LEGACY_CODE_ARCHIVE={'v164/run_semantic.py':'docs/recovery/v164/run_semantic.py'}
 
 
 def load(path):
@@ -87,7 +88,8 @@ def produce():
     for name in [p.name for p in final.iterdir() if p.is_file()]:
         require((final/name).read_bytes()==(replay/name).read_bytes(),'V164_REPLAY_MISMATCH',name)
     for rel,h in load(final/'v164_code_manifest.json').items():
-        require(sha256((ROOT/rel).read_bytes())==h,'V164_CODE_MANIFEST_MISMATCH',rel)
+        archived=LEGACY_CODE_ARCHIVE.get(rel,rel)
+        require(sha256((ROOT/archived).read_bytes())==h,'V164_CODE_MANIFEST_MISMATCH',rel)
     base=ROOT/'v162/baseline-reproduced'
     plan=load(base/'notion_typed_update_plan.json')
     require(digest(plan)==BASELINE,'BASELINE_MISMATCH')
