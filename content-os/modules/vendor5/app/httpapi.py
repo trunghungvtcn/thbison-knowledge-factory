@@ -51,9 +51,20 @@ class Handler(BaseHTTPRequestHandler):
         self._json(exc.http_status, exc.body(request_id))
 
     def _read_json(self) -> dict:
-        n = int(self.headers.get("Content-Length", "0"))
+        try:
+            n = int(self.headers.get("Content-Length", "0"))
+        except ValueError as exc:
+            raise AdapterError("VALIDATION_ERROR", "Content-Length must be an integer") from exc
+        if n < 0 or n > 2_097_152:
+            raise AdapterError("VALIDATION_ERROR", "JSON body exceeds the 2097152 byte limit")
         raw = self.rfile.read(n) if n else b"{}"
-        return json.loads(raw.decode("utf-8"))
+        try:
+            body = json.loads(raw.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise AdapterError("VALIDATION_ERROR", "Request body must be valid UTF-8 JSON") from exc
+        if not isinstance(body, dict):
+            raise AdapterError("VALIDATION_ERROR", "Request body must be a JSON object")
+        return body
 
     def do_GET(self) -> None:  # noqa: N802
         path = urlparse(self.path).path

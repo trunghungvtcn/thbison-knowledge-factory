@@ -37,3 +37,7 @@ Full Linux verification is `python scripts/verify_candidate.py --full`; the pinn
 `ACTUAL_PROCESS_SYNTHETIC_PASS`: public effects 0; V3 final/read-after-restart `SUCCEEDED`; retry owner `vendor3`; CMS `DRY_RUN`; Notion `NOTION_TARGET_MISSING`.
 
 This report does not claim production readiness. Grok must independently verify G0–G10 from the release SHA and assets and report through the single audit issue.
+
+## Independent audit remediation
+
+Grok returned `AUDIT_BLOCKED` with 54/55 adjudicated scenarios passing. The sole residual, malformed CMS JSON closing the connection, is fixed in the bounded remediation documented in `REMEDIATION_01.md`; targeted HTTP tests now pass 5/5 and the actual-process TEST_ONLY pipeline still passes with zero CMS effects. G1, G3, G7 and G9 remain blocked/not-run for the explicit reasons above.

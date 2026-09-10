@@ -68,10 +68,16 @@
       "sha256": "e5f3fe108d5ebe89d4494e392ca29ac76465885543cfcead56877abf0e906e93"
     },
     {
-      "bytes": 3099,
+      "bytes": 1516,
+      "kind": "file",
+      "path": "REMEDIATION_01.md",
+      "sha256": "59d5ee8ba6f337815adb6f8eeb403ad11e5663a4f8567b4a1087f163efd7c4ed"
+    },
+    {
+      "bytes": 3523,
       "kind": "file",
       "path": "REPORT_CODEX.md",
-      "sha256": "63dc48abd33fbef727d40d0447ced7f429dfd658fa03a470ab7a5aa1c17ff00e"
+      "sha256": "a90b48de634823e60a2b0546a11ab5d7f1e8ca682391be7934a39f0bf974105b"
     },
     {
       "bytes": 1102,
@@ -3746,10 +3752,10 @@
       "sha256": "cabe3c87dffbc6a407490e44b971781d467d707277f7ef064b6fc7ba902f0c75"
     },
     {
-      "bytes": 4996,
+      "bytes": 5606,
       "kind": "file",
       "path": "content-os/modules/vendor5/app/httpapi.py",
-      "sha256": "90da957cb9def5e48120d12e2b7e5b962474666ba53b5bc94280a74691523905"
+      "sha256": "95fffc8a003c1e10623d53d8060cf0869b03c0224366a8a0a07069200907eae7"
     },
     {
       "bytes": 9758,
@@ -4064,10 +4070,10 @@
       "sha256": "c9ca23ec147b7ad261efe0696a07162f3144e72c02695a482a6c824d0420d890"
     },
     {
-      "bytes": 2162,
+      "bytes": 4103,
       "kind": "file",
       "path": "content-os/modules/vendor5/tests/test_http.py",
-      "sha256": "51b4f2a8c33fa3c41fe7d5a6b547eafb65bb0bf41e2a86dd114760d2d69534dd"
+      "sha256": "51f683284eb50461ad4d506fdf735ed3200c6151ff00e5ce85ef677187cf010b"
     },
     {
       "bytes": 3819,

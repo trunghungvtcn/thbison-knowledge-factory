@@ -71,3 +71,61 @@ def test_publish_http_dry_run():
             assert body["actual_side_effects"] == 0
     finally:
         httpd.shutdown()
+
+
+def test_publish_malformed_json_returns_validation_envelope():
+    httpd = _server()
+    try:
+        req = Request(
+            _url(httpd, "/v1/publications"),
+            data=b"{not json",
+            headers={
+                "Authorization": "Bearer test-service",
+                "X-Contract-Version": "1.0.0",
+                "Idempotency-Key": "malformed-json-01",
+                "X-Request-Id": "req-malformed-01",
+                "Content-Type": "application/json",
+            },
+            method="POST",
+        )
+        try:
+            urlopen(req)
+            assert False, "malformed JSON must not be accepted"
+        except HTTPError as exc:
+            assert exc.code == 400
+            body = json.loads(exc.read().decode())
+            assert body == {
+                "contract_version": "1.0.0",
+                "request_id": "req-malformed-01",
+                "code": "VALIDATION_ERROR",
+                "message": "Request body must be valid UTF-8 JSON",
+                "retryable": False,
+            }
+    finally:
+        httpd.shutdown()
+
+
+def test_publish_non_object_json_returns_validation_envelope():
+    httpd = _server()
+    try:
+        req = Request(
+            _url(httpd, "/v1/publications"),
+            data=b"[]",
+            headers={
+                "Authorization": "Bearer test-service",
+                "X-Contract-Version": "1.0.0",
+                "Idempotency-Key": "non-object-json-01",
+                "Content-Type": "application/json",
+            },
+            method="POST",
+        )
+        try:
+            urlopen(req)
+            assert False, "non-object JSON must not be accepted"
+        except HTTPError as exc:
+            assert exc.code == 400
+            body = json.loads(exc.read().decode())
+            assert body["code"] == "VALIDATION_ERROR"
+            assert body["message"] == "Request body must be a JSON object"
+    finally:
+        httpd.shutdown()
