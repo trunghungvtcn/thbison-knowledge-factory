@@ -8,6 +8,12 @@
       "sha256": "0d4952386ab5ffef685bcf3900bdf5eb33893455449a608de697e7c7fb137da7"
     },
     {
+      "bytes": 1391,
+      "kind": "file",
+      "path": ".github/workflows/stabilization.yml",
+      "sha256": "1152f72378b529903790d101d135441a8ee04643710cc02894928fc68fcca2d6"
+    },
+    {
       "bytes": 1852,
       "kind": "file",
       "path": ".github/workflows/verify.yml",
@@ -90,6 +96,12 @@
       "kind": "file",
       "path": "SOURCE_SHA",
       "sha256": "4f7631265f37ec4110baf833aa56235a68b06fb9aa689f5a2b413d30cfd2ea13"
+    },
+    {
+      "bytes": 3005,
+      "kind": "file",
+      "path": "STABILIZATION_PLAN.md",
+      "sha256": "e86bb38b1b58b7af4efa94f9e13bae91c6813526fdc187b10c794c960891200d"
     },
     {
       "bytes": 185,
@@ -360,6 +372,12 @@
       "kind": "file",
       "path": "content-os/modules/vendor1/.env.example",
       "sha256": "ed5b80f02d4ef16b89c3722c2716c45ecafc6c766d887722e46fe5bb688641cc"
+    },
+    {
+      "bytes": 35,
+      "kind": "file",
+      "path": "content-os/modules/vendor1/.grok/app-env.json",
+      "sha256": "4ecd4c43f97c92389a1fd774ca2cf94296c9e49208a3f43162988936685dadae"
     },
     {
       "bytes": 604,
@@ -770,10 +788,10 @@
       "sha256": "99c8342319978d71ef3dea4989c05ecbf096946c39a255fa08f48b081a3e506b"
     },
     {
-      "bytes": 17675,
+      "bytes": 17877,
       "kind": "file",
       "path": "content-os/modules/vendor1/scripts/grok-pwa-shared.mjs",
-      "sha256": "860da7df5e0e5698ccc0ed9def2eb981c2f396831c5523368d031ec740b88b9c"
+      "sha256": "f84dfbfbd9c494c55a2287698253df25dc1a72809da0902294a750c2093f5e11"
     },
     {
       "bytes": 5658,
@@ -1580,10 +1598,16 @@
       "sha256": "fdfd1f7421214198b29742ee834c52d09073f780403cf60b53b27db2e4abdb71"
     },
     {
-      "bytes": 671,
+      "bytes": 692,
       "kind": "file",
       "path": "content-os/modules/vendor2/.gitignore",
-      "sha256": "6b0be16f8ebd0fa18e231a8e5e58a226a63d5fff87bc4e09f3a680003a96b636"
+      "sha256": "9963bd40a275b2e8c5c1bcdcefa920cee84f8f0893d478e2c5dde60ffe88ebe8"
+    },
+    {
+      "bytes": 35,
+      "kind": "file",
+      "path": "content-os/modules/vendor2/.grok/app-env.json",
+      "sha256": "4ecd4c43f97c92389a1fd774ca2cf94296c9e49208a3f43162988936685dadae"
     },
     {
       "bytes": 412,
@@ -1802,10 +1826,10 @@
       "sha256": "99c8342319978d71ef3dea4989c05ecbf096946c39a255fa08f48b081a3e506b"
     },
     {
-      "bytes": 17675,
+      "bytes": 17877,
       "kind": "file",
       "path": "content-os/modules/vendor2/scripts/grok-pwa-shared.mjs",
-      "sha256": "860da7df5e0e5698ccc0ed9def2eb981c2f396831c5523368d031ec740b88b9c"
+      "sha256": "f84dfbfbd9c494c55a2287698253df25dc1a72809da0902294a750c2093f5e11"
     },
     {
       "bytes": 5658,
@@ -4949,6 +4973,12 @@
       "kind": "file",
       "path": "scripts/package_release.py",
       "sha256": "5dddc411ad3d972abf7052af1d5b5e5eac33c63b6807c132a9f32e10377bd39b"
+    },
+    {
+      "bytes": 3662,
+      "kind": "file",
+      "path": "scripts/stabilization_verify.py",
+      "sha256": "556b5ab2f29a1d31d4348c9b03c891c5a120927d61408e6fde361c17d7c7c49f"
     },
     {
       "bytes": 3174,
