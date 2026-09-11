@@ -15,7 +15,8 @@ export const LIVE_FLAGS = {
   allow_staging: false,
   allow_social: false,
 };
-export const CODE_COMMIT = "a7c0e1d2b3f44566778899aabbccddeeff001122";
+export const CODE_COMMIT =
+  process.env.THBISON_CODE_COMMIT ?? "a7c0e1d2b3f44566778899aabbccddeeff001122";
 export const MODE = "MOCK" as const;
 
 export const ENABLED_OPERATIONS = [
