@@ -57,9 +57,13 @@ jobs:
         run: python -m pip install pytest==9.1.1 jsonschema==4.26.0
 
       - name: Verify source and contractor suites
+        id: source
+        continue-on-error: true
         run: python scripts/verify_candidate.py --full
 
       - name: Verify V1
+        id: v1
+        continue-on-error: true
         working-directory: content-os/modules/vendor1
         run: |
           set -euo pipefail
@@ -69,6 +73,8 @@ jobs:
           npm run build
 
       - name: Verify V2 and run candidate migration
+        id: v2
+        continue-on-error: true
         working-directory: content-os/modules/vendor2
         run: |
           set -euo pipefail
@@ -78,6 +84,8 @@ jobs:
           npm run build
 
       - name: Verify migration idempotency and schema
+        id: postgres
+        continue-on-error: true
         working-directory: content-os/modules/vendor2
         shell: bash
         run: |
@@ -100,12 +108,16 @@ jobs:
           NODE
 
       - name: Run V5 and V6 suites
+        id: v5_v6
+        continue-on-error: true
         run: |
           set -euo pipefail
           CMS_LEDGER_PATH="$RUNNER_TEMP/v5.sqlite" python -m pytest -q content-os/modules/vendor5/tests --junitxml=v5.xml
           python -m pytest -q content-os/modules/vendor6/tests --junitxml=v6.xml
 
       - name: Actual-process synthetic E2E
+        id: actual_e2e
+        continue-on-error: true
         run: python content-os/modules/vendor6/scripts/run_actual_integration.py
 
       - name: Upload non-secret audit evidence
@@ -120,3 +132,16 @@ jobs:
             v6.xml
           if-no-files-found: warn
           retention-days: 14
+
+      - name: Enforce final audit result
+        if: always()
+        env:
+          SOURCE: ${{ steps.source.outcome }}
+          V1: ${{ steps.v1.outcome }}
+          V2: ${{ steps.v2.outcome }}
+          POSTGRES: ${{ steps.postgres.outcome }}
+          V5_V6: ${{ steps.v5_v6.outcome }}
+          ACTUAL_E2E: ${{ steps.actual_e2e.outcome }}
+        run: |
+          printf 'source=%s v1=%s v2=%s postgres=%s v5_v6=%s actual_e2e=%s\n' "$SOURCE" "$V1" "$V2" "$POSTGRES" "$V5_V6" "$ACTUAL_E2E"
+          test "$SOURCE,$V1,$V2,$POSTGRES,$V5_V6,$ACTUAL_E2E" = "success,success,success,success,success,success"
