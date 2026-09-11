@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: neon-final-audit-e1470d4
+  group: neon-final-audit-91ff7b3
   cancel-in-progress: false
 
 jobs:
@@ -17,13 +17,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
-      CANDIDATE_SHA: e1470d4d429519434c32296871825fc6f108f2d1
+      CANDIDATE_SHA: 91ff7b32cc394dacd86faf8477ff50361b46ecb9
       DATABASE_URL: ${{ secrets.NEON_AUDIT_DATABASE_URL }}
     steps:
       - name: Checkout immutable candidate
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: e1470d4d429519434c32296871825fc6f108f2d1
+          ref: 91ff7b32cc394dacd86faf8477ff50361b46ecb9
           submodules: recursive
           fetch-depth: 0
           persist-credentials: false
@@ -124,7 +124,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: neon-final-audit-e1470d4
+          name: neon-final-audit-91ff7b3
           path: |
             content-os/evidence-current
             content-os/modules/vendor2/migration-rerun.log
