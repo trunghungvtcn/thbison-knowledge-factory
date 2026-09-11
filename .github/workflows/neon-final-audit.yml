@@ -1,0 +1,122 @@
+name: neon-final-audit
+
+on:
+  push:
+    branches:
+      - codex/audit-e1470d4-neon-final
+
+permissions:
+  contents: read
+
+concurrency:
+  group: neon-final-audit-e1470d4
+  cancel-in-progress: false
+
+jobs:
+  candidate-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      CANDIDATE_SHA: e1470d4d429519434c32296871825fc6f108f2d1
+      DATABASE_URL: ${{ secrets.NEON_AUDIT_DATABASE_URL }}
+    steps:
+      - name: Checkout immutable candidate
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: e1470d4d429519434c32296871825fc6f108f2d1
+          submodules: recursive
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Enforce candidate and sandbox database target
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$CANDIDATE_SHA"
+          test -n "$DATABASE_URL"
+          case "$DATABASE_URL" in
+            *ep-summer-bonus-axvy7i2s*) ;;
+            *) echo "Refusing non-audit Neon endpoint" >&2; exit 1 ;;
+          esac
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - name: Set up Node 22.23.2
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22.23.2"
+          cache: npm
+          cache-dependency-path: |
+            content-os/modules/vendor1/package-lock.json
+            content-os/modules/vendor2/package-lock.json
+
+      - name: Install verification dependencies
+        run: python -m pip install pytest==9.1.1 jsonschema==4.26.0
+
+      - name: Verify source and contractor suites
+        run: python scripts/verify_candidate.py --full
+
+      - name: Verify V1
+        working-directory: content-os/modules/vendor1
+        run: |
+          set -euo pipefail
+          npm ci --ignore-scripts
+          npm run typecheck
+          npm test
+          npm run build
+
+      - name: Verify V2 and run candidate migration
+        working-directory: content-os/modules/vendor2
+        run: |
+          set -euo pipefail
+          npm ci --ignore-scripts
+          npm run typecheck
+          npm test
+          npm run build
+
+      - name: Verify migration idempotency and schema
+        working-directory: content-os/modules/vendor2
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run db:migrate | tee migration-rerun.log
+          grep -F "[migrate] up to date." migration-rerun.log
+          node --input-type=module <<'NODE'
+          import pg from "pg";
+          const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL, max: 1 });
+          try {
+            const migrations = await pool.query("SELECT name FROM _migrations ORDER BY name");
+            const tables = await pool.query("SELECT count(*)::int AS count FROM information_schema.tables WHERE table_schema='public' AND table_name LIKE 'cos_%'");
+            const names = migrations.rows.map((row) => row.name);
+            if (!names.includes("0002_content_os.sql")) throw new Error("migration receipt missing");
+            if (tables.rows[0].count !== 16) throw new Error(`expected 16 cos tables, got ${tables.rows[0].count}`);
+            console.log(JSON.stringify({ candidate: process.env.CANDIDATE_SHA, migrations: names, cos_table_count: tables.rows[0].count }));
+          } finally {
+            await pool.end();
+          }
+          NODE
+
+      - name: Run V5 and V6 suites
+        run: |
+          set -euo pipefail
+          CMS_LEDGER_PATH="$RUNNER_TEMP/v5.sqlite" python -m pytest -q content-os/modules/vendor5/tests --junitxml=v5.xml
+          python -m pytest -q content-os/modules/vendor6/tests --junitxml=v6.xml
+
+      - name: Actual-process synthetic E2E
+        run: python content-os/modules/vendor6/scripts/run_actual_integration.py
+
+      - name: Upload non-secret audit evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: neon-final-audit-e1470d4
+          path: |
+            content-os/evidence-current
+            content-os/modules/vendor2/migration-rerun.log
+            v5.xml
+            v6.xml
+          if-no-files-found: warn
+          retention-days: 14
