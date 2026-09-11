@@ -1,6 +1,7 @@
 # dependencies and caches — never ship in the release ZIP
 node_modules/
-.grok/
+.grok/*
+!.grok/app-env.json
 .pytest_cache/
 **/__pycache__/
 *.pyc

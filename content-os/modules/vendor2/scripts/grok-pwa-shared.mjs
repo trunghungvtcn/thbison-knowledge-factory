@@ -254,6 +254,8 @@ export function readOgSite(cwd = process.cwd()) {
 
 /** Public path of an on-disk share card, or "" if neither file exists. */
 export function ogCardPublicPath(cwd = process.cwd()) {
+  // Empty/omitted cwd: unit tests must not inherit process.cwd() product assets.
+  if (!cwd) return "";
   if (existsSync(join(cwd, "public/og.jpg"))) return "/og.jpg";
   if (existsSync(join(cwd, "public/og.png"))) return "/og.png";
   return "";
@@ -401,15 +403,18 @@ function insertBeforeHeadClose(html, snippet) {
 }
 
 export function normalizeHeadContext(ctx = {}) {
-  const cwd = ctx.cwd ?? process.cwd();
-  // Middleware passes a baked `site`. Still consult the workspace so a
-  // public/og.jpg generated after that snapshot (or missed by a wrong cwd)
-  // wins over the og.grok.me placeholder. Vercel has no public/ to read, so
-  // a correct bake is unchanged.
-  const site = applyCustomCardFromFs(
-    ctx.site !== undefined ? ctx.site : snapshotOgIdentity(cwd).site,
-    cwd,
-  );
+  // Production Vite plugin always passes `cwd`. Nitro middleware always passes
+  // a baked `site`. Unit tests that omit both must not inherit process.cwd()
+  // product identity (site.json / public/og.jpg).
+  const cwdExplicit = ctx.cwd !== undefined && ctx.cwd !== null;
+  const cwd = cwdExplicit ? ctx.cwd : "";
+  const base =
+    ctx.site !== undefined
+      ? ctx.site
+      : cwdExplicit
+        ? snapshotOgIdentity(cwd).site
+        : {};
+  const site = cwdExplicit ? applyCustomCardFromFs(base, cwd) : base;
   const appName = resolveOgTitle(site, ctx.appName ?? DEFAULT_APP_NAME, ctx.host ?? "");
   return {
     appName,
