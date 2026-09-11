@@ -1,0 +1,70 @@
+{
+  "research": {
+    "contract_version": "1.0.0",
+    "project_id": "test-thbison",
+    "data_class": "TEST_ONLY",
+    "research_id": "test-research-1",
+    "request_id": "test-request-1",
+    "scope": {
+      "country_code": "VN",
+      "language": "vi",
+      "timezone": "Asia/Bangkok",
+      "domain": "manual-chain-hoist"
+    },
+    "keywords": [
+      {
+        "keyword": "pa lăng xích kéo tay",
+        "volume": 100,
+        "difficulty": 10,
+        "measurement_status": "SYNTHETIC",
+        "provider": "fake-seo",
+        "captured_at": "2030-01-01T00:00:00Z",
+        "source_ref": "synthetic-keywords"
+      }
+    ],
+    "provider_snapshot": {
+      "artifact_id": "test-keywords",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "bytes": 100,
+      "media_type": "application/json"
+    },
+    "warnings": [
+      "SYNTHETIC; not measured SEO data."
+    ]
+  },
+  "brief": {
+    "contract_version": "1.0.0",
+    "project_id": "test-thbison",
+    "data_class": "TEST_ONLY",
+    "brief_id": "test-brief-1",
+    "brief_revision": 1,
+    "research_id": "test-research-1",
+    "scope": {
+      "country_code": "VN",
+      "language": "vi",
+      "timezone": "Asia/Bangkok",
+      "domain": "manual-chain-hoist"
+    },
+    "title": "Cấu tạo pa lăng xích kéo tay",
+    "audience": "TEST audience",
+    "intent": "informational",
+    "primary_keyword": "pa lăng xích kéo tay",
+    "secondary_keywords": [],
+    "questions": [
+      "What can be stated from the supplied source?"
+    ],
+    "outline": [
+      "Scope",
+      "Source-supported description"
+    ],
+    "evidence_requirements": [
+      "Every factual block maps to allowed claim IDs."
+    ],
+    "product_refs": [],
+    "proposed_publish_at": null,
+    "editorial_constraints": [
+      "TEST ONLY: do not publish or treat synthetic facts as product evidence."
+    ],
+    "origin": "RESEARCH"
+  }
+}

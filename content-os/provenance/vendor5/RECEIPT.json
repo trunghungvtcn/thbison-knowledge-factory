@@ -1,0 +1,15 @@
+{
+  "vendor": "VENDOR_5",
+  "generated_at": "2026-09-10T08:00:00Z",
+  "acceptance_claimed": false,
+  "status": "HANDOFF_READY_OFFLINE",
+  "code_changed": false,
+  "digest_subject": "source.zip",
+  "artifact_sha256": "45938e205ea876c1024da80646ddf0c75a91d5cfb0eef4d0e67b15c37f7e4ae8",
+  "contract_sha256": "fd3c1b6f1ec5461e7080c538e1c332d7af3098db32edd1565e1ae16933f951a8",
+  "source_revision": "73e7eb2bc354c53f5989044623695a574c2e27a684bc1c34764d4afb37de30e5",
+  "baseline_zip_sha256": "81b67300060a3193324946b318520f5a8fbe5fae6770dceb7edcadf3df65e48c",
+  "reviewer_verify_local": "VERIFY_LOCAL_OK 2026-09-10T07:44:13Z",
+  "reviewer_python": "3.12.14",
+  "reviewer_junit": "46 passed"
+}

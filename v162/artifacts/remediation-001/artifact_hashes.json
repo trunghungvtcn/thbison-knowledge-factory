@@ -1,0 +1,10 @@
+{
+  "v162_canonical_plan.json": "f1b83ea4d8e17fef922d36f243130445ac8eb253198464c315674dc7bc828585",
+  "v162_eligible_subset.json": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f",
+  "v162_input_manifest.json": "fcc08f38b72bfacc2a57c13f5e201b07f54af8375b8a9558fd58469bbaada8ea",
+  "v162_issue_ledger.json": "e57e9eba05c1d7083cc0cf8a234d8ef0ea709b60642204ff6240f3b5ccc4a34f",
+  "v162_phase_f_canary_plan.json": "016294a67647bc02105d371c29a4b37acea78de7b5379ec4ce409c998a28030c",
+  "v162_readiness_report.json": "129417bb83a31d128c44a943f6de64418c8b5067ac914cbc35d265a2c22185aa",
+  "v162_resolution_report.json": "129417bb83a31d128c44a943f6de64418c8b5067ac914cbc35d265a2c22185aa",
+  "v162_unresolved_review_queue.json": "1a6234244ef4acc70cbe6fae28dd5b450d80c5ba711184fb9ab2c1f4648440b6"
+}

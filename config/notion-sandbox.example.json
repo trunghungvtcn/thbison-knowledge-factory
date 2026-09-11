@@ -1,0 +1,9 @@
+{
+  "status": "NOTION_TARGET_MISSING",
+  "allowed_targets": [],
+  "token_env": "NOTION_TOKEN",
+  "read_only": true,
+  "max_rows": 100,
+  "max_pages": 10,
+  "private_output_dir": null
+}

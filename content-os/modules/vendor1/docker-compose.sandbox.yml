@@ -1,0 +1,14 @@
+# Isolated MOCK sandbox. No THBISON network, no secrets.
+services:
+  seo-planning:
+    build: .
+    user: "10001:10001"
+    environment:
+      THBISON_MODE: MOCK
+      THBISON_DATA_DIR: /app/data
+    ports:
+      - "8080:8080"
+    volumes:
+      - sandbox-data:/app/data
+volumes:
+  sandbox-data:

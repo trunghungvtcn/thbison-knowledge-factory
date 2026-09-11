@@ -1,0 +1,7 @@
+{
+  "status": "NOT_BUILT",
+  "reason": "No Docker daemon in the contractor sandbox. Dockerfile and docker-compose.yml are shipped for the THBISON team to build in their environment. This receipt is not an image digest.",
+  "files": ["Dockerfile", "docker-compose.yml", "startup.sh"],
+  "user": "non-root app uid 10001",
+  "privileged": false
+}

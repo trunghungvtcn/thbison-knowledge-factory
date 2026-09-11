@@ -1,0 +1,12 @@
+services:
+  harness:
+    build: .
+    user: "10001:10001"
+    environment:
+      APP_MODE: MOCK
+      STAGING_ENABLED: "false"
+      ALLOW_PRODUCTION: "false"
+      ALLOW_PUBLIC_EFFECTS: "false"
+    read_only: true
+    tmpfs:
+      - /tmp

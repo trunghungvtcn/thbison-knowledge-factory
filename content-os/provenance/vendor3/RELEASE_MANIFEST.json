@@ -1,0 +1,10 @@
+{
+  "module": "VENDOR_3_RUNTIME_ORCHESTRATOR",
+  "status": "HANDOFF_READY_OFFLINE",
+  "round": "FINAL",
+  "acceptance_claimed": false,
+  "code_changed": false,
+  "built_at": "2026-09-10T07:48:54Z",
+  "artifact_sha256": "06fbb4cf43ae8a54e5ac10ae2b1eda097612b80e169309617d6368af727df570",
+  "source_revision_sha256": "64c2a6c8db74d0116f1d572d39e40e770a550e673aad772e10b885a5cbe5bfdb"
+}

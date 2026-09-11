@@ -1,0 +1,21 @@
+{
+  "Applicability Scope": "rich_text",
+  "Authority Tier": "select",
+  "Claim Text": "rich_text",
+  "Confidence": "number",
+  "Decision": "select",
+  "Directness": "select",
+  "Evidence Sources": "relation",
+  "Family": "select",
+  "Jurisdiction": "select",
+  "Knowledge ID": "rich_text",
+  "Legal Status": "rich_text",
+  "Name": "title",
+  "Predicate": "rich_text",
+  "Product Family": "rich_text",
+  "Reviewer Note": "rich_text",
+  "Risk": "select",
+  "Run ID": "rich_text",
+  "Source URL": "url",
+  "Status": "select"
+}

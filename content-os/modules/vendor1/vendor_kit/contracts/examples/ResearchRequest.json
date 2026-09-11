@@ -1,0 +1,23 @@
+{
+  "contract_version": "1.0.0",
+  "project_id": "test-thbison",
+  "data_class": "TEST_ONLY",
+  "request_id": "test-request-1",
+  "scope": {
+    "country_code": "VN",
+    "language": "vi",
+    "timezone": "Asia/Bangkok",
+    "domain": "manual-chain-hoist"
+  },
+  "seeds": [
+    "pa lăng xích kéo tay"
+  ],
+  "existing_pages": [],
+  "budget": {
+    "max_provider_requests": 3,
+    "max_tokens": 1000,
+    "max_cost_usd": "0.500000",
+    "deadline_at": "2030-01-01T00:05:00Z",
+    "max_transport_attempts": 2
+  }
+}

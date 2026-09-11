@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# One command: attempt clean venv from lock, then tests.
+set -u
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$ROOT"
+export PYTHONPATH="$ROOT/src${PYTHONPATH:+:$PYTHONPATH}"
+LOGDIR="$ROOT/../v6-evidence"
+mkdir -p "$LOGDIR"
+TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+log() { echo "$*"; echo "$*" >> "$LOGDIR/verify_local.log"; }
+
+{
+  echo "time=$TS"
+  echo "cwd=$PWD"
+  echo "python=$(python3 --version 2>&1)"
+} > "$LOGDIR/env.txt"
+
+if python3 -c "import venv,ensurepip" 2>/dev/null; then
+  VENV="$ROOT/.venv"
+  python3 -m venv "$VENV"
+  "$VENV/bin/pip" install -r requirements-dev.txt
+  "$VENV/bin/pip" check
+  PY="$VENV/bin/python"
+  echo "G1=PASS" | tee "$LOGDIR/g1.txt"
+else
+  echo "G1=BLOCKED_ENVIRONMENT missing venv/ensurepip" | tee "$LOGDIR/g1.txt"
+  PY="python3"
+fi
+
+set +e
+echo "time=$(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$LOGDIR/pytest_all.log"
+echo "cwd=$PWD" >> "$LOGDIR/pytest_all.log"
+echo "cmd=$PY -m pytest tests -q --junitxml=$LOGDIR/junit.xml" >> "$LOGDIR/pytest_all.log"
+echo "python=$($PY --version 2>&1)" >> "$LOGDIR/pytest_all.log"
+$PY -m pytest tests -q --junitxml="$LOGDIR/junit.xml" >> "$LOGDIR/pytest_all.log" 2>&1
+EC=$?
+echo "exit=$EC" >> "$LOGDIR/pytest_all.log"
+echo "reproduce..." >> "$LOGDIR/pytest_all.log"
+$PY scripts/reproduce.py "$ROOT" > "$LOGDIR/reproduce_new.json" 2>"$LOGDIR/reproduce_new.err"
+echo "reproduce_exit=$?" >> "$LOGDIR/pytest_all.log"
+exit $EC

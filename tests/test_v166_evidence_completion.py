@@ -3,8 +3,8 @@ from pathlib import Path
 
 import pytest
 
-from kf_pilot.v166_evidence_completion.canonical import ContractError, bytes_for, confined, digest, loads, sha256
-from kf_pilot.v166_evidence_completion.acquisition import MAX_ATTEMPTS, MAX_REDIRECTS, MAX_SOURCE_BYTES, validate_public_url
+from kf_pilot.v166_evidence_completion.canonical import ContractError, bytes_for, confined, digest, load, loads, sha256
+from kf_pilot.v166_evidence_completion.acquisition import MAX_ATTEMPTS, MAX_REDIRECTS, MAX_SOURCE_BYTES, freeze, validate_public_url
 from kf_pilot.v166_evidence_completion.pipeline import BASELINE, encode, offline_guard, project_shadow, write_new
 from kf_pilot.v166_evidence_completion.verifier import verify
 from kf_pilot.v166_evidence_completion.schemas import validate_ast, validate_research_plan, validate_run_config, validate_trust
@@ -20,6 +20,47 @@ def test_duplicate_json_keys(raw):
 def test_path_traversal(tmp_path, value):
     with pytest.raises(ContractError, match="PATH_TRAVERSAL"):
         confined(tmp_path, value)
+
+
+@pytest.mark.parametrize("value", ["/x", r"C:\\x", "C:x", r"\\\\server\\share\\x"])
+def test_absolute_path_rejected_on_every_runner(tmp_path, value):
+    with pytest.raises(ContractError, match="ABSOLUTE_PATH"):
+        confined(tmp_path, value)
+
+
+def test_freeze_confines_source_and_preserves_same_basename_inputs(tmp_path):
+    acquired = tmp_path / "acquired"
+    (acquired / "a").mkdir(parents=True)
+    (acquired / "b").mkdir()
+    (acquired / "a" / "same.txt").write_bytes(b"A")
+    (acquired / "b" / "same.txt").write_bytes(b"B")
+    rows = [
+        {"status": "FETCHED", "local_path": "a/same.txt", "sha256": sha256(b"A")},
+        {"status": "FETCHED", "local_path": "b/same.txt", "sha256": sha256(b"B")},
+    ]
+    (acquired / "acquisition_manifest.json").write_bytes(bytes_for({"sources": rows}))
+    (acquired / "discovery_log.jsonl").write_bytes(b"")
+    output = tmp_path / "frozen"
+    freeze(acquired, "2026-09-10T00:00:00Z", output)
+    manifest = load(output / "frozen_corpus_manifest.json")
+    paths = [output / row["local_path"] for row in manifest["sources"]]
+    assert len({path.name for path in paths}) == 2
+    assert [path.read_bytes() for path in paths] == [b"A", b"B"]
+
+
+def test_freeze_rejects_outside_source_root_before_read(tmp_path):
+    acquired = tmp_path / "acquired"
+    acquired.mkdir()
+    outside = tmp_path / "outside.txt"
+    outside.write_bytes(b"outside")
+    row = {"status": "FETCHED", "local_path": "../outside.txt", "sha256": sha256(b"outside")}
+    (acquired / "acquisition_manifest.json").write_bytes(bytes_for({"sources": [row]}))
+    (acquired / "discovery_log.jsonl").write_bytes(b"")
+    output = tmp_path / "frozen"
+    with pytest.raises(ContractError, match="PATH_TRAVERSAL"):
+        freeze(acquired, "2026-09-10T00:00:00Z", output)
+    assert not output.exists()
+    assert not list(tmp_path.glob("frozen.staging-*"))
 
 
 @pytest.mark.parametrize("op", ["AND", "OR"])

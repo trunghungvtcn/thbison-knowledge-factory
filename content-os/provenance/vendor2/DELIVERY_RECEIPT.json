@@ -1,0 +1,224 @@
+{
+  "status": "CHANGES_ADDRESSED_MOCK",
+  "acceptance_claimed": false,
+  "module": "VENDOR_2",
+  "label_warning": "KIT_SELF_TEST is PARTIAL (50 PASS, 1 FAIL). This drop is MOCK / SYNTHETIC. It is not KIT_SELF_TEST_PASS, not ADAPTER_VERIFIED, and not INTEGRATED_CANARY_PASS. Mock results are not live integration.",
+  "source_commit": "916a235a7df374a3f99d3eb9e032b5d9ad4f4b67",
+  "source_tree_sha256": "0a66dd7598edb222d6e20b0b1f34d09b23abc0aab401a6f966c5c2a2f92d5e4e",
+  "artifact_digest": "d8b6cb94be26babcb61e74b540c4a558393c5249294074b82cdbf0e9c9252a7c",
+  "artifact_digest_subject": "payload.tar.gz",
+  "release_zip": "THBISON-VENDOR-2-CONTENT-OS-release.zip",
+  "release_zip_sha256": "c575f1bb6ea9d6b9475969741ed40f7cf654ca80346261de50f4916dfaaaa1c0",
+  "release_zip_sha256_note": "Sidecar file next to the envelope ZIP. Not stored inside the ZIP (self-hash would be circular).",
+  "contract_sha256": "fd3c1b6f1ec5461e7080c538e1c332d7af3098db32edd1565e1ae16933f951a8",
+  "test_fixture_sha256": "0f95fc54072cf9cdbe94edc803f66230331d5206c08952a8c2ac5d3abba59672",
+  "lockfile_sha256": "fc81314ce9ca4b6be0300e35a223455005daf314253a131134bf089a5b2ba4af",
+  "junit_sha256": "2cb00527a8d22499322c9d8fb74c1fbb1345121b45627f9891f90212daaacefc",
+  "kit_junit_sha256": "a099c8a93f6d798f24160d29d58bb963fc0d2d1c70a6f4667ecce35ad3fe9e88",
+  "upstream_versions": {
+    "kit_manifest": "0f95fc54072cf9cdbe94edc803f66230331d5206c08952a8c2ac5d3abba59672",
+    "contract_version": "1.0.0"
+  },
+  "environment": {
+    "mode": "MOCK",
+    "allow_live": false,
+    "allow_staging": false,
+    "allow_social": false,
+    "host": "preview-sandbox",
+    "not_vps_b": true,
+    "database": "pglite-in-memory plus file-snapshot durable simulator",
+    "durable_simulator": "CONTENT_OS_DURABLE_DIR file snapshot; POST /v1/mock/ledger/restart",
+    "queue": "QueuePort dispatch; POST returns 202 QUEUED",
+    "docker_image_built": false,
+    "docker_files_shipped": true
+  },
+  "test_evidence": [
+    "artifacts/unit-tests.log",
+    "artifacts/acceptance-junit.xml",
+    "artifacts/acceptance-cases.json",
+    "artifacts/kit-self-test.log",
+    "artifacts/kit-self-test.xml",
+    "docs/SCOPE_STATUS.json",
+    "screenshots/"
+  ],
+  "scenario_results": [
+    {
+      "id": "G01",
+      "result": "OFFLINE_VERIFIED",
+      "note": "Canonical SHA-256 matches kit examples"
+    },
+    {
+      "id": "G02",
+      "result": "PASS",
+      "note": "Capabilities MOCK + UNSUPPORTED_CONTRACT on 0.9.0"
+    },
+    {
+      "id": "G03",
+      "result": "PASS",
+      "note": "401 missing/forged; 403 cross-project"
+    },
+    {
+      "id": "G04",
+      "result": "PASS",
+      "note": "202 QUEUED without awaiting worker; idempotent replay; 409 conflict; concurrent → 1 job"
+    },
+    {
+      "id": "G06",
+      "result": "PASS",
+      "note": "BUDGET_EXHAUSTED when max_provider_requests=0"
+    },
+    {
+      "id": "G07",
+      "result": "OFFLINE_VERIFIED",
+      "note": "Unpaired surrogate rejected"
+    },
+    {
+      "id": "G08",
+      "result": "OFFLINE_VERIFIED",
+      "note": "Naive datetime rejected by service validator"
+    },
+    {
+      "id": "G10",
+      "result": "OFFLINE_VERIFIED",
+      "note": "Log redaction"
+    },
+    {
+      "id": "G11",
+      "result": "PASS",
+      "note": "429 + Retry-After"
+    },
+    {
+      "id": "C01",
+      "result": "PASS",
+      "note": "Fixture draft admits QUEUED then SUCCEEDED PREVIEW_READY"
+    },
+    {
+      "id": "C02",
+      "result": "PASS",
+      "note": "HOLD → BLOCKED_INPUT MISSING_EVIDENCE"
+    },
+    {
+      "id": "C03",
+      "result": "PASS",
+      "note": "HTTP: revoke unused; related approval REVOKED; old approval publish blocked; no resurrect after simulated restart"
+    },
+    {
+      "id": "C05",
+      "result": "PASS",
+      "note": "Extra JSON field 400 VALIDATION_ERROR"
+    },
+    {
+      "id": "C07",
+      "result": "PASS",
+      "note": "LIVE TEST_ONLY blocked"
+    },
+    {
+      "id": "C09",
+      "result": "OFFLINE_VERIFIED",
+      "note": "Stale hash rejected in gate"
+    },
+    {
+      "id": "C10",
+      "result": "PASS",
+      "note": "Reader 403; editor approval 201"
+    },
+    {
+      "id": "C11",
+      "result": "PASS",
+      "note": "DRY_RUN actual_side_effects=0"
+    },
+    {
+      "id": "C15",
+      "result": "OFFLINE_VERIFIED",
+      "note": "Mock CMS only — not a real CMS"
+    },
+    {
+      "id": "C16",
+      "result": "PASS",
+      "note": "Injected instruction stored, not executed"
+    },
+    {
+      "id": "C19",
+      "result": "OFFLINE_VERIFIED",
+      "note": "FACTUAL requires citation"
+    },
+    {
+      "id": "C20",
+      "result": "OFFLINE_VERIFIED",
+      "note": "Negation/unit/OEM quality gates"
+    },
+    {
+      "id": "S01-S18",
+      "result": "NOT_RUN",
+      "note": "Vendor 1 scope. JUnit skipped."
+    },
+    {
+      "id": "P02",
+      "result": "MEASURED",
+      "note": "Sandbox preview observation only. Not VPS B. Not P05 evidence."
+    },
+    {
+      "id": "P05",
+      "result": "NOT_MET",
+      "note": "No Vendor 1 baseline on the assembly VM. Preview timings are not a 15% improvement claim."
+    },
+    {
+      "id": "P08",
+      "result": "SYNTHETIC",
+      "note": "Synthetic Knowledge + mock CMS rehearsal. Not canary. Not ADAPTER_VERIFIED."
+    },
+    {
+      "id": "A1-A8",
+      "result": "BLOCKED_EXTERNAL",
+      "note": "No THBISON live systems in contractor scope. JUnit skipped."
+    }
+  ],
+  "benchmark": {
+    "status": "NOT_MET",
+    "baseline": null,
+    "candidate": null,
+    "metric": "P05_15_percent_vs_vendor1_baseline",
+    "raw_samples": null,
+    "caveat": "P05 remains NOT_MET. Any preview-host p95 is an observation on this sandbox, not evidence of a 15% improvement, and not the 2 vCPU VPS B environment."
+  },
+  "real_provider_probe": {
+    "status": "NOT_RUN_EXTERNAL",
+    "receipt": null,
+    "reason": "Contractor must not access THBISON CMS/Knowledge/OpenSEO/Facebook. Mock adapter tests are not a real-provider probe."
+  },
+  "kit_self_test": {
+    "status": "PARTIAL",
+    "passed": 50,
+    "failed": 1,
+    "failed_id": "test_naive_date_rejected",
+    "reason": "jsonschema date-time accepts naive ISO-8601; BEHAVIOR.md TIMEZONE_REQUIRED. Vendor-kit tests were not modified to manufacture PASS.",
+    "not": "KIT_SELF_TEST_PASS"
+  },
+  "public_posts_created": 0,
+  "paid_calls": 0,
+  "known_blockers": [
+    "No real Knowledge / CMS / OpenSEO / Facebook credentials in scope",
+    "PGLite preview ledger is in-memory; durable simulator is a local file snapshot, not THBISON DB",
+    "Docker files shipped but image not built in this sandbox (no docker daemon)",
+    "vendor-kit test_naive_date_rejected fails under jsonschema; kit tests unmodified; KIT_SELF_TEST=PARTIAL",
+    "HTTP Error.code enum maps TEST_DATA_NOT_PUBLISHABLE → VALIDATION_ERROR",
+    "P05 15% improvement vs Vendor 1 baseline not measured on VPS B (NOT_MET)"
+  ],
+  "handover": {
+    "runbook": "docs/OPERATOR_RUNBOOK.md",
+    "limitations": "docs/KNOWN_LIMITATIONS.md",
+    "review_response": "docs/REVIEW_RESPONSE.md",
+    "env_example": "config/environment.example.json",
+    "compose": "docker-compose.yml",
+    "docker_receipt": "docs/DOCKER_BUILD_RECEIPT.json",
+    "scope": "docs/SCOPE_STATUS.json",
+    "ui": "Vietnamese workspace at / ; API at /v1/* and /healthz",
+    "pack": "scripts/pack-release.mjs"
+  },
+  "packed_at": "2026-09-10T03:24:34.437Z",
+  "hashing_scheme": {
+    "source_tree_sha256": "sha256 of sorted 'sha256  path\\n' listing of git ls-files (SOURCE_TREE_SHA256SUMS.txt)",
+    "artifact_digest": "sha256 of payload.tar.gz produced by git archive | gzip -n -9",
+    "release_zip_sha256": "sidecar only"
+  }
+}

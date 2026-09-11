@@ -1,0 +1,40 @@
+{
+  "module": "VENDOR_6_INTEGRATION_TEST_HARNESS",
+  "round": "FINAL",
+  "status": "HANDOFF_WITH_BLOCKERS",
+  "acceptance_claimed": false,
+  "code_changed": false,
+  "contract_version": "1.0.0",
+  "contract_sha256": "fd3c1b6f1ec5461e7080c538e1c332d7af3098db32edd1565e1ae16933f951a8",
+  "built_at": "2026-09-10T08:00:00Z",
+  "source_revision_sha256": "9022947278ceb2600ee5a7c4743b11a160076e227581b8b3e4b3f914e7b0cb8a",
+  "artifact_sha256": "a8c5267044ee3aacce1f9729349c8ac789ccc93ed43cbe7a72f90e78735188a6",
+  "digest_subject": "source.zip payload inside this envelope (byte-identical to R2 baseline)",
+  "baseline_envelope_sha256": "2e4b1e28863428b9d7d2c6044db43a4af8c7167d0be6f9799adfdf2ddd7ebbf2",
+  "test_counts": {
+    "collected": 73,
+    "passed": 71,
+    "skipped": 2,
+    "failed": 0,
+    "rerun_this_round": false
+  },
+  "issues": {
+    "V6-R2-01": "CLOSED",
+    "V6-R2-02": "CLOSED",
+    "V6-R2-03": "PARTIAL_OPEN"
+  },
+  "gates": {
+    "clean_install": "BLOCKED_ENVIRONMENT",
+    "schema_pin": "PASS",
+    "regression": "PASS_FROZEN_R2",
+    "http": "PASS_MOCK",
+    "kill_restart_process": "PASS_MOCK",
+    "simulator_integration": "PASS",
+    "spy_or_fake_http": "PASS_MOCK_NOT_ACTUAL",
+    "actual_component_integration": "NOT_RUN",
+    "staging_access": "BLOCKED_ACCESS",
+    "staging_protocol": "PARTIAL_OPEN",
+    "staging_rollback": "PASS_REFERENCE_ONLY",
+    "packaging": "PASS"
+  }
+}

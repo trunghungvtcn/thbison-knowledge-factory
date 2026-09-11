@@ -1,0 +1,44 @@
+[
+  {
+    "vendor": 1,
+    "uploaded_name": "59myUKePj4CqLjQO-grok-workspace.zip",
+    "upload_sha256": "f75df682bcfc79937ea570b656b760f43cc3638049fd8ef92f53b44243b7b493",
+    "module": "modules/vendor1",
+    "version": "1.0.0-r3"
+  },
+  {
+    "vendor": 2,
+    "uploaded_name": "rMV0WKtcBenVD2mM-grok-workspace.zip",
+    "upload_sha256": "2feea5b65c89a90af37cb59c1ae00d46b2e651ef1d634a385ad33d78a8ce9013",
+    "module": "modules/vendor2",
+    "version": "Content OS supplied workspace"
+  },
+  {
+    "vendor": 3,
+    "uploaded_name": "VENDOR3-RUNTIME-ORCHESTRATOR-HANDOFF-FINAL.zip",
+    "upload_sha256": "70db14730a375bbd7dbf834a533afbc80c3d30b2bdf4e2e52e0a1c91a6a9fb91",
+    "module": "modules/vendor3",
+    "version": "FINAL R5"
+  },
+  {
+    "vendor": 4,
+    "uploaded_name": "THBISON-VENDOR-4-FINAL-HANDOFF (1).zip",
+    "upload_sha256": "9383b8af2b405d60270ae193775eaad1715cb342791203a339a90e6e33b247e8",
+    "module": "modules/vendor4",
+    "version": "FINAL R5"
+  },
+  {
+    "vendor": 5,
+    "uploaded_name": "THBISON-VENDOR-5-CMS-ADAPTER-HANDOFF-READY-OFFLINE.zip",
+    "upload_sha256": "2d8d816ba72e9991a8b8c98f1ae66376914256bfad8fe94871e7ce351199d735",
+    "module": "modules/vendor5",
+    "version": "FINAL R2"
+  },
+  {
+    "vendor": 6,
+    "uploaded_name": "THBISON-VENDOR-6-FINAL-HANDOFF (1).zip",
+    "upload_sha256": "f5fa1b5854d815472bda4ae004c88a3bdd084598df74e204f05dda938d1b41bd",
+    "module": "modules/vendor6",
+    "version": "FINAL R2 WITH BLOCKERS"
+  }
+]

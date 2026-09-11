@@ -1,0 +1,38 @@
+name: THBISON-STABILIZATION-01
+on:
+  push:
+    branches: [codex/thbison-stabilization-01]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          submodules: recursive
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: '22.23.2'
+      - name: Install audit dependencies
+        run: python -m pip install pytest==9.1.1 jsonschema==4.26.0 'pydantic>=2.7,<3' 'PyYAML>=6,<7' 'pandas>=2,<3' 'PyMuPDF>=1.23,<2' 'pdfplumber>=0.11,<1' 'pyarrow>=15,<24' 'duckdb>=1,<2'
+      - name: Collect all gates for this candidate
+        run: python scripts/stabilization_verify.py
+      - name: Upload candidate evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: stabilization-${{ github.sha }}
+          path: |
+            stabilization-evidence/*.log
+            stabilization-evidence/*.xml
+            stabilization-evidence/*.json
+          if-no-files-found: error

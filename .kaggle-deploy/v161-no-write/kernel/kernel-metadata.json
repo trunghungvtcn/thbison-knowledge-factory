@@ -1,0 +1,16 @@
+{
+  "id": "nguyeble/kf-v161-migration-no-write",
+  "title": "KF V161 Migration NO WRITE",
+  "code_file": "30_migrate_v16.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": false,
+  "dataset_sources": [
+    "nguyeble/kf-v161-no-write-baseline"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}

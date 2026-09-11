@@ -1,0 +1,21 @@
+{
+  "captured_at": "2026-09-10T02:00:00Z",
+  "source_urls": [
+    "https://openseo.so/features/mcp",
+    "https://openseo.so/docs/mcp"
+  ],
+  "upstream_commit": "3632f408528cd588fec98c3a174af8ea0ad205e8",
+  "mcp_url": "https://app.openseo.so/mcp",
+  "note": "Discovered from public documentation. Not a live THBISON account dump. TEST_ONLY.",
+  "tools": [
+    { "name": "research_keywords", "group": "keywords", "used_by_adapter": true },
+    { "name": "get_serp_results", "group": "keywords", "used_by_adapter": true },
+    { "name": "save_keywords", "group": "keywords", "used_by_adapter": false },
+    { "name": "get_rank_tracker_data", "group": "keywords", "used_by_adapter": false },
+    { "name": "get_domain_overview", "group": "competitive", "used_by_adapter": false },
+    { "name": "get_domain_keywords", "group": "competitive", "used_by_adapter": false },
+    { "name": "get_backlinks_overview", "group": "competitive", "used_by_adapter": false },
+    { "name": "get_gsc_performance", "group": "search_console", "used_by_adapter": false },
+    { "name": "inspect_urls", "group": "search_console", "used_by_adapter": false }
+  ]
+}

@@ -1,0 +1,3 @@
+[
+  {"asset_id":"syn-asset-001","project_id":"test-alpha","filename":"manual.pdf","size":128,"sha256":"TO_BE_COMPUTED_BY_SIMULATOR","state":"PENDING_UPLOAD","data_class":"TEST_ONLY"}
+]

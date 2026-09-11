@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "1.0.0"
+    },
+    "request_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "code": {
+      "type": "string",
+      "enum": [
+        "UNAUTHORIZED",
+        "FORBIDDEN",
+        "VALIDATION_ERROR",
+        "UNSUPPORTED_CONTRACT",
+        "IDEMPOTENCY_CONFLICT",
+        "STALE_REVISION",
+        "MISSING_EVIDENCE",
+        "SOURCE_REVOKED",
+        "BUDGET_EXHAUSTED",
+        "RATE_LIMITED",
+        "PROVIDER_ERROR",
+        "TIMEOUT",
+        "PUBLICATION_UNKNOWN",
+        "JOB_NOT_TERMINAL"
+      ]
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 12000
+    },
+    "retryable": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "contract_version",
+    "request_id",
+    "code",
+    "message",
+    "retryable"
+  ]
+}

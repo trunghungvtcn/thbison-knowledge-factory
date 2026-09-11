@@ -1,0 +1,272 @@
+{
+  "classification": "CHECKPOINT_REFERENCE_NOT_APPROVAL",
+  "input_zip_sha256": "30054428e104f084efd2cd9dea04037c2698cf6cadee99c89e3fb911338823aa",
+  "input_manifest_sha256": "d154b411445d239a3a4167cf0b52e0158dffe6f49946baa40fe476cd38148aaf",
+  "selection_basis": "Fewer legacy condition tags; no legal validity inference.",
+  "targets": [
+    {
+      "role": "PRIMARY",
+      "mapping": {
+        "entity_id": "0496c4f5-fe89-5d30-b948-34505fb64143",
+        "page_id": "3d1fbe3f-22e6-8130-b190-e78b51fe972e",
+        "parent_id": "9d53865d0cdd41f3a6c65d171b4e50f4",
+        "version_id": "cv_be9140613fe23ef6ca60dde1979a4704c97341ff5f562be88027e1c0dffe3b6c"
+      },
+      "issues": [
+        {
+          "candidate_diagnostics": [],
+          "entity_id": "0496c4f5-fe89-5d30-b948-34505fb64143",
+          "issue_id": "ri_231ee183bc333b130c9238c9a002aa282c2b8e1b224ee969d378e29712bfd3f8",
+          "issue_type": "CONDITION_CONNECTIVE_AMBIGUOUS",
+          "resolution_status": "NEEDS_REVIEW",
+          "review_results": [],
+          "upstream_state": "NEEDS_REVIEW",
+          "version_id": "cv_be9140613fe23ef6ca60dde1979a4704c97341ff5f562be88027e1c0dffe3b6c"
+        },
+        {
+          "candidate_diagnostics": [
+            {
+              "candidate_id": "v164_ef695a720e75c5166d4d5625aac11bddb366e571ac6cb32d596a4d6ff288a0b6",
+              "compatibility_preview": {
+                "compatible": false,
+                "reason": "V162_CONTRACT_INCOMPATIBLE"
+              },
+              "issue_id": "ri_6d93315b540a7c320f94ddf548687d733c86e0859d72436a7d86ee92f3faaafc",
+              "proposal_hash": "a0860e9f8b48d99e01b8f75d812ae6a4d57ef3625d0b05d7a4cacd72bc92d900",
+              "reason": null,
+              "status": "AWAITING_ADJUDICATION"
+            }
+          ],
+          "entity_id": "0496c4f5-fe89-5d30-b948-34505fb64143",
+          "issue_id": "ri_6d93315b540a7c320f94ddf548687d733c86e0859d72436a7d86ee92f3faaafc",
+          "issue_type": "OBJECT_VALUE_UNSTRUCTURED",
+          "resolution_status": "NEEDS_REVIEW",
+          "review_results": [],
+          "upstream_state": "NEEDS_REVIEW",
+          "version_id": "cv_be9140613fe23ef6ca60dde1979a4704c97341ff5f562be88027e1c0dffe3b6c"
+        }
+      ],
+      "v164_proposal": {
+        "after_value_hash": "e31482b41ee41e11a64239844f409b032b07f4005f5f931c3c2f6904424bb12b",
+        "base_record_hash": "82e0aae93d92e9d860d77e4d291c5905676428c147ad10e758c8b6d435106c87",
+        "base_version_id": "cv_be9140613fe23ef6ca60dde1979a4704c97341ff5f562be88027e1c0dffe3b6c",
+        "before_value_hash": "483beb46c1729f1e60b40c71e79a568b3195e51fef5d80461151e95e89fed2a3",
+        "candidate_hash": "ffceea8eaf643de6b08f1b7bb1b0a72a83f7b1df8d1594c8ee9f3ff1ea5a948a",
+        "candidate_id": "v164_ef695a720e75c5166d4d5625aac11bddb366e571ac6cb32d596a4d6ff288a0b6",
+        "canonical_text": "Với các palăng xích kéo tay lắp đặt cố định tại nơi có mái che: thời hạn kiểm định định kỳ 3 năm.",
+        "context_span": {
+          "end": 1600,
+          "extractor_id": "pymupdf:1.28.2:sort=True",
+          "quote": "Với các palăng xích kéo tay lắp đặt cố định tại nơi có mái che: thời hạn\nkiểm định định kỳ 3 năm.",
+          "raw_sha256": "bcadfadbc117bfb367a1577871f6d59e13ce0cca38a935523e816a3bb3dfcba4",
+          "source_ref": "https://congbaocdn.chinhphu.vn/CongBaoCP/VanBan/2016/12/23923/17902-1-2017431-43254-2016-tt-bldtbxh.pdf",
+          "start": 1503,
+          "unit_id": "pdf:page:67"
+        },
+        "contract": "evidence_derived_value/v1",
+        "data_class": "REPOSITORY",
+        "entity_id": "0496c4f5-fe89-5d30-b948-34505fb64143",
+        "identity_contract_id": "kf_pilot.v16.identity.claim_version_id/v1",
+        "issue_id": "ri_6d93315b540a7c320f94ddf548687d733c86e0859d72436a7d86ee92f3faaafc",
+        "page_id": "3d1fbe3f-22e6-8130-b190-e78b51fe972e",
+        "parent_id": "9d53865d0cdd41f3a6c65d171b4e50f4",
+        "predicate": "inspection_interval",
+        "predicate_contract_hash": "00c4ff99c7ee85c38d7c36b8f1f0d6cee637ad672b50d00e7841cd8de3b91945",
+        "proofs": {
+          "amount": {
+            "end": 1595,
+            "extractor_id": "pymupdf:1.28.2:sort=True",
+            "quote": "3",
+            "raw_sha256": "bcadfadbc117bfb367a1577871f6d59e13ce0cca38a935523e816a3bb3dfcba4",
+            "source_ref": "https://congbaocdn.chinhphu.vn/CongBaoCP/VanBan/2016/12/23923/17902-1-2017431-43254-2016-tt-bldtbxh.pdf",
+            "start": 1594,
+            "unit_id": "pdf:page:67"
+          },
+          "unit": {
+            "end": 1599,
+            "extractor_id": "pymupdf:1.28.2:sort=True",
+            "quote": "năm",
+            "raw_sha256": "bcadfadbc117bfb367a1577871f6d59e13ce0cca38a935523e816a3bb3dfcba4",
+            "source_ref": "https://congbaocdn.chinhphu.vn/CongBaoCP/VanBan/2016/12/23923/17902-1-2017431-43254-2016-tt-bldtbxh.pdf",
+            "start": 1596,
+            "unit_id": "pdf:page:67"
+          }
+        },
+        "proposal_hash": "a0860e9f8b48d99e01b8f75d812ae6a4d57ef3625d0b05d7a4cacd72bc92d900",
+        "proposer_id": "KF_V163_EVIDENCE_BINDER",
+        "semantic_hash": "2e5df9fcbf6af41c7d405dfb1565ebcd1a4d5ee1f20dd0e54c7afc3044887bc2",
+        "source_text": "Với các palăng xích kéo tay lắp đặt cố định tại nơi có mái che: thời hạn kiểm định định kỳ 3 năm.",
+        "target_semantic_payload": {
+          "applicability": "MANUAL_CHAIN_HOIST_CAPACITY_GTE_1000_KG",
+          "condition_ast": {
+            "legacy_tags": [
+              "COVERED",
+              "FIXED_INSTALLATION"
+            ],
+            "op": "UNRESOLVED",
+            "reason": "LEGACY_LIST_HAS_NO_BOOLEAN_CONNECTIVE"
+          },
+          "exception_ast": {
+            "op": "FALSE"
+          },
+          "jurisdiction": "VN",
+          "legal_status": "CURRENT_REFERENCED_BY_19_2025_TT_BNV",
+          "object_value": {
+            "amount": "3",
+            "dimension": "time",
+            "kind": "quantity",
+            "operator": "EQ",
+            "unit": "year"
+          },
+          "predicate": "inspection_interval",
+          "product_family": "manual hand chain hoist",
+          "subject": "manual hand chain hoist"
+        },
+        "target_version_id": "cv_98e8fa46214aeb32167c3750021b1d743511d1aa0416a077e06792e061c900b0",
+        "upstream_binding_hash": "ef695a720e75c5166d4d5625aac11bddb366e571ac6cb32d596a4d6ff288a0b6",
+        "vocabulary_contract_hash": "2a59fac38dba9c2f0f733e7115a40afc3554d1cc6d489747cf324233acf7564e"
+      },
+      "page_mapping_reported_requires_raw_verification": {
+        "locator": "pdf:page:67",
+        "pdf_zero_based_index": 66,
+        "printed_page_label": 68
+      },
+      "v165_target_version_id": null,
+      "semantic_adjudication": "NOT_SUPPLIED",
+      "production_authorized": false
+    },
+    {
+      "role": "CONTEXT_AND_REGRESSION",
+      "mapping": {
+        "entity_id": "59957ace-b4fb-519e-b92d-773bc74ad268",
+        "page_id": "3d1fbe3f-22e6-8116-b554-dc2ef3243880",
+        "parent_id": "9d53865d0cdd41f3a6c65d171b4e50f4",
+        "version_id": "cv_dcaf9914d5b47c39abbce4b96cb92145a8352b2c1dc63ed14bbe2def740f99a6"
+      },
+      "issues": [
+        {
+          "candidate_diagnostics": [
+            {
+              "candidate_id": "v164_56b0c5502bca926714435d8dc073a7778b060800039fdced1ac4e7a04411fab0",
+              "compatibility_preview": {
+                "compatible": false,
+                "reason": "V162_CONTRACT_INCOMPATIBLE"
+              },
+              "issue_id": "ri_65dc0aae82336138e784f05ae96015be21ee620418c5c719cca3c19f42116fbf",
+              "proposal_hash": "a21aa9d4f63ff7b4a7f1243271924e5b1b9c3f4e931cd40070d918862e529cc6",
+              "reason": null,
+              "status": "AWAITING_ADJUDICATION"
+            }
+          ],
+          "entity_id": "59957ace-b4fb-519e-b92d-773bc74ad268",
+          "issue_id": "ri_65dc0aae82336138e784f05ae96015be21ee620418c5c719cca3c19f42116fbf",
+          "issue_type": "OBJECT_VALUE_UNSTRUCTURED",
+          "resolution_status": "NEEDS_REVIEW",
+          "review_results": [],
+          "upstream_state": "NEEDS_REVIEW",
+          "version_id": "cv_dcaf9914d5b47c39abbce4b96cb92145a8352b2c1dc63ed14bbe2def740f99a6"
+        },
+        {
+          "candidate_diagnostics": [],
+          "entity_id": "59957ace-b4fb-519e-b92d-773bc74ad268",
+          "issue_id": "ri_935aceff9ee04c8f76118eaea10053842556726e272fdc01eabb73636f445d68",
+          "issue_type": "CONDITION_CONNECTIVE_AMBIGUOUS",
+          "resolution_status": "NEEDS_REVIEW",
+          "review_results": [],
+          "upstream_state": "NEEDS_REVIEW",
+          "version_id": "cv_dcaf9914d5b47c39abbce4b96cb92145a8352b2c1dc63ed14bbe2def740f99a6"
+        }
+      ],
+      "v164_proposal": {
+        "after_value_hash": "4f3ea4b7ae525485d126c0d2dff0380fa5e280437e20bef066efebdd4e5c96c7",
+        "base_record_hash": "2166f54c4f1dca54605c15d6469518000ac75fe96b7d69cad833fcede2b9d29d",
+        "base_version_id": "cv_dcaf9914d5b47c39abbce4b96cb92145a8352b2c1dc63ed14bbe2def740f99a6",
+        "before_value_hash": "dd8ae0bb8147cbc89a345872d4db32504f4ea907c72f4f894fb837580acfd54c",
+        "candidate_hash": "73a4ff059b1b3f06b8626a1d969e02ba77b57329e20f22dd1f285358f942e77b",
+        "candidate_id": "v164_56b0c5502bca926714435d8dc073a7778b060800039fdced1ac4e7a04411fab0",
+        "canonical_text": "Thời hạn kiểm định định kỳ 1 năm đối với các palăng xích kéo tay sau: lắp đặt cố định ngoài trời; thiết bị được sử dụng lưu động; thiết bị sử dụng trên 12 năm.",
+        "context_span": {
+          "end": 1764,
+          "extractor_id": "pymupdf:1.28.2:sort=True",
+          "quote": "Thời hạn kiểm định định kỳ 1 năm đối với các palăng xích kéo tay sau: lắp đặt\ncố định ngoài trời; thiết bị được sử dụng lưu động; thiết bị sử dụng trên 12 năm.",
+          "raw_sha256": "bcadfadbc117bfb367a1577871f6d59e13ce0cca38a935523e816a3bb3dfcba4",
+          "source_ref": "https://congbaocdn.chinhphu.vn/CongBaoCP/VanBan/2016/12/23923/17902-1-2017431-43254-2016-tt-bldtbxh.pdf",
+          "start": 1605,
+          "unit_id": "pdf:page:67"
+        },
+        "contract": "evidence_derived_value/v1",
+        "data_class": "REPOSITORY",
+        "entity_id": "59957ace-b4fb-519e-b92d-773bc74ad268",
+        "identity_contract_id": "kf_pilot.v16.identity.claim_version_id/v1",
+        "issue_id": "ri_65dc0aae82336138e784f05ae96015be21ee620418c5c719cca3c19f42116fbf",
+        "page_id": "3d1fbe3f-22e6-8116-b554-dc2ef3243880",
+        "parent_id": "9d53865d0cdd41f3a6c65d171b4e50f4",
+        "predicate": "inspection_interval",
+        "predicate_contract_hash": "00c4ff99c7ee85c38d7c36b8f1f0d6cee637ad672b50d00e7841cd8de3b91945",
+        "proofs": {
+          "amount": {
+            "end": 1633,
+            "extractor_id": "pymupdf:1.28.2:sort=True",
+            "quote": "1",
+            "raw_sha256": "bcadfadbc117bfb367a1577871f6d59e13ce0cca38a935523e816a3bb3dfcba4",
+            "source_ref": "https://congbaocdn.chinhphu.vn/CongBaoCP/VanBan/2016/12/23923/17902-1-2017431-43254-2016-tt-bldtbxh.pdf",
+            "start": 1632,
+            "unit_id": "pdf:page:67"
+          },
+          "unit": {
+            "end": 1637,
+            "extractor_id": "pymupdf:1.28.2:sort=True",
+            "quote": "năm",
+            "raw_sha256": "bcadfadbc117bfb367a1577871f6d59e13ce0cca38a935523e816a3bb3dfcba4",
+            "source_ref": "https://congbaocdn.chinhphu.vn/CongBaoCP/VanBan/2016/12/23923/17902-1-2017431-43254-2016-tt-bldtbxh.pdf",
+            "start": 1634,
+            "unit_id": "pdf:page:67"
+          }
+        },
+        "proposal_hash": "a21aa9d4f63ff7b4a7f1243271924e5b1b9c3f4e931cd40070d918862e529cc6",
+        "proposer_id": "KF_V163_EVIDENCE_BINDER",
+        "semantic_hash": "a65b57c7936da447575e6125ac525d47ad60d850fa75f489ca336bb9657fdcbe",
+        "source_text": "Thời hạn kiểm định định kỳ 1 năm đối với các palăng xích kéo tay sau: lắp đặt cố định ngoài trời; thiết bị được sử dụng lưu động; thiết bị sử dụng trên 12 năm.",
+        "target_semantic_payload": {
+          "applicability": "MANUAL_CHAIN_HOIST_CAPACITY_GTE_1000_KG",
+          "condition_ast": {
+            "legacy_tags": [
+              "AGE_OVER_12_YEARS",
+              "FIXED_INSTALLATION",
+              "MOBILE_USE",
+              "OUTDOOR"
+            ],
+            "op": "UNRESOLVED",
+            "reason": "LEGACY_LIST_HAS_NO_BOOLEAN_CONNECTIVE"
+          },
+          "exception_ast": {
+            "op": "FALSE"
+          },
+          "jurisdiction": "VN",
+          "legal_status": "CURRENT_REFERENCED_BY_19_2025_TT_BNV",
+          "object_value": {
+            "amount": "1",
+            "dimension": "time",
+            "kind": "quantity",
+            "operator": "EQ",
+            "unit": "year"
+          },
+          "predicate": "inspection_interval",
+          "product_family": "manual hand chain hoist",
+          "subject": "manual hand chain hoist"
+        },
+        "target_version_id": "cv_b105ced58f300425b09a6feae0f7bd01e694555c426b55b1a4d453e1d8595072",
+        "upstream_binding_hash": "56b0c5502bca926714435d8dc073a7778b060800039fdced1ac4e7a04411fab0",
+        "vocabulary_contract_hash": "2a59fac38dba9c2f0f733e7115a40afc3554d1cc6d489747cf324233acf7564e"
+      },
+      "page_mapping_reported_requires_raw_verification": {
+        "locator": "pdf:page:67",
+        "pdf_zero_based_index": 66,
+        "printed_page_label": 68
+      },
+      "v165_target_version_id": null,
+      "semantic_adjudication": "NOT_SUPPLIED",
+      "production_authorized": false
+    }
+  ]
+}

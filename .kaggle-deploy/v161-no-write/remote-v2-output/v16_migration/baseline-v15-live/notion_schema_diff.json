@@ -1,0 +1,41 @@
+{
+  "additions": [
+    {
+      "name": "Claim Entity ID",
+      "owner": "SYSTEM",
+      "type": "rich_text"
+    },
+    {
+      "name": "Claim Version ID",
+      "owner": "SYSTEM",
+      "type": "rich_text"
+    },
+    {
+      "name": "Condition AST",
+      "owner": "SYSTEM",
+      "type": "rich_text"
+    },
+    {
+      "name": "Condition Status",
+      "owner": "SYSTEM",
+      "type": "select"
+    },
+    {
+      "name": "System Status",
+      "owner": "SYSTEM",
+      "type": "select"
+    },
+    {
+      "name": "Reviewed Entity ID",
+      "owner": "HUMAN",
+      "type": "rich_text"
+    },
+    {
+      "name": "Reviewed Version ID",
+      "owner": "HUMAN",
+      "type": "rich_text"
+    }
+  ],
+  "compatible": true,
+  "type_mismatches": []
+}

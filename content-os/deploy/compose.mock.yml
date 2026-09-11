@@ -1,0 +1,57 @@
+# LAB TEMPLATE ONLY. UI build/actual process E2E gate is still OPEN.
+# All bindings private; no production credentials. Not an integrated deployment.
+name: thbison-content-lab
+services:
+  planning:
+    profiles: [lab]
+    build: ../modules/vendor1
+    environment:
+      THBISON_MODE: MOCK
+      THBISON_DATA_DIR: /tmp/planning-state
+      VITE_AUTH_ENABLED: "false"
+    ports: ["127.0.0.1:18081:8080"]
+    volumes: [planning-state:/tmp]
+  content:
+    profiles: [lab]
+    build: ../modules/vendor2
+    environment:
+      CONTENT_OS_MODE: MOCK
+      VITE_AUTH_ENABLED: "false"
+      # Codex must supply an isolated staging DATABASE_URL after DB gate.
+    ports: ["127.0.0.1:18082:8080"]
+  runtime:
+    profiles: [lab]
+    build: ../modules/vendor3
+    environment:
+      APP_MODE: MOCK
+      ALLOW_PRODUCTION: "false"
+      ALLOW_PUBLIC_EFFECTS: "false"
+      DATABASE_URL: sqlite:////state/runtime.db
+    ports: ["127.0.0.1:18083:8080"]
+    volumes: [runtime-state:/state]
+  knowledge:
+    profiles: [lab]
+    build: ../modules/vendor4
+    environment:
+      APP_MODE: MOCK
+      ALLOW_PRODUCTION: "false"
+      STAGING_ENABLED: "false"
+      V4_DATA_DIR: /state
+    ports: ["127.0.0.1:18084:8080"]
+    volumes: [knowledge-state:/state]
+  cms:
+    profiles: [lab]
+    build: ../modules/vendor5
+    environment:
+      APP_MODE: MOCK
+      CMS_LEDGER_PATH: /tmp/cms-ledger.sqlite
+      STAGING_WRITE_ENABLED: "false"
+      ALLOW_PRODUCTION: "false"
+      ALLOW_PUBLIC_EFFECTS: "false"
+    ports: ["127.0.0.1:18085:8080"]
+    volumes: [cms-state:/tmp]
+volumes:
+  planning-state:
+  runtime-state:
+  knowledge-state:
+  cms-state:

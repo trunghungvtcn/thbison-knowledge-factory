@@ -1,0 +1,22 @@
+{
+  "data_class": "TEST_ONLY",
+  "tool": "research_keywords",
+  "arguments": {
+    "seeds": ["pa lăng xích kéo tay"],
+    "location": "VN",
+    "language": "vi"
+  },
+  "response": {
+    "keywords": [
+      {
+        "keyword": "pa lăng xích kéo tay",
+        "search_volume": 100,
+        "keyword_difficulty": 10,
+        "cpc": 0.4,
+        "competition": 0.21
+      }
+    ]
+  },
+  "measurement_status_expected": "SYNTHETIC",
+  "note": "Sanitized protocol fixture. Not DataForSEO production bytes. Missing volume in sibling fixture uses null."
+}

@@ -1,7 +1,7 @@
 import hashlib
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 
 
 class ContractError(ValueError):
@@ -61,10 +61,16 @@ def exact(value, keys, name="OBJECT"):
 
 def confined(root, value):
     require(type(value) is str and value and "\x00" not in value, "INVALID_PATH")
+    # Treat both separators as path syntax on every runner.  Without this
+    # normalization, POSIX interprets a Windows traversal such as ``..\\x``
+    # as a harmless filename and the contract becomes platform-dependent.
+    normalized = value.replace("\\", "/")
+    windows = PureWindowsPath(value)
+    require(not Path(normalized).is_absolute() and not windows.drive and not windows.root,
+            "ABSOLUTE_PATH")
+    require(".." not in Path(normalized).parts, "PATH_TRAVERSAL")
     root = Path(root).resolve()
-    candidate = Path(value)
-    if not candidate.is_absolute():
-        candidate = root / candidate
+    candidate = root / normalized
     resolved = candidate.resolve()
     require(os.path.commonpath([str(root), str(resolved)]) == str(root), "PATH_TRAVERSAL")
     return resolved

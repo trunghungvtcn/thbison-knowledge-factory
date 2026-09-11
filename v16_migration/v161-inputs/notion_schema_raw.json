@@ -1,0 +1,260 @@
+{
+  "name": "THBISON Knowledge Items",
+  "schema": {
+    "Applicability Scope": {
+      "description": "",
+      "name": "Applicability Scope",
+      "type": "text"
+    },
+    "Authority Tier": {
+      "description": "",
+      "name": "Authority Tier",
+      "options": [
+        {
+          "color": "red",
+          "description": "",
+          "name": "PRIMARY_LEGAL",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/Zm1ERA/NmNiZDc3MGItZDljMy00ZTdiLWI0MjYtNDk2NDc0OWUyZTE4"
+        },
+        {
+          "color": "green",
+          "description": "",
+          "name": "GOVERNMENT_GUIDANCE",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/Zm1ERA/NmQxMGQ5ODUtY2JkMS00NThiLWFjYTMtMDM0NWMzMTliZThm"
+        }
+      ],
+      "type": "select"
+    },
+    "Claim Text": {
+      "description": "",
+      "name": "Claim Text",
+      "type": "text"
+    },
+    "Confidence": {
+      "description": "",
+      "name": "Confidence",
+      "type": "number"
+    },
+    "Decision": {
+      "description": "",
+      "name": "Decision",
+      "options": [
+        {
+          "color": "gray",
+          "description": "",
+          "name": "PENDING",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/TWJnXw/NzZlNTk2YzQtZTEwNi00NDNiLWFhYzgtNjY2YTU4MzIzMjky"
+        },
+        {
+          "color": "yellow",
+          "description": "",
+          "name": "HOLD",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/TWJnXw/Njg2OTVhMDMtNGE1Ni00OGU2LWJhOWYtMjI3ZGFiNTcyOGJk"
+        },
+        {
+          "color": "green",
+          "description": "",
+          "name": "APPROVED",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/TWJnXw/MjhiNTY1MmEtOTg3Zi00YThlLWI0OWYtY2E0YzBlNjU1MGUw"
+        },
+        {
+          "color": "red",
+          "description": "",
+          "name": "REJECTED",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/TWJnXw/YjUzMDQ0OWEtNThhZC00MjkyLThjODgtMGFjZTgzNTM1OGY4"
+        }
+      ],
+      "type": "select"
+    },
+    "Directness": {
+      "description": "",
+      "name": "Directness",
+      "options": [
+        {
+          "color": "green",
+          "description": "",
+          "name": "DIRECT",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/SVFsSA/ODcwMzljN2ItOTc1Zi00ZWU0LWIzZjItYzEzZmE4YzMxNmIz"
+        },
+        {
+          "color": "yellow",
+          "description": "",
+          "name": "CONDITIONAL",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/SVFsSA/NDY0NjhjNDgtNGI2Yi00Yzk5LTkxMmEtZmExYTUxNDM2MTVj"
+        }
+      ],
+      "type": "select"
+    },
+    "Evidence Sources": {
+      "dataSourceUrl": "collection://87318868-8be2-4e27-8ab6-7a3d0b53bb32",
+      "description": "",
+      "name": "Evidence Sources",
+      "type": "relation"
+    },
+    "Family": {
+      "description": "",
+      "name": "Family",
+      "options": [
+        {
+          "color": "red",
+          "description": "",
+          "name": "REGULATORY_REQUIREMENT",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/QkxhPQ/YmFkY2ZmNmUtYWE1Yy00ZWI3LTgxZjItOWQ2ODM3NDM1ODk3"
+        },
+        {
+          "color": "orange",
+          "description": "",
+          "name": "SAFETY_GUIDANCE",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/QkxhPQ/YTVkMGNjM2ItOWZlOS00NWZmLWJmN2MtYjRjZWUwMjUxYTNh"
+        },
+        {
+          "color": "purple",
+          "description": "",
+          "name": "LEGAL_SCOPE",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/QkxhPQ/OTFmMGJjZDMtOGViNy00MzU1LWFkMzEtZTA2YjA2YjAxOWMw"
+        }
+      ],
+      "type": "select"
+    },
+    "Jurisdiction": {
+      "description": "",
+      "name": "Jurisdiction",
+      "options": [
+        {
+          "color": "red",
+          "description": "",
+          "name": "VN",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/O05gcw/OWIyODY0MjAtMGNmOC00MGJlLWJmNmYtMjE1MDUyNGUxNDA5"
+        },
+        {
+          "color": "blue",
+          "description": "",
+          "name": "US",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/O05gcw/MTAwMDI3MmItMzQ1NC00NmY4LTk1YTAtYjU2OTM0NTFiNDk0"
+        },
+        {
+          "color": "orange",
+          "description": "",
+          "name": "GB",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/O05gcw/OTkzNjg1ZjAtNGU4Mi00NzMxLWIyZmUtZmZiOTRmOGI0MzE4"
+        },
+        {
+          "color": "green",
+          "description": "",
+          "name": "CA",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/O05gcw/NWNhZjViMDEtZjk4Ny00NWY2LWE2MWMtMTExY2M1NWNiYWY1"
+        },
+        {
+          "color": "gray",
+          "description": "",
+          "name": "GLOBAL",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/O05gcw/M2RhNWViYzMtODVlMC00MTZiLWFiZDEtYTdhYTIyZTdkZjJk"
+        }
+      ],
+      "type": "select"
+    },
+    "Knowledge ID": {
+      "description": "",
+      "name": "Knowledge ID",
+      "type": "text"
+    },
+    "Legal Status": {
+      "description": "",
+      "name": "Legal Status",
+      "type": "text"
+    },
+    "Name": {
+      "description": "",
+      "name": "Name",
+      "type": "title"
+    },
+    "Predicate": {
+      "description": "",
+      "name": "Predicate",
+      "type": "text"
+    },
+    "Product Family": {
+      "description": "",
+      "name": "Product Family",
+      "type": "text"
+    },
+    "Reviewer Note": {
+      "description": "",
+      "name": "Reviewer Note",
+      "type": "text"
+    },
+    "Risk": {
+      "description": "",
+      "name": "Risk",
+      "options": [
+        {
+          "color": "red",
+          "description": "",
+          "name": "LEGAL_OR_SAFETY",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/VEdsbA/YjVkYTZlYmItYjA2YS00YWIxLTgzM2UtZmQ2N2VjYzQ4ZmRl"
+        },
+        {
+          "color": "orange",
+          "description": "",
+          "name": "HIGH",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/VEdsbA/OTVhZWIyOTktODdlMC00YmYzLTljYWYtODE2N2M4YmMwYTBm"
+        },
+        {
+          "color": "yellow",
+          "description": "",
+          "name": "MEDIUM",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/VEdsbA/NTQ5ZjQ2MzMtN2I4Ni00Zjk5LWIyZDktY2QyNmJhZDNiYjI1"
+        },
+        {
+          "color": "green",
+          "description": "",
+          "name": "LOW",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/VEdsbA/NGZmYjQwOWYtMTdmYi00MmQ2LTkwZGEtMjg2ZDI0ZDIyOTBi"
+        }
+      ],
+      "type": "select"
+    },
+    "Run ID": {
+      "description": "",
+      "name": "Run ID",
+      "type": "text"
+    },
+    "Source URL": {
+      "description": "",
+      "name": "Source URL",
+      "type": "url"
+    },
+    "Status": {
+      "description": "",
+      "name": "Status",
+      "options": [
+        {
+          "color": "orange",
+          "description": "",
+          "name": "REVIEW_REQUIRED",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/Tz9uYw/YTlkZjYwOTMtOWYxMy00OGE3LTk1N2QtMDZhYjM0YTM1NDFi"
+        },
+        {
+          "color": "yellow",
+          "description": "",
+          "name": "HOLD",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/Tz9uYw/NjRhOTdkNTUtZTQ1MS00NmU2LWFkM2QtZGM1MTY5ZWMyOGZm"
+        },
+        {
+          "color": "green",
+          "description": "",
+          "name": "APPROVED",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/Tz9uYw/NDg2NDRhZTctZjVlMy00NTM2LWIxODItZGE2Y2I2MjVlYmI3"
+        },
+        {
+          "color": "red",
+          "description": "",
+          "name": "REJECTED",
+          "url": "collectionPropertyOption://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4/Tz9uYw/ZWFjOTc3MDgtMDk5YS00Nzk1LTkxY2YtYzc5N2FkY2E2MWFh"
+        }
+      ],
+      "type": "select"
+    }
+  },
+  "url": "collection://9d53865d-0cdd-41f3-a6c6-5d171b4e50f4"
+}

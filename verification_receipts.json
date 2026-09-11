@@ -1,0 +1,18 @@
+{
+  "job_id": "MCH-MIGRATE-KAGGLE-GITHUB-001",
+  "baseline_commit": "8865b1031bf5aa2a91df7ad8c8a6e11b3b1ee38f",
+  "branch": "fix/migration-architecture-alignment",
+  "local_verification": {
+    "python": "3.12.14",
+    "dependency_check": "PASS",
+    "compile": "PASS",
+    "tests": {"passed": 401, "excluded": 4, "exclusion_reason": "managed Windows sandbox blocks child git process; enabled in Linux CI"},
+    "secret_pattern_scan": "PASS_NO_MATCHES",
+    "max_tracked_file_bytes": "UNDER_10_MIB"
+  },
+  "runtime_deployed": false,
+  "scheduler_enabled": false,
+  "production_knowledge_writes": false,
+  "model_training": "NOT_RUN",
+  "model_improvement": "NOT_EVALUATED"
+}

@@ -1,0 +1,20 @@
+{
+  "status": "HANDOFF_READY_OFFLINE",
+  "module": "VENDOR_3",
+  "round": "FINAL",
+  "acceptance_claimed": false,
+  "code_changed": false,
+  "baseline_envelope_sha256": "b90d4cdf6ccb5e1b58703e076c152af61fa4e90a7037a0e3f6a6b74e7f673cc4",
+  "digest_subjects": {
+    "artifact_sha256": "sha256 of unchanged source.zip from R5 baseline",
+    "source_revision_sha256": "from R5 RECEIPT"
+  },
+  "source_revision_sha256": "64c2a6c8db74d0116f1d572d39e40e770a550e673aad772e10b885a5cbe5bfdb",
+  "artifact_sha256": "06fbb4cf43ae8a54e5ac10ae2b1eda097612b80e169309617d6368af727df570",
+  "test_summary": {
+    "reviewer_pass": 80,
+    "reviewer_skip": 1,
+    "packager_offline_pass": 68,
+    "packager_offline_skip": 1
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "contract_version": "1.0.0",
+  "project_id": "test-thbison",
+  "data_class": "TEST_ONLY",
+  "publication_id": "test-publication-1",
+  "request_id": "test-publish-1",
+  "article_id": "test-article-1",
+  "article_revision": 1,
+  "destination_id": "test-cms",
+  "content_sha256": "6be925fada31f467e81cc238266833827c300d6a0f2c5c89fbdc8a044515975d",
+  "status": "DRY_RUN",
+  "provider_record_id": null,
+  "provider_url": null,
+  "created_at": "2030-01-01T00:00:00Z",
+  "actual_side_effects": 0
+}

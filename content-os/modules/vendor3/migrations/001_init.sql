@@ -1,0 +1,2 @@
+-- See app/store.py SCHEMA. Applied on startup.
+-- Rollback: DROP TABLE jobs, leases, budgets, audit, receipts, unknown_outcomes, module_schedule_blocks;

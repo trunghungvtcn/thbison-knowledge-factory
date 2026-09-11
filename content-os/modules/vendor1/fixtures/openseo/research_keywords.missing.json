@@ -1,0 +1,11 @@
+{
+  "data_class": "TEST_ONLY",
+  "tool": "research_keywords",
+  "arguments": { "seeds": ["pa lăng xích kéo tay"], "location": "VN", "language": "vi" },
+  "response": {
+    "keywords": [
+      { "keyword": "pa lăng xích kéo tay" }
+    ]
+  },
+  "note": "Provider omitted volume/difficulty. Adapter MUST emit null + MISSING, never 0."
+}

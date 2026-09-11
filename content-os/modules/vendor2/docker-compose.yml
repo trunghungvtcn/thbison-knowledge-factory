@@ -1,0 +1,10 @@
+services:
+  content-os:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      CONTENT_OS_MODE: MOCK
+      PORT: "8080"
+    # Simulation only. Do not attach production THBISON secrets or networks.
+    restart: unless-stopped

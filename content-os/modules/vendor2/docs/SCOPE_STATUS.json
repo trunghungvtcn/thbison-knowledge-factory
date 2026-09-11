@@ -1,0 +1,77 @@
+{
+  "acceptance_claimed": false,
+  "kit_self_test": "PARTIAL",
+  "kit_self_test_detail": "50 passed, 1 failed: test_naive_date_rejected (jsonschema date-time vs BEHAVIOR TIMEZONE_REQUIRED). Vendor-kit tests were not modified.",
+  "labels": {
+    "ADAPTER_VERIFIED": false,
+    "INTEGRATED_CANARY_PASS": false,
+    "KIT_SELF_TEST_PASS": false
+  },
+  "junit": {
+    "tests": 41,
+    "failures": 0,
+    "skipped": 7
+  },
+  "by_status": {
+    "PASS": 34,
+    "MEASURED": 1,
+    "NOT_MET": 1,
+    "NOT_RUN": 1,
+    "BLOCKED_EXTERNAL": 1,
+    "NOT_RUN_EXTERNAL": 1,
+    "SYNTHETIC": 1,
+    "PARTIAL": 1
+  },
+  "out_of_scope": [
+    {
+      "id": "P02-preview-observation",
+      "owner": "BOTH",
+      "status": "MEASURED",
+      "note": "Sandbox preview p95 11.4ms. NOT evidence for P05. NOT VPS B."
+    },
+    {
+      "id": "P05",
+      "owner": "BOTH",
+      "status": "NOT_MET",
+      "note": "No Vendor 1 compatible baseline on assembly VM. Preview timings are not the 15% target."
+    },
+    {
+      "id": "S01-S18",
+      "owner": "VENDOR_1",
+      "status": "NOT_RUN",
+      "note": "Outside Vendor 2 scope. Not executed."
+    },
+    {
+      "id": "A1-A8",
+      "owner": "ASSEMBLY",
+      "status": "BLOCKED_EXTERNAL",
+      "note": "No THBISON Knowledge/CMS/OpenSEO/Facebook/VPS B access."
+    },
+    {
+      "id": "real_provider_probe",
+      "owner": "VENDOR_2",
+      "status": "NOT_RUN_EXTERNAL",
+      "note": "Mock is not a real-provider probe."
+    },
+    {
+      "id": "P08",
+      "owner": "BOTH",
+      "status": "SYNTHETIC",
+      "note": "Synthetic Knowledge + mock CMS rehearsal. Not canary. Not ADAPTER_VERIFIED."
+    },
+    {
+      "id": "KIT_SELF_TEST",
+      "owner": "BOTH",
+      "status": "PARTIAL",
+      "note": "vendor-kit tests: 50 passed, 1 failed (test_naive_date_rejected). Kit unmodified."
+    }
+  ],
+  "p05": {
+    "status": "NOT_MET",
+    "not_evidence": "Any preview-host p95 figure is an observation only."
+  },
+  "p08": {
+    "status": "SYNTHETIC",
+    "not": "ADAPTER_VERIFIED"
+  }
+}

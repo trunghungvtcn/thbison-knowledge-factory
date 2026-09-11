@@ -1,0 +1,3 @@
+[submodule "dependencies/pipeline-lab-contractor-m1-m5"]
+	path = dependencies/pipeline-lab-contractor-m1-m5
+	url = https://github.com/trunghungvtcn/pipeline-lab-contractor-m1-m5.git

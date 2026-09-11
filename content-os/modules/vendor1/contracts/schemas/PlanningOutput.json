@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "research": {
+      "$ref": "ResearchResult.json"
+    },
+    "brief": {
+      "$ref": "ContentBrief.json"
+    }
+  },
+  "required": [
+    "research",
+    "brief"
+  ]
+}

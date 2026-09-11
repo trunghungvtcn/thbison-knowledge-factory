@@ -1,0 +1,41 @@
+# dependencies and caches — never ship in the release ZIP
+node_modules/
+.grok/*
+!.grok/app-env.json
+.pytest_cache/
+**/__pycache__/
+*.pyc
+.vercel/
+dist/
+.output/
+.vite/
+.tanstack/
+.nitro/
+playwright-report/
+test-results/
+coverage/
+.cache/
+
+# preview / process runtime
+*.pid
+/tmp/
+/tmp-ledger/
+
+# original input kit zip (extracted vendor-kit/ is kept)
+attachments/
+
+# pack output (envelope + sidecar live here)
+releases/
+
+# generated release copies served by preview (not source)
+/public/THBISON-VENDOR-2-CONTENT-WORKFLOW.zip
+/public/THBISON-VENDOR-2-CONTENT-WORKFLOW.zip.sha256
+/public/SHA256SUMS.txt
+/public/RELEASE_MANIFEST.json
+/public/DELIVERY_RECEIPT.json
+
+
+# editor
+.DS_Store
+*.swp
+*~

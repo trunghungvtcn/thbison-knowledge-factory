@@ -1,0 +1,28 @@
+{
+  "baseline_sha256": {
+    "canonical": "74130d9861f46a00ad82b0870ab8cbbfa2f3a5a42be22687747559eb79f14f05",
+    "decisions": "0297ed6a73a075d8e5c7a340030e6b447ee2a986c22c2c0531750fa3803857ae",
+    "live_snapshot": "caa60a20e31d033c2ae7abaa573944737fa0643c658a2692af61d02c49189f01",
+    "mappings": "f11b2394e6609e6fb8bfda39e84e36ea8f7af00a576a6b1037f14c10a7f9e6c6"
+  },
+  "condition_unresolved_count": 9,
+  "effective_decisions": {
+    "BLOCKED_BY_SYSTEM_STATUS": 11,
+    "HOLD_CONDITION_REVIEW": 9,
+    "PENDING": 50
+  },
+  "entity_count": 70,
+  "limitations": [
+    "V15 decision export is not a complete live knowledge review snapshot",
+    "Legacy text retained in object value: structured semantic extraction remains pending",
+    "SQL reference not applied; payload is a logical plan, not a validated HTTP request"
+  ],
+  "live_decision_note_snapshot": true,
+  "mode": "NO_WRITE",
+  "page_mapping_replay": "PASS",
+  "planned_creates": 0,
+  "planned_updates": 70,
+  "production_writes": 0,
+  "row_order_replay": "PASS",
+  "single_semantic_change": "PASS"
+}

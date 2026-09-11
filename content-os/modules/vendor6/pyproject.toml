@@ -1,0 +1,24 @@
+[project]
+name = "thbison-vendor6-harness"
+version = "0.1.0"
+description = "THBISON Vendor 6 Integration Test Harness"
+requires-python = ">=3.11"
+dependencies = [
+  "jsonschema==4.23.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest==8.3.3",
+  "pytest-junitxml==0.0.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+junit_family = "xunit2"
+markers = [
+  "int: integration matrix case",
+  "reference: reference/simulator path",
+  "actual: requires actual vendor component",
+  "staging: requires staging credentials",
+]

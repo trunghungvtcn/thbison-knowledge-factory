@@ -1,0 +1,32 @@
+{
+  "contract_version": "1.0.0",
+  "project_id": "test-thbison",
+  "data_class": "TEST_ONLY",
+  "article_id": "test-article-1",
+  "article_revision": 1,
+  "brief_id": "test-brief-1",
+  "brief_revision": 1,
+  "bundle_id": "test-bundle-1",
+  "evidence_snapshot_sha256": "e5fb39220eefc4e5accbc009878790ea72d0ef2915bd820877701054f630a8bf",
+  "policy_version": "test-policy-1",
+  "title": "Cấu tạo pa lăng xích kéo tay",
+  "slug": "test-manual-chain-hoist",
+  "status": "PREVIEW_READY",
+  "blocks": [
+    {
+      "block_id": "p1",
+      "kind": "FACTUAL",
+      "text": "TEST ONLY. Example Model X has a blue housing. This is synthetic, not a real product claim.",
+      "claim_ids": [
+        "test-claim-1"
+      ]
+    }
+  ],
+  "seo": {
+    "title": "TEST title",
+    "description": "TEST description"
+  },
+  "unresolved_claim_ids": [],
+  "publication_blockers": [],
+  "content_sha256": "6be925fada31f467e81cc238266833827c300d6a0f2c5c89fbdc8a044515975d"
+}

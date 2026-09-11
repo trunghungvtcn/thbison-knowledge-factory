@@ -1,0 +1,100 @@
+--- a/modules/vendor1/vendor_kit/tools/contracts.py
++++ b/modules/vendor1/vendor_kit/tools/contracts.py
+@@ -41,6 +41,16 @@
+ 
+ def validate(name: str, value: dict) -> None:
+     no_invalid_unicode(value)
++    # Internal assembly fix: preserve schema pin; enforce the documented aware-UTC boundary.
++    if name == 'ContentBrief' and isinstance(value, dict):
++        proposed = value.get('proposed_publish_at')
++        if isinstance(proposed, str):
++            try:
++                instant(proposed)
++            except ContractError:
++                raise
++            except ValueError:
++                raise ContractError('SCHEMA_INVALID:ContentBrief')
+     schema=json.loads((SCHEMAS/(name+'.json')).read_text(encoding='utf-8'))
+     schema['$id']=BASE+name+'.json'
+     errors=list(Draft202012Validator(schema,registry=REGISTRY,format_checker=FormatChecker()).iter_errors(value))
+--- a/modules/vendor2/src/lib/content-os/quality.test.ts
++++ b/modules/vendor2/src/lib/content-os/quality.test.ts
+@@ -4,7 +4,7 @@
+ import { evaluateArticle, isUntrustedInstruction, sanitizeText } from "./quality.ts";
+ import { sealArticle } from "./gate.ts";
+ 
+-const kit = JSON.parse(readFileSync("/workspace/src/lib/content-os/kit-fixtures.json", "utf8"));
++const kit = JSON.parse(readFileSync(process.cwd() + "/src/lib/content-os/kit-fixtures.json", "utf8"));
+ const kitArticle = kit.article;
+ const kitEvidence = kit.evidence;
+ 
+--- a/modules/vendor2/src/lib/content-os/gate.test.ts
++++ b/modules/vendor2/src/lib/content-os/gate.test.ts
+@@ -6,7 +6,7 @@
+ import { generateSyntheticArticle } from "./writer.ts";
+ import type { ApprovalRecord, PublishRequest } from "./types.ts";
+ 
+-const examples = "/workspace/vendor-kit/contracts/examples";
++const examples = process.cwd() + "/vendor-kit/contracts/examples";
+ function load(name: string) {
+   return JSON.parse(readFileSync(`${examples}/${name}.json`, "utf8"));
+ }
+@@ -31,7 +31,7 @@
+ });
+ 
+ test("C02 HOLD claim cannot be drafted", () => {
+-  const bundle = checkBundle(JSON.parse(readFileSync("/workspace/src/lib/content-os/kit-fixtures.json", "utf8")).hold);
++  const bundle = checkBundle(JSON.parse(readFileSync(process.cwd() + "/src/lib/content-os/kit-fixtures.json", "utf8")).hold);
+   const brief = load("ContentBrief");
+   const article = generateSyntheticArticle(brief, bundle, "art-hold", 1);
+   assert.equal(article.status, "REVIEW_REQUIRED");
+--- a/modules/vendor2/src/lib/content-os/hash.test.ts
++++ b/modules/vendor2/src/lib/content-os/hash.test.ts
+@@ -3,7 +3,7 @@
+ import { test } from "node:test";
+ import { canonicalJson, digest, hashWithout, sha256Utf8 } from "./hash.ts";
+ 
+-const examples = "/workspace/vendor-kit/contracts/examples";
++const examples = process.cwd() + "/vendor-kit/contracts/examples";
+ 
+ function load(name: string) {
+   return JSON.parse(readFileSync(`${examples}/${name}.json`, "utf8"));
+--- a/modules/vendor2/src/lib/content-os/validate.test.ts
++++ b/modules/vendor2/src/lib/content-os/validate.test.ts
+@@ -5,7 +5,7 @@
+ import { readFileSync } from "node:fs";
+ 
+ test("G08 naive datetime rejected", () => {
+-  const draft = JSON.parse(readFileSync("/workspace/vendor-kit/contracts/examples/DraftRequest.json", "utf8"));
++  const draft = JSON.parse(readFileSync(process.cwd() + "/vendor-kit/contracts/examples/DraftRequest.json", "utf8"));
+   draft.budget.deadline_at = "2030-01-01T00:05:00";
+   assert.throws(() => validateDraftRequest(draft), (e: unknown) => e instanceof ContractError);
+ });
+@@ -19,7 +19,7 @@
+ });
+ 
+ test("C05 extra field on draft request", () => {
+-  const draft = JSON.parse(readFileSync("/workspace/vendor-kit/contracts/examples/DraftRequest.json", "utf8"));
++  const draft = JSON.parse(readFileSync(process.cwd() + "/vendor-kit/contracts/examples/DraftRequest.json", "utf8"));
+   draft.extra = "nope";
+   assert.throws(() => validateDraftRequest(draft));
+ });
+--- a/modules/vendor2/vendor-kit/tools/contracts.py
++++ b/modules/vendor2/vendor-kit/tools/contracts.py
+@@ -41,6 +41,16 @@
+ 
+ def validate(name: str, value: dict) -> None:
+     no_invalid_unicode(value)
++    # Internal assembly fix: preserve schema pin; enforce the documented aware-UTC boundary.
++    if name == 'ContentBrief' and isinstance(value, dict):
++        proposed = value.get('proposed_publish_at')
++        if isinstance(proposed, str):
++            try:
++                instant(proposed)
++            except ContractError:
++                raise
++            except ValueError:
++                raise ContractError('SCHEMA_INVALID:ContentBrief')
+     schema=json.loads((SCHEMAS/(name+'.json')).read_text(encoding='utf-8'))
+     schema['$id']=BASE+name+'.json'
+     errors=list(Draft202012Validator(schema,registry=REGISTRY,format_checker=FormatChecker()).iter_errors(value))
