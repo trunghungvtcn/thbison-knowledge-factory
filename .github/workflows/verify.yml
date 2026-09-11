@@ -15,6 +15,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          submodules: recursive
           fetch-depth: 0
           persist-credentials: false
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
@@ -31,6 +32,7 @@ jobs:
         run: python scripts/jobs/j2_verify_payload.py
       - name: Run source-only offline tests
         env:
+          CONTRACTOR_ROOT: ${{ github.workspace }}/dependencies/pipeline-lab-contractor-m1-m5
           PYTHONPATH: src
         run: python scripts/jobs/j2_source_only_pytest.py --junitxml=j2-junit.xml --summary-json=j2-summary.json
       - name: Upload JUnit
