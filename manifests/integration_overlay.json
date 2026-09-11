@@ -56,6 +56,12 @@
       "sha256": "d593a110a4a5905bedc0d9fe4a931ce5aec186cf7dc5550eb036fb786a6d31eb"
     },
     {
+      "bytes": 3393,
+      "kind": "file",
+      "path": "GROK_TEST_HANDOFF.md",
+      "sha256": "7e95a5e93cb78365653f26ac627b762fc80242e175b35dc16e5217f38225eeea"
+    },
+    {
       "bytes": 1130,
       "kind": "file",
       "path": "NOTION_READONLY.md",
@@ -378,6 +384,60 @@
       "kind": "file",
       "path": "content-os/modules/vendor1/.grok/app-env.json",
       "sha256": "4ecd4c43f97c92389a1fd774ca2cf94296c9e49208a3f43162988936685dadae"
+    },
+    {
+      "bytes": 6555,
+      "kind": "file",
+      "path": "content-os/modules/vendor1/.grok/skills/og/SKILL.md",
+      "sha256": "5c6ff71e42840f38db61fb5173836485de4a53418c99d1f34d77ecefaed46d28"
+    },
+    {
+      "bytes": 2568,
+      "kind": "file",
+      "path": "content-os/modules/vendor1/.grok/skills/og/references/brand-pass.md",
+      "sha256": "68019a3afe8ae75b94599de354245c9a0d068cae5ff054841ac75cc055058afe"
+    },
+    {
+      "bytes": 5988,
+      "kind": "file",
+      "path": "content-os/modules/vendor1/.grok/skills/og/references/custom-card.md",
+      "sha256": "97c0efccce4daf47486f8caa65723db2fd0435ccaa68be90004a6c1ad15cb954"
+    },
+    {
+      "bytes": 1959,
+      "kind": "file",
+      "path": "content-os/modules/vendor1/.grok/skills/og/references/favicon-and-icons.md",
+      "sha256": "bc95ed577825a411571f4680f992799a26811dd72af6714375dc49800e216db6"
+    },
+    {
+      "bytes": 1749,
+      "kind": "file",
+      "path": "content-os/modules/vendor1/.grok/skills/og/references/og-type-contract.md",
+      "sha256": "2743a8a9a6c1eafb8aec5ae8c83f2202533df6a55649582684d2bce18a52ea2f"
+    },
+    {
+      "bytes": 887,
+      "kind": "file",
+      "path": "content-os/modules/vendor1/.grok/skills/og/references/placeholder-card.md",
+      "sha256": "c21551f098562c8ff49004885596f71848c09af13b19237f1babe820e4f7e957"
+    },
+    {
+      "bytes": 2339,
+      "kind": "file",
+      "path": "content-os/modules/vendor1/.grok/skills/og/references/x-banner.md",
+      "sha256": "0f6f5b8c381c40e26514439575a004ef0560b379fd069b76fc940c9f803e0733"
+    },
+    {
+      "bytes": 18904,
+      "kind": "file",
+      "path": "content-os/modules/vendor1/AGENTS.md",
+      "sha256": "09f7b09f35660596cc4c22612a7893b0dea41e28c187168076b9c59302d0f610"
+    },
+    {
+      "bytes": 536,
+      "kind": "file",
+      "path": "content-os/modules/vendor1/AGENTS.project.md",
+      "sha256": "aff8f2083fd946545f2d27fed555ea3b36b612e5b41e948fb9a792ded0f8241b"
     },
     {
       "bytes": 604,
@@ -1610,6 +1670,60 @@
       "sha256": "4ecd4c43f97c92389a1fd774ca2cf94296c9e49208a3f43162988936685dadae"
     },
     {
+      "bytes": 6555,
+      "kind": "file",
+      "path": "content-os/modules/vendor2/.grok/skills/og/SKILL.md",
+      "sha256": "5c6ff71e42840f38db61fb5173836485de4a53418c99d1f34d77ecefaed46d28"
+    },
+    {
+      "bytes": 2568,
+      "kind": "file",
+      "path": "content-os/modules/vendor2/.grok/skills/og/references/brand-pass.md",
+      "sha256": "68019a3afe8ae75b94599de354245c9a0d068cae5ff054841ac75cc055058afe"
+    },
+    {
+      "bytes": 5988,
+      "kind": "file",
+      "path": "content-os/modules/vendor2/.grok/skills/og/references/custom-card.md",
+      "sha256": "97c0efccce4daf47486f8caa65723db2fd0435ccaa68be90004a6c1ad15cb954"
+    },
+    {
+      "bytes": 1959,
+      "kind": "file",
+      "path": "content-os/modules/vendor2/.grok/skills/og/references/favicon-and-icons.md",
+      "sha256": "bc95ed577825a411571f4680f992799a26811dd72af6714375dc49800e216db6"
+    },
+    {
+      "bytes": 1749,
+      "kind": "file",
+      "path": "content-os/modules/vendor2/.grok/skills/og/references/og-type-contract.md",
+      "sha256": "2743a8a9a6c1eafb8aec5ae8c83f2202533df6a55649582684d2bce18a52ea2f"
+    },
+    {
+      "bytes": 887,
+      "kind": "file",
+      "path": "content-os/modules/vendor2/.grok/skills/og/references/placeholder-card.md",
+      "sha256": "c21551f098562c8ff49004885596f71848c09af13b19237f1babe820e4f7e957"
+    },
+    {
+      "bytes": 2339,
+      "kind": "file",
+      "path": "content-os/modules/vendor2/.grok/skills/og/references/x-banner.md",
+      "sha256": "0f6f5b8c381c40e26514439575a004ef0560b379fd069b76fc940c9f803e0733"
+    },
+    {
+      "bytes": 18904,
+      "kind": "file",
+      "path": "content-os/modules/vendor2/AGENTS.md",
+      "sha256": "09f7b09f35660596cc4c22612a7893b0dea41e28c187168076b9c59302d0f610"
+    },
+    {
+      "bytes": 536,
+      "kind": "file",
+      "path": "content-os/modules/vendor2/AGENTS.project.md",
+      "sha256": "aff8f2083fd946545f2d27fed555ea3b36b612e5b41e948fb9a792ded0f8241b"
+    },
+    {
       "bytes": 412,
       "kind": "file",
       "path": "content-os/modules/vendor2/Dockerfile",
@@ -1850,10 +1964,10 @@
       "sha256": "9305d8cfe8cdad73671065d675c89d0f20075d18c756f9aba5043b72e7c19a0d"
     },
     {
-      "bytes": 3558,
+      "bytes": 3855,
       "kind": "file",
       "path": "content-os/modules/vendor2/scripts/migration-plan.test.mjs",
-      "sha256": "9787b5f5f1a7057db94f0a5a8c89abf6ec569fd22d26f99be1c248a2a9f0c082"
+      "sha256": "d228eb089d2663c8c9bcb114a204cda65a61402ad7cc8ae5752e4775d880899b"
     },
     {
       "bytes": 12430,
@@ -4871,6 +4985,18 @@
       "git_sha": "afac091e60bb6c8a0f0630964e43f5e80951267c",
       "kind": "gitlink",
       "path": "dependencies/pipeline-lab-contractor-m1-m5"
+    },
+    {
+      "bytes": 1682,
+      "kind": "file",
+      "path": "docs/MIGRATION-CONTRACT-01.md",
+      "sha256": "ad26c8bf3717f686e4871e04e9ecde1547bb5ad3c65bdc1e6a84930768408e18"
+    },
+    {
+      "bytes": 3683,
+      "kind": "file",
+      "path": "docs/OG_SOURCE_RESOLUTION.md",
+      "sha256": "12f08c20fdbcf784530f6cc6cbb50d5dde547f6962ab372d732b1a6d3eb918a4"
     },
     {
       "bytes": 3980,
