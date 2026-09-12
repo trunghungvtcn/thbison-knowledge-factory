@@ -9,9 +9,9 @@ permissions:
   contents: read
 
 env:
-  CANDIDATE_SHA: 693c1b5083da031bcc6b4d92a1917949bc6c5d01
-  IMAGE_NAME: thbison-v2-audit:693c1b5
-  CONTAINER_NAME: thbison-v2-audit-693c1b5
+  CANDIDATE_SHA: 12abc17590d1e26f46f01769e51e91c11f696288
+  IMAGE_NAME: thbison-v2-audit:12abc17
+  CONTAINER_NAME: thbison-v2-audit-12abc17
   NETWORK_NAME: thbison-v2-audit-internal
   POSTGRES_NAME: thbison-v2-audit-postgres
   AUDIT_DATABASE_URL: postgresql://audit:audit@thbison-v2-audit-postgres:5432/audit
@@ -24,7 +24,7 @@ jobs:
       - name: Check out immutable candidate
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: 693c1b5083da031bcc6b4d92a1917949bc6c5d01
+          ref: 12abc17590d1e26f46f01769e51e91c11f696288
           submodules: recursive
           fetch-depth: 0
           persist-credentials: false
