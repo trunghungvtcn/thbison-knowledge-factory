@@ -1,38 +1,95 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Shell } from '@/components/shell';
+import { CheckCircle2, CircleDashed, ClipboardCheck, ExternalLink, ShieldCheck } from 'lucide-react';
 import { useState } from 'react';
+import { Shell } from '@/components/shell';
 
 export const Route = createFileRoute('/tac-vu-ngoai')({ component: RemoteJobs });
-const HASH = 'e18a2650dcf3d52646f8e6fd50091d88e2e3d6515b228d049485f6d06cea4c10';
+
+const SNAPSHOT = {
+  bytes: 174507,
+  sha256: 'e18a2650dcf3d52646f8e6fd50091d88e2e3d6515b228d049485f6d06cea4c10',
+  counts: { evidence: 9, products: 24, knowledge: 114 },
+} as const;
+
+const COLAB_RECEIPT = {
+  status: 'SNAPSHOT_QA_PASS',
+  receiptSha256: '717113272ebac8612d196c645762f821fa66382423124d4908a60c76c5eab306',
+  notebookUrl: 'https://colab.research.google.com/drive/18SdgyxI8lqTqxWqL4bknkbVcje6--mjN',
+  interpreter: 'Python 3.13.15',
+} as const;
+
 function RemoteJobs() {
   const [platform, setPlatform] = useState<'kaggle' | 'colab'>('kaggle');
   const [notice, setNotice] = useState('');
   const root = platform === 'kaggle' ? '/kaggle/working' : '/content';
-  const input = platform === 'kaggle' ? '/kaggle/input/thbison-private/notion-content-os-snapshot-20260912.json' : '/content/notion-content-os-snapshot-20260912.json';
-  const command = `# Chạy trong một ô notebook; dùng source đã kiểm checksum tại ${root}/thbison\nimport subprocess, sys, uuid\nsubprocess.run([sys.executable, '${root}/thbison/content-os/scripts/snapshot_worker.py',\n    '--input', '${input}',\n    '--sha256', '${HASH}',\n    '--output', '${root}/snapshot-qa-' + uuid.uuid4().hex], check=True)`;
+  const input = platform === 'kaggle'
+    ? '/kaggle/input/thbison-private/notion-content-os-snapshot.json'
+    : '/content/notion-content-os-snapshot.json';
+  const command = `# NO_WRITE: kiểm tra snapshot, không tạo bài và không kết nối dịch vụ thật\nimport subprocess, sys, uuid\nsubprocess.run([sys.executable, '${root}/thbison/content-os/scripts/snapshot_worker.py',\n    '--input', '${input}',\n    '--sha256', '${SNAPSHOT.sha256}',\n    '--output', '${root}/snapshot-qa-' + uuid.uuid4().hex], check=True)`;
+
   return <Shell>
-    <h1 className="text-3xl font-semibold">Tác vụ Kaggle / Colab</h1>
-    <p className="mt-3 text-muted">VPS giữ dashboard và biên nhận. Notebook xử lý gói đầu vào đã khóa checksum; không kết nối database.</p>
-    <div className="mt-6 grid gap-4 md:grid-cols-3">
-      {['1. Chuẩn bị source và snapshot riêng tư', '2. Chạy notebook NO_WRITE', '3. Đối soát receipt trước khi nhập'].map(t => <div key={t} className="rounded-lg border border-line bg-panel p-5">{t}</div>)}
+    <div className="flex flex-wrap items-start justify-between gap-4">
+      <div>
+        <p className="text-xs font-semibold uppercase tracking-wide text-muted">Hosted compute · NO_WRITE</p>
+        <h1 className="mt-1 font-display text-3xl font-semibold tracking-tight">Tác vụ Kaggle / Colab</h1>
+        <p className="mt-2 max-w-3xl text-sm text-muted">VPS giữ dashboard và biên nhận. Notebook chỉ xử lý gói đầu vào đã khóa checksum; không kết nối database hoặc thay đổi trạng thái duyệt.</p>
+      </div>
+      <span className="inline-flex min-h-9 items-center gap-2 rounded-full bg-ok-bg px-3 text-xs font-medium text-ok"><ShieldCheck className="size-4" aria-hidden /> Không ghi dữ liệu</span>
     </div>
-    <section className="mt-6 rounded-lg border border-line bg-panel p-5">
-      <h2 className="text-xl font-semibold">Kiểm tra snapshot · sẵn lệnh</h2>
-      <p className="mt-2 text-sm text-muted">Kiểm tra metadata, ID và số lượng. Không phải tác vụ sinh bài, train model hay crawl dữ liệu.</p>
-      <label htmlFor="platform" className="mt-5 block font-medium">Môi trường</label>
-      <select id="platform" value={platform} onChange={e => {setPlatform(e.target.value as 'kaggle' | 'colab'); setNotice('');}} className="mt-2 min-h-11 rounded border border-line bg-paper px-3">
-        <option value="kaggle">Kaggle · private notebook, Internet OFF</option><option value="colab">Google Colab · private notebook</option>
-      </select>
-      <p className="mt-4 text-sm">Đặt source tại <code className="break-all">{root}/thbison</code>. Đặt snapshot tại đường dẫn trong lệnh; không dùng dataset công khai và không chia sẻ notebook chứa dữ liệu thật.</p>
-      <pre className="mt-4 overflow-x-auto rounded bg-paper p-4 text-sm"><code>{command}</code></pre>
-      <button className="mt-3 min-h-11 rounded bg-steel px-4 text-steel-fg" onClick={async () => {try {await navigator.clipboard.writeText(command); setNotice('Đã sao chép lệnh.');} catch {setNotice('Không truy cập được clipboard; chọn và sao chép lệnh trong khung.');}}}>Sao chép lệnh</button>
-      <p role="status" className="mt-2 text-sm">{notice}</p>
-      <p className="mt-3 text-sm text-muted">Kết quả: receipt.json và sha256.json trong thư mục output mới. Lỗi checksum sẽ dừng trước khi tạo output. Chưa chạy trên Kaggle/Colab trong lượt triển khai này.</p>
+
+    <section className="mt-6 grid gap-4 lg:grid-cols-2" aria-labelledby="run-status-title">
+      <h2 id="run-status-title" className="sr-only">Trạng thái môi trường chạy</h2>
+      <article className="rounded-lg border border-line bg-panel p-5">
+        <div className="flex items-start justify-between gap-3">
+          <div><p className="text-sm font-medium text-muted">Google Colab</p><h3 className="mt-1 text-lg font-semibold">Snapshot thật đã kiểm định</h3></div>
+          <span className="inline-flex items-center gap-2 rounded-full bg-ok-bg px-3 py-1 text-xs font-medium text-ok"><CheckCircle2 className="size-4" aria-hidden /> PASS</span>
+        </div>
+        <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
+          <div><dt className="text-muted">Kết quả</dt><dd className="mt-1 font-mono text-xs">{COLAB_RECEIPT.status}</dd></div>
+          <div><dt className="text-muted">Runtime</dt><dd className="mt-1">{COLAB_RECEIPT.interpreter}</dd></div>
+          <div className="col-span-2"><dt className="text-muted">Receipt SHA-256</dt><dd className="mt-1 break-all font-mono text-xs">{COLAB_RECEIPT.receiptSha256}</dd></div>
+        </dl>
+        <a className="mt-4 inline-flex min-h-11 items-center gap-2 rounded border border-line px-4 text-sm font-medium" href={COLAB_RECEIPT.notebookUrl} target="_blank" rel="noreferrer">Mở notebook riêng tư <ExternalLink className="size-4" aria-hidden /></a>
+      </article>
+      <article className="rounded-lg border border-line bg-panel p-5">
+        <div className="flex items-start justify-between gap-3">
+          <div><p className="text-sm font-medium text-muted">Kaggle</p><h3 className="mt-1 text-lg font-semibold">Chờ chạy private notebook</h3></div>
+          <span className="inline-flex items-center gap-2 rounded-full bg-raised px-3 py-1 text-xs font-medium"><CircleDashed className="size-4" aria-hidden /> PENDING</span>
+        </div>
+        <p className="mt-4 text-sm text-muted">Chỉ hoàn tất khi notebook để riêng tư, Internet OFF, input khớp checksum và receipt được tải về đối soát. Không dùng kết quả Colab để tự khai PASS cho Kaggle.</p>
+      </article>
     </section>
+
     <section className="mt-6 rounded-lg border border-line bg-panel p-5">
-      <h2 className="text-xl font-semibold">Sinh bài từ nguồn thật · chưa mở</h2>
-      <p className="mt-2">Snapshot hiện là metadata. Cần bổ sung quan hệ Knowledge → Evidence và trích dẫn đã xác minh trước khi nối bộ sinh bài. Không thay thế phần thiếu bằng fixture.</p>
-      <p className="mt-3 text-sm text-muted">Không có nút tự khởi chạy từ dashboard, scheduler hoặc tự nhập kết quả vào Notion/CMS. Mọi output phải qua nghiệm thu trước.</p>
+      <h2 className="text-xl font-semibold">Gói đầu vào đã khóa</h2>
+      <div className="mt-4 grid gap-3 sm:grid-cols-4">
+        <div className="rounded bg-raised p-3"><p className="text-xs text-muted">Dung lượng</p><p className="mt-1 font-mono text-sm">{SNAPSHOT.bytes.toLocaleString('vi-VN')} bytes</p></div>
+        <div className="rounded bg-raised p-3"><p className="text-xs text-muted">Evidence</p><p className="mt-1 text-xl font-semibold">{SNAPSHOT.counts.evidence}</p></div>
+        <div className="rounded bg-raised p-3"><p className="text-xs text-muted">Products</p><p className="mt-1 text-xl font-semibold">{SNAPSHOT.counts.products}</p></div>
+        <div className="rounded bg-raised p-3"><p className="text-xs text-muted">Knowledge</p><p className="mt-1 text-xl font-semibold">{SNAPSHOT.counts.knowledge}</p></div>
+      </div>
+      <p className="mt-3 break-all font-mono text-xs text-muted">SHA-256 {SNAPSHOT.sha256}</p>
+    </section>
+
+    <section className="mt-6 rounded-lg border border-line bg-panel p-5">
+      <h2 className="text-xl font-semibold">Lệnh vận hành an toàn</h2>
+      <p className="mt-2 text-sm text-muted">Kiểm tra metadata, ID và số lượng. Không sinh bài, train model hoặc crawl dữ liệu.</p>
+      <label htmlFor="platform" className="mt-5 block font-medium">Môi trường</label>
+      <select id="platform" value={platform} onChange={e => { setPlatform(e.target.value as 'kaggle' | 'colab'); setNotice(''); }} className="mt-2 min-h-11 rounded border border-line bg-paper px-3">
+        <option value="kaggle">Kaggle · private notebook, Internet OFF</option>
+        <option value="colab">Google Colab · private notebook</option>
+      </select>
+      <p className="mt-4 text-sm">Đặt source tại <code className="break-all">{root}/thbison</code> và snapshot tại <code className="break-all">{input}</code>.</p>
+      <pre className="mt-4 overflow-x-auto rounded bg-paper p-4 text-sm"><code>{command}</code></pre>
+      <button className="mt-3 inline-flex min-h-11 items-center gap-2 rounded bg-steel px-4 text-steel-fg" onClick={async () => { try { await navigator.clipboard.writeText(command); setNotice('Đã sao chép lệnh.'); } catch { setNotice('Không truy cập được clipboard; chọn và sao chép lệnh trong khung.'); } }}><ClipboardCheck className="size-4" aria-hidden /> Sao chép lệnh</button>
+      <p role="status" className="mt-2 min-h-5 text-sm">{notice}</p>
+      <p className="mt-2 text-sm text-muted">Kết quả hợp lệ gồm receipt.json và sha256.json trong thư mục output mới. Lỗi checksum phải dừng trước khi tạo output.</p>
+    </section>
+
+    <section className="mt-6 rounded-lg border border-line bg-panel p-5">
+      <h2 className="text-xl font-semibold">Cổng Knowledge · để dành cho model riêng</h2>
+      <p className="mt-2">Dashboard hiện chỉ giữ interface tích hợp. Không tự đưa 114 Knowledge Items vào bộ sinh bài và không thay đổi HOLD/REVIEW_REQUIRED.</p>
+      <p className="mt-3 text-sm text-muted">Khi model chất lượng được gắn sau, output vẫn phải qua kiểm chứng nguồn, preview và phê duyệt thủ công trước khi có quyền xuất bản.</p>
     </section>
   </Shell>;
 }
