@@ -83,13 +83,25 @@ jobs:
 
       - name: Probe canary health
         run: |
-          for attempt in $(seq 1 30); do
+          ready=false
+          for attempt in $(seq 1 90); do
             if docker exec "$CONTAINER_NAME" node -e \
               'fetch("http://127.0.0.1:8080/healthz").then(async r => { if (!r.ok) process.exit(1); require("node:fs").writeFileSync("/tmp/health.json", await r.text()) })'; then
+              ready=true
               break
+            fi
+            if test $((attempt % 10)) -eq 0; then
+              printf 'probe_attempt=%s\n' "$attempt"
+              docker inspect "$CONTAINER_NAME" --format 'running={{.State.Running}} status={{.State.Status}} exit={{.State.ExitCode}}'
+              docker logs --tail 30 "$CONTAINER_NAME" || true
             fi
             sleep 1
           done
+          if test "$ready" != true; then
+            docker inspect "$CONTAINER_NAME" --format 'running={{.State.Running}} status={{.State.Status}} exit={{.State.ExitCode}} error={{.State.Error}}'
+            docker logs "$CONTAINER_NAME" || true
+            exit 1
+          fi
           docker cp "$CONTAINER_NAME":/tmp/health.json health.json
           test "$(cat health.json)" = '{"status":"ok"}'
 
