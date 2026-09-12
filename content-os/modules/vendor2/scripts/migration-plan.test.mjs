@@ -63,8 +63,12 @@ test("the auth schema ships outside the globbed directory", () => {
   assert.ok(!entries.includes(AUTH_MIGRATION));
   assert.deepEqual(pendingMigrations(entries, []), [
     { name: "0002_content_os.sql", path: "0002_content_os.sql" },
+    { name: "0003_notion_readonly_snapshots.sql", path: "0003_notion_readonly_snapshots.sql" },
   ]);
-  assert.deepEqual(pendingMigrations(entries, ["0002_content_os.sql"]), []);
+  assert.deepEqual(pendingMigrations(entries, ["0002_content_os.sql"]), [
+    { name: "0003_notion_readonly_snapshots.sql", path: "0003_notion_readonly_snapshots.sql" },
+  ]);
+  assert.deepEqual(pendingMigrations(entries, ["0002_content_os.sql", "0003_notion_readonly_snapshots.sql"]), []);
   assert.ok(readdirSync(join(migrationsDir, "auth")).includes("0001_auth.sql"));
 });
 

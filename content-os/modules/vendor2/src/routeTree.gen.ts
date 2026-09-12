@@ -16,6 +16,7 @@ import { Route as KeHoachRouteImport } from './routes/ke-hoach'
 import { Route as LichSuRouteImport } from './routes/lich-su'
 import { Route as NghiemThuRouteImport } from './routes/nghiem-thu'
 import { Route as NguonDuLieuRouteImport } from './routes/nguon-du-lieu'
+import { Route as TacVuNgoaiRouteImport } from './routes/tac-vu-ngoai'
 import { Route as BaiVietArticleIdRouteImport } from './routes/bai-viet_.$articleId'
 import { Route as DuyetArticleIdRouteImport } from './routes/duyet.$articleId'
 import { Route as KeHoachBriefIdRouteImport } from './routes/ke-hoach_.$briefId'
@@ -71,6 +72,11 @@ const NghiemThuRoute = NghiemThuRouteImport.update({
 const NguonDuLieuRoute = NguonDuLieuRouteImport.update({
   id: '/nguon-du-lieu',
   path: '/nguon-du-lieu',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TacVuNgoaiRoute = TacVuNgoaiRouteImport.update({
+  id: '/tac-vu-ngoai',
+  path: '/tac-vu-ngoai',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BaiVietArticleIdRoute = BaiVietArticleIdRouteImport.update({
@@ -194,6 +200,7 @@ export interface FileRoutesByFullPath {
   '/lich-su': typeof LichSuRoute
   '/nghiem-thu': typeof NghiemThuRoute
   '/nguon-du-lieu': typeof NguonDuLieuRoute
+  '/tac-vu-ngoai': typeof TacVuNgoaiRoute
   '/bai-viet/$articleId': typeof BaiVietArticleIdRoute
   '/duyet/$articleId': typeof DuyetArticleIdRoute
   '/ke-hoach/$briefId': typeof KeHoachBriefIdRoute
@@ -224,6 +231,7 @@ export interface FileRoutesByTo {
   '/lich-su': typeof LichSuRoute
   '/nghiem-thu': typeof NghiemThuRoute
   '/nguon-du-lieu': typeof NguonDuLieuRoute
+  '/tac-vu-ngoai': typeof TacVuNgoaiRoute
   '/bai-viet/$articleId': typeof BaiVietArticleIdRoute
   '/duyet/$articleId': typeof DuyetArticleIdRoute
   '/ke-hoach/$briefId': typeof KeHoachBriefIdRoute
@@ -255,6 +263,7 @@ export interface FileRoutesById {
   '/lich-su': typeof LichSuRoute
   '/nghiem-thu': typeof NghiemThuRoute
   '/nguon-du-lieu': typeof NguonDuLieuRoute
+  '/tac-vu-ngoai': typeof TacVuNgoaiRoute
   '/bai-viet_/$articleId': typeof BaiVietArticleIdRoute
   '/duyet/$articleId': typeof DuyetArticleIdRoute
   '/ke-hoach_/$briefId': typeof KeHoachBriefIdRoute
@@ -287,6 +296,7 @@ export interface FileRouteTypes {
     | '/lich-su'
     | '/nghiem-thu'
     | '/nguon-du-lieu'
+    | '/tac-vu-ngoai'
     | '/bai-viet/$articleId'
     | '/duyet/$articleId'
     | '/ke-hoach/$briefId'
@@ -317,6 +327,7 @@ export interface FileRouteTypes {
     | '/lich-su'
     | '/nghiem-thu'
     | '/nguon-du-lieu'
+    | '/tac-vu-ngoai'
     | '/bai-viet/$articleId'
     | '/duyet/$articleId'
     | '/ke-hoach/$briefId'
@@ -347,6 +358,7 @@ export interface FileRouteTypes {
     | '/lich-su'
     | '/nghiem-thu'
     | '/nguon-du-lieu'
+    | '/tac-vu-ngoai'
     | '/bai-viet_/$articleId'
     | '/duyet/$articleId'
     | '/ke-hoach_/$briefId'
@@ -378,6 +390,7 @@ export interface RootRouteChildren {
   LichSuRoute: typeof LichSuRoute
   NghiemThuRoute: typeof NghiemThuRoute
   NguonDuLieuRoute: typeof NguonDuLieuRoute
+  TacVuNgoaiRoute: typeof TacVuNgoaiRoute
   BaiVietArticleIdRoute: typeof BaiVietArticleIdRoute
   DuyetArticleIdRoute: typeof DuyetArticleIdRoute
   KeHoachBriefIdRoute: typeof KeHoachBriefIdRoute
@@ -441,6 +454,13 @@ declare module '@tanstack/react-router' {
       path: '/nguon-du-lieu'
       fullPath: '/nguon-du-lieu'
       preLoaderRoute: typeof NguonDuLieuRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tac-vu-ngoai': {
+      id: '/tac-vu-ngoai'
+      path: '/tac-vu-ngoai'
+      fullPath: '/tac-vu-ngoai'
+      preLoaderRoute: typeof TacVuNgoaiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bai-viet_/$articleId': {
@@ -691,6 +711,7 @@ const rootRouteChildren: RootRouteChildren = {
   LichSuRoute: LichSuRoute,
   NghiemThuRoute: NghiemThuRoute,
   NguonDuLieuRoute: NguonDuLieuRoute,
+  TacVuNgoaiRoute: TacVuNgoaiRoute,
   BaiVietArticleIdRoute: BaiVietArticleIdRoute,
   DuyetArticleIdRoute: DuyetArticleIdRoute,
   KeHoachBriefIdRoute: KeHoachBriefIdRoute,

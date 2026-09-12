@@ -48,7 +48,7 @@ export async function latestNotionSnapshot(): Promise<NotionSnapshotView> {
     const scopeValue = body["Applicability Scope"] ?? body["Product Family"] ?? body["Model"];
     const view: NotionSnapshotRow = {
       dataSourceId: row.data_source_id, recordId: row.record_id, name: row.record_name,
-      status: row.status, decision: row.decision, sourceUrl: row.source_url,
+      status: row.status, decision: row.decision, sourceUrl: row.source_url && /^https?:\/\//i.test(row.source_url) ? row.source_url : null,
       eligible: false, scope: typeof scopeValue === "string" ? scopeValue : null,
     };
     view.eligible = notionRecordEligible(view.dataSourceId, view.status, view.decision);

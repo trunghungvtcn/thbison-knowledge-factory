@@ -9,6 +9,7 @@ const NAV = [
   { to: "/ke-hoach", label: "Kế hoạch", icon: CalendarRange },
   { to: "/bai-viet", label: "Bài viết", icon: FileText },
   { to: "/nguon-du-lieu", label: "Nguồn dữ liệu", icon: Database },
+  { to: "/tac-vu-ngoai", label: "Kaggle / Colab", icon: ClipboardCheck },
   { to: "/lich-su", label: "Lịch sử", icon: History },
   { to: "/nghiem-thu", label: "Nghiệm thu", icon: ClipboardCheck },
 ];
@@ -42,7 +43,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
               MOCK · LIVE tắt
             </span>
             <label className="text-xs text-muted" htmlFor="principal">
-              Vai trò máy chủ
+              Vai trò mô phỏng
             </label>
             <select
               id="principal"

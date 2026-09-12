@@ -1,5 +1,6 @@
-import { StatusPill } from "@/components/shell";
-import { NOTION_DATA_SOURCES } from "@/lib/content-os/notion-snapshot";
+import { Shell, StatusPill } from "@/components/shell";
+import { NOTION_DATA_SOURCES } from "@/lib/content-os/notion-policy";
+import { useState } from "react";
 import { loadNotionSources } from "@/lib/content-os/workspace.functions";
 import { createFileRoute } from "@tanstack/react-router";
 import { Database, ExternalLink, ShieldCheck } from "lucide-react";
@@ -7,6 +8,8 @@ import { Database, ExternalLink, ShieldCheck } from "lucide-react";
 export const Route = createFileRoute("/nguon-du-lieu")({
   loader: () => loadNotionSources(),
   component: NotionSourcesPage,
+  pendingComponent: () => <Shell><p role="status">Đang tải nguồn dữ liệu…</p></Shell>,
+  errorComponent: ({ reset }) => <Shell><div role="alert">Không tải được snapshot. Không thay bằng dữ liệu mẫu.</div><button className="mt-4 min-h-11 rounded border px-4" onClick={reset}>Thử lại</button></Shell>,
 });
 
 const SOURCES = [
@@ -17,8 +20,9 @@ const SOURCES = [
 
 function NotionSourcesPage() {
   const data = Route.useLoaderData();
+  const [query, setQuery] = useState("");
   return (
-    <div>
+    <Shell>
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-muted">Notion · chỉ đọc</p>
@@ -49,17 +53,20 @@ function NotionSourcesPage() {
               </div>
             ))}
           </div>
-          <div className="mt-4 rounded-lg bg-panel px-4 py-3 text-xs text-muted shadow-[var(--shadow-border)]">
+          <div className="mt-4 break-all rounded-lg bg-panel px-4 py-3 text-sm text-muted shadow-[var(--shadow-border)]">
             Chụp lúc {data.capturedAt} · nhập lúc {data.importedAt} · SHA-256 <span className="font-mono">{data.snapshotSha256}</span>
           </div>
+          <p className="mt-3 text-sm text-muted">Trạng thái dưới đây giữ nguyên từ Notion. Đạt điều kiện trạng thái chưa có nghĩa đã đủ bằng chứng để sinh bài hoặc được phép xuất bản.</p>
+          <label className="mt-5 block text-sm font-medium" htmlFor="source-search">Tìm trong nguồn dữ liệu</label>
+          <input id="source-search" type="search" value={query} onChange={e => setQuery(e.target.value)} className="mt-2 min-h-11 w-full rounded border border-line bg-panel px-3" placeholder="Tên, trạng thái hoặc phạm vi…" />
           <div className="mt-6 space-y-8">
             {SOURCES.map((source) => {
-              const rows = data.rows.filter((row) => row.dataSourceId === source.id);
+              const rows = data.rows.filter((row) => row.dataSourceId === source.id && [row.name, row.status, row.decision, row.scope].join(" ").toLocaleLowerCase("vi").includes(query.toLocaleLowerCase("vi").trim()));
               return (
                 <section key={source.id} aria-labelledby={`source-${source.key}`}>
                   <div className="mb-3 flex items-center justify-between gap-3">
                     <h2 id={`source-${source.key}`} className="text-xl font-semibold">{source.label}</h2>
-                    <span className="text-xs text-muted">{rows.filter((row) => row.eligible).length} đủ điều kiện Content Engine</span>
+                    <span className="text-sm text-muted">{rows.length} kết quả · {rows.filter((row) => row.eligible).length} đạt điều kiện trạng thái</span>
                   </div>
                   <div className="overflow-x-auto rounded-lg bg-panel shadow-[var(--shadow-border)]">
                     <table className="w-full min-w-[760px] text-left text-sm">
@@ -67,6 +74,7 @@ function NotionSourcesPage() {
                         <tr><th className="px-4 py-3">Tên</th><th className="px-4 py-3">Trạng thái</th><th className="px-4 py-3">Quyết định</th><th className="px-4 py-3">Phạm vi</th><th className="px-4 py-3">Nguồn</th></tr>
                       </thead>
                       <tbody className="divide-y divide-line">
+                        {rows.length === 0 && <tr><td colSpan={5} className="px-4 py-6 text-muted">Không có bản ghi phù hợp.</td></tr>}
                         {rows.map((row) => (
                           <tr key={row.recordId}>
                             <td className="px-4 py-3 font-medium">{row.name}</td>
@@ -87,6 +95,6 @@ function NotionSourcesPage() {
           </div>
         </>
       )}
-    </div>
+    </Shell>
   );
 }
