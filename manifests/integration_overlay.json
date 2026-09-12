@@ -1724,10 +1724,10 @@
       "sha256": "aff8f2083fd946545f2d27fed555ea3b36b612e5b41e948fb9a792ded0f8241b"
     },
     {
-      "bytes": 412,
+      "bytes": 449,
       "kind": "file",
       "path": "content-os/modules/vendor2/Dockerfile",
-      "sha256": "346daf68480b22810045318057b68ce6d5185c2dbe4742e851c55f0d9bafe9e8"
+      "sha256": "4f415c614c666bc335bedf1648558a5a9859b96407a2aa64195e3296817a28c6"
     },
     {
       "bytes": 1496,
@@ -2282,10 +2282,10 @@
       "sha256": "d1f1e0d62cb8d8d1e04c26e14de842d8a151f75812d81b046c65b5d1fe8e4b27"
     },
     {
-      "bytes": 1698,
+      "bytes": 1735,
       "kind": "file",
       "path": "content-os/modules/vendor2/src/lib/content-os/constants.ts",
-      "sha256": "25018c3550a014b6bab122b6a9f0f6708ec017a7078d1ac7eee919ef73115084"
+      "sha256": "317d11554a4b0359899ef1e2c70ec89bf51c1d879f99dc0b0b9e774c6405e372"
     },
     {
       "bytes": 2895,
