@@ -13,6 +13,8 @@ env:
   IMAGE_NAME: thbison-v2-audit:13cd0f45
   CONTAINER_NAME: thbison-v2-audit-13cd0f45
   NETWORK_NAME: thbison-v2-audit-internal
+  POSTGRES_NAME: thbison-v2-audit-postgres
+  AUDIT_DATABASE_URL: postgresql://audit:audit@thbison-v2-audit-postgres:5432/audit
 
 jobs:
   docker-runtime-audit:
@@ -62,6 +64,25 @@ jobs:
         run: |
           docker network create --internal "$NETWORK_NAME"
           docker run --detach \
+            --name "$POSTGRES_NAME" \
+            --network "$NETWORK_NAME" \
+            --env POSTGRES_USER=audit \
+            --env POSTGRES_PASSWORD=audit \
+            --env POSTGRES_DB=audit \
+            --tmpfs /var/lib/postgresql/data:rw,noexec,nosuid,size=256m \
+            postgres:16-bookworm
+          for attempt in $(seq 1 60); do
+            if docker exec "$POSTGRES_NAME" pg_isready --username audit --dbname audit; then
+              break
+            fi
+            sleep 1
+          done
+          docker exec "$POSTGRES_NAME" pg_isready --username audit --dbname audit
+          docker run --rm \
+            --network "$NETWORK_NAME" \
+            --env "DATABASE_URL=$AUDIT_DATABASE_URL" \
+            "$IMAGE_NAME" npm run db:migrate
+          docker run --detach \
             --name "$CONTAINER_NAME" \
             --network "$NETWORK_NAME" \
             --cpus 0.5 \
@@ -73,6 +94,8 @@ jobs:
             --security-opt no-new-privileges \
             --cap-drop ALL \
             --env CONTENT_OS_MODE=MOCK \
+            --env "DATABASE_URL=$AUDIT_DATABASE_URL" \
+            --env VITE_AUTH_ENABLED=true \
             --env ALLOW_PRODUCTION=false \
             --env ALLOW_PUBLIC_EFFECTS=false \
             --env ALLOW_LIVE=false \
@@ -133,6 +156,7 @@ jobs:
           env = set(inspect["Config"]["Env"])
           expected = {
               "CONTENT_OS_MODE=MOCK",
+              "VITE_AUTH_ENABLED=true",
               "ALLOW_PRODUCTION=false",
               "ALLOW_PUBLIC_EFFECTS=false",
               "ALLOW_LIVE=false",
@@ -181,4 +205,5 @@ jobs:
         if: always()
         run: |
           docker rm --force "$CONTAINER_NAME" 2>/dev/null || true
+          docker rm --force "$POSTGRES_NAME" 2>/dev/null || true
           docker network rm "$NETWORK_NAME" 2>/dev/null || true
