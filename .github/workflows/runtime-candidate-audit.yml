@@ -12,7 +12,6 @@ env:
   CANDIDATE_SHA: 13cd0f4518e086ac29c8d939d23c7f28c7869996
   IMAGE_NAME: thbison-v2-audit:13cd0f45
   CONTAINER_NAME: thbison-v2-audit-13cd0f45
-  NETWORK_NAME: thbison-v2-audit-internal
 
 jobs:
   docker-runtime-audit:
@@ -60,11 +59,9 @@ jobs:
 
       - name: Run isolated default-CMD canary
         run: |
-          docker network create --internal "$NETWORK_NAME"
           docker run --detach \
             --name "$CONTAINER_NAME" \
-            --network "$NETWORK_NAME" \
-            --publish 127.0.0.1:18082:8080 \
+            --network none \
             --cpus 0.5 \
             --memory 512m \
             --pids-limit 256 \
@@ -82,17 +79,18 @@ jobs:
             "$IMAGE_NAME"
 
           for attempt in $(seq 1 30); do
-            if curl --fail --silent --show-error http://127.0.0.1:18082/healthz > health.json; then
+            if docker exec "$CONTAINER_NAME" node -e \
+              'fetch("http://127.0.0.1:8080/healthz").then(async r => { if (!r.ok) process.exit(1); require("node:fs").writeFileSync("/tmp/health.json", await r.text()) })'; then
               break
             fi
             sleep 1
           done
+          docker cp "$CONTAINER_NAME":/tmp/health.json health.json
           test "$(cat health.json)" = '{"status":"ok"}'
 
-          curl --fail --silent --show-error \
-            -H 'Authorization: Bearer svc_reader_test_thbison_ok12' \
-            -H 'X-Contract-Version: 1.0.0' \
-            http://127.0.0.1:18082/v1/capabilities > capabilities.json
+          docker exec "$CONTAINER_NAME" node -e \
+            'fetch("http://127.0.0.1:8080/v1/capabilities", {headers: {authorization: "Bearer svc_reader_test_thbison_ok12", "x-contract-version": "1.0.0"}}).then(async r => { if (!r.ok) process.exit(1); require("node:fs").writeFileSync("/tmp/capabilities.json", await r.text()) })'
+          docker cp "$CONTAINER_NAME":/tmp/capabilities.json capabilities.json
 
           docker inspect "$CONTAINER_NAME" > container-inspect.json
           docker logs "$CONTAINER_NAME" > container.log 2>&1
