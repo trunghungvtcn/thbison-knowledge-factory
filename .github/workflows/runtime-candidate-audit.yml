@@ -62,7 +62,7 @@ jobs:
 
       - name: Start isolated default-CMD canary
         run: |
-          docker network create --internal "$NETWORK_NAME"
+          docker network create "$NETWORK_NAME"
           docker run --detach \
             --name "$POSTGRES_NAME" \
             --network "$NETWORK_NAME" \
@@ -85,6 +85,7 @@ jobs:
           docker run --detach \
             --name "$CONTAINER_NAME" \
             --network "$NETWORK_NAME" \
+            --publish 127.0.0.1:18082:8080 \
             --cpus 0.5 \
             --memory 512m \
             --pids-limit 256 \
@@ -110,8 +111,7 @@ jobs:
         run: |
           ready=false
           for attempt in $(seq 1 90); do
-            if docker run --rm --network "$NETWORK_NAME" node:22-bookworm-slim node -e \
-              'fetch("http://thbison-v2-audit-13cd0f45:8080/healthz").then(async r => { if (!r.ok) process.exit(1); console.log(await r.text()) })' > health.json; then
+            if curl --fail --silent --show-error http://127.0.0.1:18082/healthz > health.json; then
               ready=true
               break
             fi
@@ -131,8 +131,10 @@ jobs:
 
       - name: Probe canary capabilities
         run: |
-          docker run --rm --network "$NETWORK_NAME" node:22-bookworm-slim node -e \
-            'fetch("http://thbison-v2-audit-13cd0f45:8080/v1/capabilities", {headers: {authorization: "Bearer svc_reader_test_thbison_ok12", "x-contract-version": "1.0.0"}}).then(async r => { if (!r.ok) process.exit(1); console.log(await r.text()) })' > capabilities.json
+          curl --fail --silent --show-error \
+            -H 'Authorization: Bearer svc_reader_test_thbison_ok12' \
+            -H 'X-Contract-Version: 1.0.0' \
+            http://127.0.0.1:18082/v1/capabilities > capabilities.json
 
       - name: Validate identity and safety invariants
         run: |
