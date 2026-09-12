@@ -11,6 +11,7 @@ import {
   getBrief,
   getEvidence,
   getJob,
+  getJobOutput,
   issueApproval,
   latestApprovalFor,
   listArticles,
@@ -22,6 +23,7 @@ import {
   reconcilePublication,
   socialSummary,
   submitContentJob,
+  submitPlanningJob,
   submitPublication,
 } from "./service";
 import { getQueue } from "./queue";
@@ -29,7 +31,7 @@ import { kitEvidence } from "./fixtures";
 import { MOCK_DESTINATION } from "./constants";
 import { nowIso } from "./clock";
 import { formatBangkok } from "./clock";
-import type { ContentBrief } from "./types";
+import type { ContentBrief, PlanningOutput } from "./types";
 import { latestNotionSnapshot } from "./notion-snapshot";
 
 function principal() {
@@ -63,6 +65,43 @@ export const loadOverview = createServerFn({ method: "GET" }).handler(async () =
 
 export const loadBriefs = createServerFn({ method: "GET" }).handler(async () => listBriefs(principal()));
 
+export const runPlanning = createServerFn({ method: "POST" })
+  .validator((d: { seed: string; existingPages?: string[] }) => d)
+  .handler(async ({ data }) => {
+    const p = principal();
+    const seed = data.seed.trim();
+    if (!seed) throw new ContractError("VALIDATION_ERROR", "seed keyword is required");
+    const nonce = Date.now().toString(36);
+    const key = `idem-planning-${nonce}`.padEnd(16, "x").slice(0, 80);
+    const job = await submitPlanningJob(
+      p,
+      {
+        contract_version: CONTRACT_VERSION,
+        project_id: p.project_id,
+        data_class: "TEST_ONLY",
+        request_id: `planning-${nonce}`,
+        scope: { country_code: "VN", language: "vi", timezone: "Asia/Bangkok", domain: "manual-chain-hoist" },
+        seeds: [seed],
+        existing_pages: data.existingPages ?? [],
+        budget: {
+          max_provider_requests: 0,
+          max_tokens: 0,
+          max_cost_usd: "0.000000",
+          deadline_at: new Date(Date.now() + 5 * 60 * 1000).toISOString().replace(/\.\d{3}Z$/, "Z"),
+          max_transport_attempts: 1,
+        },
+      },
+      key,
+      CONTRACT_VERSION,
+    );
+    await getQueue().drain();
+    const completed = await getJob(p, job.job_id, CONTRACT_VERSION);
+    const output = completed.status === "SUCCEEDED"
+      ? await getJobOutput(p, completed.job_id, CONTRACT_VERSION) as PlanningOutput
+      : null;
+    return { job: completed, output };
+  });
+
 export const loadBrief = createServerFn({ method: "GET" })
   .validator((d: { briefId: string }) => d)
   .handler(async ({ data }) => {
@@ -79,11 +118,14 @@ export const loadBrief = createServerFn({ method: "GET" })
   });
 
 export const saveBrief = createServerFn({ method: "POST" })
-  .validator((d: { briefId: string; title?: string; audience?: string; proposed_publish_at?: string | null }) => d)
+  .validator((d: { briefId: string; title?: string; audience?: string; primaryKeyword?: string; questions?: string[]; outline?: string[]; proposed_publish_at?: string | null }) => d)
   .handler(async ({ data }) => {
     return patchBrief(principal(), data.briefId, {
       title: data.title,
       audience: data.audience,
+      primary_keyword: data.primaryKeyword,
+      questions: data.questions,
+      outline: data.outline,
       proposed_publish_at: data.proposed_publish_at ?? undefined,
     });
   });

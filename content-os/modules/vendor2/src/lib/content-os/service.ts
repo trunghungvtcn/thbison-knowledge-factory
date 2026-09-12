@@ -473,7 +473,7 @@ export async function listBriefs(principal: Principal): Promise<ContentBrief[]> 
 export async function patchBrief(
   principal: Principal,
   briefId: string,
-  patch: Partial<Pick<ContentBrief, "title" | "audience" | "proposed_publish_at" | "outline" | "questions">>,
+  patch: Partial<Pick<ContentBrief, "title" | "audience" | "primary_keyword" | "proposed_publish_at" | "outline" | "questions">>,
 ): Promise<ContentBrief> {
   await ensureSeed();
   const current = await getBrief(principal, briefId, CONTRACT_VERSION);

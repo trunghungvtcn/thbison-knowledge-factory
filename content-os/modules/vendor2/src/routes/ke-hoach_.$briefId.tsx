@@ -14,6 +14,9 @@ function BriefPage() {
   const router = useRouter();
   const [title, setTitle] = useState(brief.title);
   const [audience, setAudience] = useState(brief.audience);
+  const [primaryKeyword, setPrimaryKeyword] = useState(brief.primary_keyword);
+  const [questions, setQuestions] = useState(brief.questions.join("\n"));
+  const [outline, setOutline] = useState(brief.outline.join("\n"));
   const [date, setDate] = useState(brief.proposed_publish_at ?? "");
   const [msg, setMsg] = useState("");
   const [busy, setBusy] = useState(false);
@@ -37,6 +40,9 @@ function BriefPage() {
               briefId: brief.brief_id,
               title,
               audience,
+              primaryKeyword,
+              questions: questions.split("\n").map((value) => value.trim()).filter(Boolean),
+              outline: outline.split("\n").map((value) => value.trim()).filter(Boolean),
               proposed_publish_at: date ? new Date(date).toISOString() : null,
             },
           });
@@ -54,6 +60,10 @@ function BriefPage() {
           <input className="min-h-11 rounded-sm border border-line bg-paper px-3" value={audience} onChange={(e) => setAudience(e.target.value)} />
         </label>
         <label className="grid gap-1 text-sm">
+          Từ khóa chính
+          <input className="min-h-11 rounded-sm border border-line bg-paper px-3" value={primaryKeyword} onChange={(e) => setPrimaryKeyword(e.target.value)} />
+        </label>
+        <label className="grid gap-1 text-sm">
           Ngày đề xuất (không phải lệnh xuất bản)
           <input
             type="datetime-local"
@@ -62,23 +72,13 @@ function BriefPage() {
             onChange={(e) => setDate(e.target.value)}
           />
         </label>
-        <div className="grid gap-1 text-sm">
-          <p>Câu hỏi mục tiêu</p>
-          <ul className="list-disc pl-5 text-muted">
-            {brief.questions.map((q) => (
-              <li key={q}>{q}</li>
-            ))}
-          </ul>
-        </div>
-        <div className="grid gap-1 text-sm">
-          <p>Dàn ý</p>
-          <ul className="list-disc pl-5 text-muted">
-            {brief.outline.map((q) => (
-              <li key={q}>{q}</li>
-            ))}
-          </ul>
-        </div>
-        <p className="text-sm text-muted">SEO source / keyword: {brief.primary_keyword} · {brief.scope.country_code}/{brief.scope.language}</p>
+        <label className="grid gap-1 text-sm">Câu hỏi mục tiêu · mỗi dòng một câu
+          <textarea className="min-h-28 rounded-sm border border-line bg-paper px-3 py-2" value={questions} onChange={(e) => setQuestions(e.target.value)} />
+        </label>
+        <label className="grid gap-1 text-sm">Dàn ý · mỗi dòng một mục
+          <textarea className="min-h-36 rounded-sm border border-line bg-paper px-3 py-2" value={outline} onChange={(e) => setOutline(e.target.value)} />
+        </label>
+        <p className="text-sm text-muted">Phạm vi SEO: {brief.scope.country_code}/{brief.scope.language}</p>
         <ShieldNote />
         <div className="flex flex-wrap gap-3">
           <Button type="submit" disabled={busy}>Lưu revision brief</Button>
@@ -94,7 +94,7 @@ function BriefPage() {
               await router.invalidate();
             }}
           >
-            Tạo bản nháp từ fixture
+            Chuyển brief thành bản nháp
           </Button>
         </div>
         {msg ? <p className="text-sm text-ok">{msg}</p> : null}
