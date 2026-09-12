@@ -15,6 +15,7 @@ import { Route as HealthzRouteImport } from './routes/healthz'
 import { Route as KeHoachRouteImport } from './routes/ke-hoach'
 import { Route as LichSuRouteImport } from './routes/lich-su'
 import { Route as NghiemThuRouteImport } from './routes/nghiem-thu'
+import { Route as NguonDuLieuRouteImport } from './routes/nguon-du-lieu'
 import { Route as BaiVietArticleIdRouteImport } from './routes/bai-viet_.$articleId'
 import { Route as DuyetArticleIdRouteImport } from './routes/duyet.$articleId'
 import { Route as KeHoachBriefIdRouteImport } from './routes/ke-hoach_.$briefId'
@@ -65,6 +66,11 @@ const LichSuRoute = LichSuRouteImport.update({
 const NghiemThuRoute = NghiemThuRouteImport.update({
   id: '/nghiem-thu',
   path: '/nghiem-thu',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NguonDuLieuRoute = NguonDuLieuRouteImport.update({
+  id: '/nguon-du-lieu',
+  path: '/nguon-du-lieu',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BaiVietArticleIdRoute = BaiVietArticleIdRouteImport.update({
@@ -187,6 +193,7 @@ export interface FileRoutesByFullPath {
   '/ke-hoach': typeof KeHoachRoute
   '/lich-su': typeof LichSuRoute
   '/nghiem-thu': typeof NghiemThuRoute
+  '/nguon-du-lieu': typeof NguonDuLieuRoute
   '/bai-viet/$articleId': typeof BaiVietArticleIdRoute
   '/duyet/$articleId': typeof DuyetArticleIdRoute
   '/ke-hoach/$briefId': typeof KeHoachBriefIdRoute
@@ -216,6 +223,7 @@ export interface FileRoutesByTo {
   '/ke-hoach': typeof KeHoachRoute
   '/lich-su': typeof LichSuRoute
   '/nghiem-thu': typeof NghiemThuRoute
+  '/nguon-du-lieu': typeof NguonDuLieuRoute
   '/bai-viet/$articleId': typeof BaiVietArticleIdRoute
   '/duyet/$articleId': typeof DuyetArticleIdRoute
   '/ke-hoach/$briefId': typeof KeHoachBriefIdRoute
@@ -246,6 +254,7 @@ export interface FileRoutesById {
   '/ke-hoach': typeof KeHoachRoute
   '/lich-su': typeof LichSuRoute
   '/nghiem-thu': typeof NghiemThuRoute
+  '/nguon-du-lieu': typeof NguonDuLieuRoute
   '/bai-viet_/$articleId': typeof BaiVietArticleIdRoute
   '/duyet/$articleId': typeof DuyetArticleIdRoute
   '/ke-hoach_/$briefId': typeof KeHoachBriefIdRoute
@@ -277,6 +286,7 @@ export interface FileRouteTypes {
     | '/ke-hoach'
     | '/lich-su'
     | '/nghiem-thu'
+    | '/nguon-du-lieu'
     | '/bai-viet/$articleId'
     | '/duyet/$articleId'
     | '/ke-hoach/$briefId'
@@ -306,6 +316,7 @@ export interface FileRouteTypes {
     | '/ke-hoach'
     | '/lich-su'
     | '/nghiem-thu'
+    | '/nguon-du-lieu'
     | '/bai-viet/$articleId'
     | '/duyet/$articleId'
     | '/ke-hoach/$briefId'
@@ -335,6 +346,7 @@ export interface FileRouteTypes {
     | '/ke-hoach'
     | '/lich-su'
     | '/nghiem-thu'
+    | '/nguon-du-lieu'
     | '/bai-viet_/$articleId'
     | '/duyet/$articleId'
     | '/ke-hoach_/$briefId'
@@ -365,6 +377,7 @@ export interface RootRouteChildren {
   KeHoachRoute: typeof KeHoachRoute
   LichSuRoute: typeof LichSuRoute
   NghiemThuRoute: typeof NghiemThuRoute
+  NguonDuLieuRoute: typeof NguonDuLieuRoute
   BaiVietArticleIdRoute: typeof BaiVietArticleIdRoute
   DuyetArticleIdRoute: typeof DuyetArticleIdRoute
   KeHoachBriefIdRoute: typeof KeHoachBriefIdRoute
@@ -421,6 +434,13 @@ declare module '@tanstack/react-router' {
       path: '/nghiem-thu'
       fullPath: '/nghiem-thu'
       preLoaderRoute: typeof NghiemThuRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nguon-du-lieu': {
+      id: '/nguon-du-lieu'
+      path: '/nguon-du-lieu'
+      fullPath: '/nguon-du-lieu'
+      preLoaderRoute: typeof NguonDuLieuRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bai-viet_/$articleId': {
@@ -670,6 +690,7 @@ const rootRouteChildren: RootRouteChildren = {
   KeHoachRoute: KeHoachRoute,
   LichSuRoute: LichSuRoute,
   NghiemThuRoute: NghiemThuRoute,
+  NguonDuLieuRoute: NguonDuLieuRoute,
   BaiVietArticleIdRoute: BaiVietArticleIdRoute,
   DuyetArticleIdRoute: DuyetArticleIdRoute,
   KeHoachBriefIdRoute: KeHoachBriefIdRoute,

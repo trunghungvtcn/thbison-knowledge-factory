@@ -30,6 +30,7 @@ import { MOCK_DESTINATION } from "./constants";
 import { nowIso } from "./clock";
 import { formatBangkok } from "./clock";
 import type { ContentBrief } from "./types";
+import { latestNotionSnapshot } from "./notion-snapshot";
 
 function principal() {
   return principalFromId(getCookie("thbison_principal") ?? "editor");
@@ -194,6 +195,12 @@ export const loadHistory = createServerFn({ method: "GET" }).handler(async () =>
   const p = principal();
   const [jobs, pubs] = await Promise.all([listJobs(p), listPublications(p)]);
   return { jobs, pubs };
+});
+
+export const loadNotionSources = createServerFn({ method: "GET" }).handler(async () => {
+  const p = principal();
+  if (p.project_id !== "test-thbison") throw new ContractError("FORBIDDEN");
+  return latestNotionSnapshot();
 });
 
 export const loadJob = createServerFn({ method: "GET" })

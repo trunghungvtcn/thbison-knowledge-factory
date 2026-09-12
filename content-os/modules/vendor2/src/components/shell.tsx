@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { CalendarRange, FileText, History, LayoutDashboard, ShieldCheck, ClipboardCheck } from "lucide-react";
+import { CalendarRange, Database, FileText, History, LayoutDashboard, ShieldCheck, ClipboardCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getSession, setSession } from "@/lib/content-os/workspace.functions";
 import { cn } from "@/lib/content-os/cn";
@@ -8,6 +8,7 @@ const NAV = [
   { to: "/", label: "Tổng quan", icon: LayoutDashboard },
   { to: "/ke-hoach", label: "Kế hoạch", icon: CalendarRange },
   { to: "/bai-viet", label: "Bài viết", icon: FileText },
+  { to: "/nguon-du-lieu", label: "Nguồn dữ liệu", icon: Database },
   { to: "/lich-su", label: "Lịch sử", icon: History },
   { to: "/nghiem-thu", label: "Nghiệm thu", icon: ClipboardCheck },
 ];
