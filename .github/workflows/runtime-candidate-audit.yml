@@ -1,0 +1,165 @@
+name: runtime-candidate-audit
+
+on:
+  push:
+    branches: [codex/audit-runtime-13cd0f4]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CANDIDATE_SHA: 13cd0f4518e086ac29c8d939d23c7f28c7869996
+  IMAGE_NAME: thbison-v2-audit:13cd0f45
+  CONTAINER_NAME: thbison-v2-audit-13cd0f45
+  NETWORK_NAME: thbison-v2-audit-internal
+
+jobs:
+  docker-runtime-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out immutable candidate
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: 13cd0f4518e086ac29c8d939d23c7f28c7869996
+          submodules: recursive
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Lock source identity
+        run: |
+          test "$(git rev-parse HEAD)" = "$CANDIDATE_SHA"
+          test -z "$(git status --porcelain)"
+          printf 'candidate_sha=%s\n' "$CANDIDATE_SHA" | tee source-receipt.txt
+          git rev-parse HEAD^{tree} | sed 's/^/tree=/' | tee -a source-receipt.txt
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22.23.2"
+          cache: npm
+          cache-dependency-path: content-os/modules/vendor2/package-lock.json
+
+      - name: Install, test and typecheck exact source
+        working-directory: content-os/modules/vendor2
+        env:
+          DATABASE_URL: ""
+        run: |
+          npm ci --ignore-scripts
+          npm test 2>&1 | tee ../../../vendor2-test.log
+          npm run typecheck 2>&1 | tee ../../../vendor2-typecheck.log
+
+      - name: Build immutable runtime image
+        run: |
+          docker build \
+            --build-arg "CODE_COMMIT=$CANDIDATE_SHA" \
+            --tag "$IMAGE_NAME" \
+            content-os/modules/vendor2 2>&1 | tee docker-build.log
+          docker image inspect "$IMAGE_NAME" --format '{{.Id}}' | tee image-id.txt
+          test "$(docker image inspect "$IMAGE_NAME" --format '{{json .Config.Cmd}}')" = '["npm","run","preview","--","--host","0.0.0.0","--port","8080"]'
+
+      - name: Run isolated default-CMD canary
+        run: |
+          docker network create --internal "$NETWORK_NAME"
+          docker run --detach \
+            --name "$CONTAINER_NAME" \
+            --network "$NETWORK_NAME" \
+            --publish 127.0.0.1:18082:8080 \
+            --cpus 0.5 \
+            --memory 512m \
+            --pids-limit 256 \
+            --read-only \
+            --tmpfs /tmp:rw,noexec,nosuid,size=64m \
+            --tmpfs /app/node_modules/.vite-temp:rw,noexec,nosuid,size=16m,uid=10001,gid=10001 \
+            --security-opt no-new-privileges \
+            --cap-drop ALL \
+            --env CONTENT_OS_MODE=MOCK \
+            --env ALLOW_PRODUCTION=false \
+            --env ALLOW_PUBLIC_EFFECTS=false \
+            --env ALLOW_LIVE=false \
+            --env ALLOW_STAGING=false \
+            --env ALLOW_SOCIAL=false \
+            "$IMAGE_NAME"
+
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent --show-error http://127.0.0.1:18082/healthz > health.json; then
+              break
+            fi
+            sleep 1
+          done
+          test "$(cat health.json)" = '{"status":"ok"}'
+
+          curl --fail --silent --show-error \
+            -H 'Authorization: Bearer svc_reader_test_thbison_ok12' \
+            -H 'X-Contract-Version: 1.0.0' \
+            http://127.0.0.1:18082/v1/capabilities > capabilities.json
+
+          docker inspect "$CONTAINER_NAME" > container-inspect.json
+          docker logs "$CONTAINER_NAME" > container.log 2>&1
+
+          python - <<'PY'
+          import json
+          import os
+
+          candidate = os.environ["CANDIDATE_SHA"]
+          capabilities = json.load(open("capabilities.json", encoding="utf-8"))
+          inspect = json.load(open("container-inspect.json", encoding="utf-8"))[0]
+
+          assert capabilities["code_commit"] == candidate, capabilities
+          assert capabilities["mode"] == "MOCK", capabilities
+          assert inspect["State"]["Running"] is True, inspect["State"]
+          assert inspect["RestartCount"] == 0, inspect["RestartCount"]
+          assert inspect["HostConfig"]["ReadonlyRootfs"] is True
+
+          env = set(inspect["Config"]["Env"])
+          expected = {
+              "CONTENT_OS_MODE=MOCK",
+              "ALLOW_PRODUCTION=false",
+              "ALLOW_PUBLIC_EFFECTS=false",
+              "ALLOW_LIVE=false",
+              "ALLOW_STAGING=false",
+              "ALLOW_SOCIAL=false",
+          }
+          assert expected <= env, sorted(expected - env)
+
+          receipt = {
+              "candidate_sha": candidate,
+              "code_commit": capabilities["code_commit"],
+              "mode": capabilities["mode"],
+              "health": json.load(open("health.json", encoding="utf-8")),
+              "running": inspect["State"]["Running"],
+              "restart_count": inspect["RestartCount"],
+              "readonly_rootfs": inspect["HostConfig"]["ReadonlyRootfs"],
+              "safety_flags": sorted(expected),
+              "actual_side_effects": 0,
+          }
+          with open("runtime-receipt.json", "w", encoding="utf-8") as fh:
+              json.dump(receipt, fh, ensure_ascii=False, indent=2, sort_keys=True)
+              fh.write("\n")
+          print(json.dumps(receipt, indent=2, sort_keys=True))
+          PY
+
+      - name: Upload audit receipt
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: runtime-candidate-audit-${{ env.CANDIDATE_SHA }}
+          path: |
+            source-receipt.txt
+            vendor2-test.log
+            vendor2-typecheck.log
+            docker-build.log
+            image-id.txt
+            health.json
+            capabilities.json
+            container-inspect.json
+            container.log
+            runtime-receipt.json
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Clean up audit container
+        if: always()
+        run: |
+          docker rm --force "$CONTAINER_NAME" 2>/dev/null || true
+          docker network rm "$NETWORK_NAME" 2>/dev/null || true
