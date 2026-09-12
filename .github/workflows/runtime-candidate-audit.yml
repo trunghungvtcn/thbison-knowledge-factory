@@ -57,7 +57,7 @@ jobs:
           docker image inspect "$IMAGE_NAME" --format '{{.Id}}' | tee image-id.txt
           test "$(docker image inspect "$IMAGE_NAME" --format '{{json .Config.Cmd}}')" = '["npm","run","preview","--","--host","0.0.0.0","--port","8080"]'
 
-      - name: Run isolated default-CMD canary
+      - name: Start isolated default-CMD canary
         run: |
           docker run --detach \
             --name "$CONTAINER_NAME" \
@@ -78,6 +78,11 @@ jobs:
             --env ALLOW_SOCIAL=false \
             "$IMAGE_NAME"
 
+          docker ps --filter "name=$CONTAINER_NAME"
+          docker inspect "$CONTAINER_NAME" --format 'running={{.State.Running}} restart_count={{.RestartCount}}'
+
+      - name: Probe canary health
+        run: |
           for attempt in $(seq 1 30); do
             if docker exec "$CONTAINER_NAME" node -e \
               'fetch("http://127.0.0.1:8080/healthz").then(async r => { if (!r.ok) process.exit(1); require("node:fs").writeFileSync("/tmp/health.json", await r.text()) })'; then
@@ -88,10 +93,14 @@ jobs:
           docker cp "$CONTAINER_NAME":/tmp/health.json health.json
           test "$(cat health.json)" = '{"status":"ok"}'
 
+      - name: Probe canary capabilities
+        run: |
           docker exec "$CONTAINER_NAME" node -e \
             'fetch("http://127.0.0.1:8080/v1/capabilities", {headers: {authorization: "Bearer svc_reader_test_thbison_ok12", "x-contract-version": "1.0.0"}}).then(async r => { if (!r.ok) process.exit(1); require("node:fs").writeFileSync("/tmp/capabilities.json", await r.text()) })'
           docker cp "$CONTAINER_NAME":/tmp/capabilities.json capabilities.json
 
+      - name: Validate identity and safety invariants
+        run: |
           docker inspect "$CONTAINER_NAME" > container-inspect.json
           docker logs "$CONTAINER_NAME" > container.log 2>&1
 
